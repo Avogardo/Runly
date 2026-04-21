@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet, Pressable, ScrollView } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useMemo } from "react";
 import { useRunTracking } from "../src/features/run/useRunTracking";
@@ -10,12 +10,11 @@ import {
   formatTime,
 } from "../src/features/run/distance";
 import StatsBar from "../src/components/StatsBar";
+import RunMapView from "../src/components/MapView";
 
 export default function RunScreen() {
   const { state, start, pause, resume, stop, reset } = useRunTracking();
   const { status, path, elapsedMs } = state;
-
-  const lastCoord = path.length > 0 ? path[path.length - 1] : null;
 
   const distance = useMemo(() => calculateTotalDistance(path), [path]);
   const pace = useMemo(
@@ -33,7 +32,10 @@ export default function RunScreen() {
   );
 
   return (
-    <View style={styles.container}>
+    <ScrollView
+      style={styles.scrollView}
+      contentContainerStyle={styles.container}
+    >
       <Text style={styles.emoji}>🏃</Text>
       <Text style={styles.title}>Runly</Text>
       <Text style={styles.subtitle}>
@@ -43,21 +45,15 @@ export default function RunScreen() {
         {status === "stopped" && "Bieg zakończony!"}
       </Text>
 
+      {/* Mapa */}
+      <RunMapView
+        path={path}
+        followUser={status === "running"}
+        staticMode={status === "stopped"}
+      />
+
       {/* Stats */}
       <StatsBar stats={stats} />
-
-      {/* Debug GPS */}
-      {lastCoord && (
-        <View style={styles.debugBox}>
-          <Text style={styles.debugTitle}>📍 GPS debug</Text>
-          <Text style={styles.debugText}>
-            lat: {lastCoord.latitude.toFixed(6)}  lng: {lastCoord.longitude.toFixed(6)}
-          </Text>
-          <Text style={styles.debugText}>
-            Punkty: {path.length}
-          </Text>
-        </View>
-      )}
 
       {/* Buttons */}
       <View style={styles.buttonsRow}>
@@ -97,17 +93,20 @@ export default function RunScreen() {
       </View>
 
       <StatusBar style="light" />
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  scrollView: {
     flex: 1,
     backgroundColor: "#F2F2F7",
+  },
+  container: {
     alignItems: "center",
-    justifyContent: "center",
     padding: 20,
+    paddingTop: 20,
+    paddingBottom: 40,
   },
   emoji: {
     fontSize: 64,
@@ -121,29 +120,12 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 16,
     color: "#8E8E93",
-    marginBottom: 40,
-  },
-  debugBox: {
-    width: "100%",
-    backgroundColor: "#E8F5E9",
-    borderRadius: 12,
-    padding: 12,
     marginBottom: 20,
-  },
-  debugTitle: {
-    fontSize: 13,
-    fontWeight: "600",
-    color: "#2E7D32",
-    marginBottom: 4,
-  },
-  debugText: {
-    fontSize: 12,
-    color: "#1B5E20",
-    fontFamily: "monospace",
   },
   buttonsRow: {
     flexDirection: "row",
     gap: 12,
+    marginTop: 10,
   },
   btn: {
     paddingHorizontal: 32,

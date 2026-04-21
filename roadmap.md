@@ -63,11 +63,11 @@
 
 **Cel:** Wizualizacja trasy na mapie w czasie rzeczywistym.
 
-- [ ] Instalacja `react-native-maps` (via `expo`)
-- [ ] Komponent `MapView` z markerem aktualnej pozycji
-- [ ] Rysowanie trasy (`Polyline`) na podstawie `path[]`
-- [ ] Centrowanie mapy na użytkowniku
-- [ ] Aktualizacja mapy w trakcie biegu (animacja kamery)
+- [x] Instalacja `react-native-maps` (via `expo`)
+- [x] Komponent `MapView` z markerem aktualnej pozycji
+- [x] Rysowanie trasy (`Polyline`) na podstawie `path[]`
+- [x] Centrowanie mapy na użytkowniku
+- [x] Aktualizacja mapy w trakcie biegu (animacja kamery)
 
 **Czego się nauczysz:**
 - Natywne komponenty mapowe
