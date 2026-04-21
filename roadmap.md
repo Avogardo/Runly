@@ -9,11 +9,11 @@
 
 **Cel:** Działający szkielet aplikacji z nawigacją.
 
-- [ ] Inicjalizacja projektu Expo (`npx create-expo-app`)
-- [ ] Konfiguracja TypeScript
-- [ ] Struktura katalogów wg `docs.md` (`/features`, `/components`, `/services`)
-- [ ] Instalacja i konfiguracja nawigacji (`expo-router` lub `@react-navigation/native`)
-- [ ] Dwa ekrany-placeholdery: **RunScreen** i **HistoryScreen** z bottom tabs
+- [x] Inicjalizacja projektu Expo (`npx create-expo-app`)
+- [x] Konfiguracja TypeScript
+- [x] Struktura katalogów wg `docs.md` (`/features`, `/components`, `/services`)
+- [x] Instalacja i konfiguracja nawigacji (`expo-router`)
+- [x] Dwa ekrany-placeholdery: **RunScreen** i **HistoryScreen** z bottom tabs
 - [ ] Pierwsze uruchomienie na emulatorze / fizycznym urządzeniu Android
 
 **Czego się nauczysz:**
