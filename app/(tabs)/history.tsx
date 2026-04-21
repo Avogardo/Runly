@@ -16,14 +16,18 @@ export default function HistoryScreen() {
   const [runs, setRuns] = useState<Run[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const refreshRuns = useCallback(() => {
+    getAllRuns()
+      .then(setRuns)
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, []);
+
   // Odświeżaj listę za każdym razem gdy ekran jest aktywny
   useFocusEffect(
     useCallback(() => {
-      getAllRuns()
-        .then(setRuns)
-        .catch(() => {})
-        .finally(() => setLoading(false));
-    }, [])
+      refreshRuns();
+    }, [refreshRuns])
   );
 
   if (loading) {

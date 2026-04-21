@@ -1,7 +1,7 @@
-import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from "react-native";
-import { useLocalSearchParams } from "expo-router";
+import { View, Text, StyleSheet, ScrollView, ActivityIndicator, Pressable, Alert } from "react-native";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { getRunById } from "../../src/services/storageService";
+import { getRunById, deleteRun } from "../../src/services/storageService";
 import {
   formatDistance,
   formatTime,
@@ -14,6 +14,7 @@ import { Run } from "../../src/types";
 
 export default function RunDetailsScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
+  const router = useRouter();
   const [run, setRun] = useState<Run | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -25,6 +26,25 @@ export default function RunDetailsScreen() {
         .finally(() => setLoading(false));
     }
   }, [id]);
+
+  const handleDelete = () => {
+    if (!run) return;
+    Alert.alert(
+      "Usuń bieg",
+      `Czy na pewno chcesz usunąć ten bieg (${formatDistance(run.distance)})?`,
+      [
+        { text: "Anuluj", style: "cancel" },
+        {
+          text: "Usuń",
+          style: "destructive",
+          onPress: async () => {
+            await deleteRun(run.id);
+            router.back();
+          },
+        },
+      ]
+    );
+  };
 
   if (loading) {
     return (
@@ -98,6 +118,17 @@ export default function RunDetailsScreen() {
           value={formatTime(run.duration * 1000)}
         />
       </View>
+
+      {/* Przycisk usuwania */}
+      <Pressable
+        style={({ pressed }) => [
+          styles.deleteBtn,
+          pressed && styles.deleteBtnPressed,
+        ]}
+        onPress={handleDelete}
+      >
+        <Text style={styles.deleteBtnText}>Usuń bieg</Text>
+      </Pressable>
     </ScrollView>
   );
 }
@@ -167,6 +198,21 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "600",
     color: "#1C1C1E",
+  },
+  deleteBtn: {
+    marginTop: 32,
+    backgroundColor: "rgba(255, 59, 48, 0.08)",
+    borderRadius: 14,
+    paddingVertical: 14,
+    alignItems: "center",
+  },
+  deleteBtnPressed: {
+    backgroundColor: "rgba(255, 59, 48, 0.18)",
+  },
+  deleteBtnText: {
+    fontSize: 15,
+    fontWeight: "600",
+    color: "#FF3B30",
   },
 });
 

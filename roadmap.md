@@ -85,7 +85,7 @@
 - [x] Zapis biegu po kliknięciu "Stop" (dane + ścieżka GPS)
 - [x] Generowanie `id` (UUID)
 - [x] Walidacja: nie zapisuj pustych biegów
-- [ ] Testy manualne: zamknij apkę → otwórz → dane nadal są
+- [x] Testy manualne: zamknij apkę → otwórz → dane nadal są
 
 **Czego się nauczysz:**
 - Lokalna baza danych w React Native
