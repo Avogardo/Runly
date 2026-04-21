@@ -1,6 +1,6 @@
-import { View, Text, StyleSheet, Pressable, ScrollView } from "react-native";
+import { View, Text, StyleSheet, Pressable, ScrollView, Alert } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { useMemo } from "react";
+import { useMemo, useCallback, useState } from "react";
 import { useRunTracking } from "../src/features/run/useRunTracking";
 import {
   calculateTotalDistance,
@@ -9,8 +9,10 @@ import {
   formatPace,
   formatTime,
 } from "../src/features/run/distance";
+import { saveRun, generateId } from "../src/services/storageService";
 import StatsBar from "../src/components/StatsBar";
 import RunMapView from "../src/components/MapView";
+import { Run } from "../src/types";
 
 export default function RunScreen() {
   const { state, start, pause, resume, stop, reset } = useRunTracking();
@@ -30,6 +32,37 @@ export default function RunScreen() {
     ],
     [distance, elapsedMs, pace]
   );
+
+  const [saved, setSaved] = useState(false);
+
+  const handleSave = useCallback(async () => {
+    if (!state.startedAt || path.length === 0) {
+      Alert.alert("Błąd", "Brak danych do zapisania.");
+      return;
+    }
+
+    const run: Run = {
+      id: generateId(),
+      startedAt: state.startedAt,
+      endedAt: new Date().toISOString(),
+      distance,
+      duration: Math.floor(elapsedMs / 1000),
+      path,
+    };
+
+    try {
+      await saveRun(run);
+      setSaved(true);
+      Alert.alert("✅ Zapisano!", `Bieg ${formatDistance(distance)} został zapisany.`);
+    } catch (e: any) {
+      Alert.alert("Błąd zapisu", e.message);
+    }
+  }, [state.startedAt, path, distance, elapsedMs]);
+
+  const handleReset = useCallback(() => {
+    reset();
+    setSaved(false);
+  }, [reset]);
 
   return (
     <ScrollView
@@ -86,9 +119,16 @@ export default function RunScreen() {
         )}
 
         {status === "stopped" && (
-          <Pressable style={[styles.btn, styles.btnReset]} onPress={reset}>
-            <Text style={styles.btnText}>🔄 NOWY BIEG</Text>
-          </Pressable>
+          <>
+            {!saved && (
+              <Pressable style={[styles.btn, styles.btnSave]} onPress={handleSave}>
+                <Text style={styles.btnText}>💾 ZAPISZ</Text>
+              </Pressable>
+            )}
+            <Pressable style={[styles.btn, styles.btnReset]} onPress={handleReset}>
+              <Text style={styles.btnText}>🔄 NOWY BIEG</Text>
+            </Pressable>
+          </>
         )}
       </View>
 
@@ -151,6 +191,10 @@ const styles = StyleSheet.create({
   btnReset: {
     backgroundColor: "#007AFF",
     shadowColor: "#007AFF",
+  },
+  btnSave: {
+    backgroundColor: "#34C759",
+    shadowColor: "#34C759",
   },
   btnText: {
     color: "#fff",

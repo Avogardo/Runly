@@ -80,11 +80,11 @@
 
 **Cel:** Trwałe przechowywanie treningów lokalnie.
 
-- [ ] Instalacja `expo-sqlite`
-- [ ] `storageService.ts` — CRUD dla modelu `Run`
-- [ ] Zapis biegu po kliknięciu "Stop" (dane + ścieżka GPS)
-- [ ] Generowanie `id` (UUID)
-- [ ] Walidacja: nie zapisuj pustych biegów
+- [x] Instalacja `expo-sqlite`
+- [x] `storageService.ts` — CRUD dla modelu `Run`
+- [x] Zapis biegu po kliknięciu "Stop" (dane + ścieżka GPS)
+- [x] Generowanie `id` (UUID)
+- [x] Walidacja: nie zapisuj pustych biegów
 - [ ] Testy manualne: zamknij apkę → otwórz → dane nadal są
 
 **Czego się nauczysz:**
