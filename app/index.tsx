@@ -1,19 +1,36 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { StatusBar } from "expo-status-bar";
+import { useMemo } from "react";
 import { useRunTracking } from "../src/features/run/useRunTracking";
-
-function formatTime(ms: number): string {
-  const totalSec = Math.floor(ms / 1000);
-  const min = Math.floor(totalSec / 60);
-  const sec = totalSec % 60;
-  return `${String(min).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
-}
+import {
+  calculateTotalDistance,
+  calculatePace,
+  formatDistance,
+  formatPace,
+  formatTime,
+} from "../src/features/run/distance";
+import StatsBar from "../src/components/StatsBar";
 
 export default function RunScreen() {
   const { state, start, pause, resume, stop, reset } = useRunTracking();
   const { status, path, elapsedMs } = state;
-console.log(path)
+
   const lastCoord = path.length > 0 ? path[path.length - 1] : null;
+
+  const distance = useMemo(() => calculateTotalDistance(path), [path]);
+  const pace = useMemo(
+    () => calculatePace(distance, elapsedMs),
+    [distance, elapsedMs]
+  );
+
+  const stats = useMemo(
+    () => [
+      { label: "Dystans", value: formatDistance(distance) },
+      { label: "Czas", value: formatTime(elapsedMs) },
+      { label: "Tempo", value: `${formatPace(pace)} /km` },
+    ],
+    [distance, elapsedMs, pace]
+  );
 
   return (
     <View style={styles.container}>
@@ -27,20 +44,17 @@ console.log(path)
       </Text>
 
       {/* Stats */}
-      <View style={styles.statsPlaceholder}>
-        <StatItem label="Czas" value={formatTime(elapsedMs)} />
-        <StatItem label="Punkty GPS" value={String(path.length)} />
-      </View>
+      <StatsBar stats={stats} />
 
       {/* Debug GPS */}
       {lastCoord && (
         <View style={styles.debugBox}>
-          <Text style={styles.debugTitle}>📍 Ostatnia pozycja</Text>
+          <Text style={styles.debugTitle}>📍 GPS debug</Text>
           <Text style={styles.debugText}>
-            lat: {lastCoord.latitude.toFixed(6)}
+            lat: {lastCoord.latitude.toFixed(6)}  lng: {lastCoord.longitude.toFixed(6)}
           </Text>
           <Text style={styles.debugText}>
-            lng: {lastCoord.longitude.toFixed(6)}
+            Punkty: {path.length}
           </Text>
         </View>
       )}
@@ -87,15 +101,6 @@ console.log(path)
   );
 }
 
-function StatItem({ label, value }: { label: string; value: string }) {
-  return (
-    <View style={styles.statItem}>
-      <Text style={styles.statValue}>{value}</Text>
-      <Text style={styles.statLabel}>{label}</Text>
-    </View>
-  );
-}
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -118,48 +123,21 @@ const styles = StyleSheet.create({
     color: "#8E8E93",
     marginBottom: 40,
   },
-  statsPlaceholder: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    width: "100%",
-    marginBottom: 20,
-    backgroundColor: "#fff",
-    borderRadius: 16,
-    padding: 20,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  statItem: {
-    alignItems: "center",
-  },
-  statValue: {
-    fontSize: 20,
-    fontWeight: "600",
-    color: "#1C1C1E",
-  },
-  statLabel: {
-    fontSize: 12,
-    color: "#8E8E93",
-    marginTop: 4,
-  },
   debugBox: {
     width: "100%",
     backgroundColor: "#E8F5E9",
     borderRadius: 12,
-    padding: 16,
+    padding: 12,
     marginBottom: 20,
   },
   debugTitle: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: "600",
     color: "#2E7D32",
     marginBottom: 4,
   },
   debugText: {
-    fontSize: 13,
+    fontSize: 12,
     color: "#1B5E20",
     fontFamily: "monospace",
   },

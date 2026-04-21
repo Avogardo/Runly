@@ -45,12 +45,12 @@
 
 **Cel:** Liczenie metryki biegu w czasie rzeczywistym.
 
-- [ ] Implementacja wzoru **Haversine** (`distance.ts`)
-- [ ] Obliczanie dystansu kumulatywnego z `path[]`
-- [ ] Licznik czasu (timer) — `duration` w sekundach
-- [ ] Obliczanie bieżącego tempa (min/km)
-- [ ] Komponent `StatsBar` wyświetlający: dystans, czas, tempo
-- [ ] Filtrowanie "skaczących" punktów GPS (min. odległość między punktami)
+- [x] Implementacja wzoru **Haversine** (`distance.ts`)
+- [x] Obliczanie dystansu kumulatywnego z `path[]`
+- [x] Licznik czasu (timer) — `duration` w sekundach
+- [x] Obliczanie bieżącego tempa (min/km)
+- [x] Komponent `StatsBar` wyświetlający: dystans, czas, tempo
+- [x] Filtrowanie "skaczących" punktów GPS (min. odległość między punktami)
 
 **Czego się nauczysz:**
 - Custom hooks z logiką obliczeniową
