@@ -98,12 +98,12 @@
 
 **Cel:** Przeglądanie zapisanych biegów.
 
-- [ ] Ekran `HistoryScreen` — lista biegów (`FlatList`)
-- [ ] Każdy element: data, dystans, czas, tempo
-- [ ] Ekran `RunDetailsScreen` — szczegóły biegu
-- [ ] Mapa z trasą (statyczna, na podstawie `path[]`)
-- [ ] Nawigacja z listy do szczegółów (stack navigation)
-- [ ] Pusty stan (empty state) gdy brak treningów
+- [x] Ekran `HistoryScreen` — lista biegów (`FlatList`)
+- [x] Każdy element: data, dystans, czas, tempo
+- [x] Ekran `RunDetailsScreen` — szczegóły biegu
+- [x] Mapa z trasą (statyczna, na podstawie `path[]`)
+- [x] Nawigacja z listy do szczegółów (stack navigation)
+- [x] Pusty stan (empty state) gdy brak treningów
 
 **Czego się nauczysz:**
 - `FlatList` i optymalizacja długich list

@@ -1,18 +1,18 @@
 import { View, Text, StyleSheet, Pressable, ScrollView, Alert } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useMemo, useCallback, useState } from "react";
-import { useRunTracking } from "../src/features/run/useRunTracking";
+import { useRunTracking } from "../../src/features/run/useRunTracking";
 import {
   calculateTotalDistance,
   calculatePace,
   formatDistance,
   formatPace,
   formatTime,
-} from "../src/features/run/distance";
-import { saveRun, generateId } from "../src/services/storageService";
-import StatsBar from "../src/components/StatsBar";
-import RunMapView from "../src/components/MapView";
-import { Run } from "../src/types";
+} from "../../src/features/run/distance";
+import { saveRun, generateId } from "../../src/services/storageService";
+import StatsBar from "../../src/components/StatsBar";
+import RunMapView from "../../src/components/MapView";
+import { Run } from "../../src/types";
 
 export default function RunScreen() {
   const { state, start, pause, resume, stop, reset } = useRunTracking();
