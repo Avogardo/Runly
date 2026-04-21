@@ -1,7 +1,8 @@
-import { useRef, useEffect } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { useRef, useEffect, useState } from "react";
+import { StyleSheet, View, Text, ActivityIndicator } from "react-native";
 import RNMapView, { Polyline, Marker } from "react-native-maps";
 import { Coordinate } from "../types";
+import { getCurrentPosition } from "../services/locationService";
 
 type RunMapViewProps = {
   path: Coordinate[];
@@ -17,9 +18,19 @@ export default function RunMapView({
   staticMode = false,
 }: RunMapViewProps) {
   const mapRef = useRef<RNMapView>(null);
+  const [initialLocation, setInitialLocation] = useState<Coordinate | null>(null);
 
   const lastCoord = path.length > 0 ? path[path.length - 1] : null;
   const firstCoord = path.length > 0 ? path[0] : null;
+
+  // Pobierz aktualną lokalizację na start (przed biegiem)
+  useEffect(() => {
+    if (path.length === 0) {
+      getCurrentPosition()
+        .then(setInitialLocation)
+        .catch(() => {});
+    }
+  }, [path.length === 0]);
 
   // Animuj kamerę do ostatniej pozycji w trybie follow
   useEffect(() => {
@@ -49,10 +60,30 @@ export default function RunMapView({
     }
   }, [staticMode, path.length]);
 
+  // Przed biegiem — pokaż mapę z aktualną lokalizacją
   if (path.length === 0) {
+    if (!initialLocation) {
+      return (
+        <View style={[styles.container, styles.placeholder]}>
+          <ActivityIndicator size="small" color="#007AFF" />
+          <Text style={styles.placeholderText}>Ładowanie mapy...</Text>
+        </View>
+      );
+    }
+
     return (
-      <View style={[styles.container, styles.placeholder]}>
-        <Text style={styles.placeholderText}>🗺️ Mapa pojawi się po starcie biegu</Text>
+      <View style={styles.container}>
+        <RNMapView
+          style={styles.map}
+          initialRegion={{
+            latitude: initialLocation.latitude,
+            longitude: initialLocation.longitude,
+            latitudeDelta: 0.01,
+            longitudeDelta: 0.01,
+          }}
+          showsUserLocation={true}
+          showsMyLocationButton={false}
+        />
       </View>
     );
   }
@@ -130,6 +161,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#E5E5EA",
     alignItems: "center",
     justifyContent: "center",
+    gap: 8,
   },
   placeholderText: {
     color: "#8E8E93",
