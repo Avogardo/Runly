@@ -14,7 +14,7 @@
 - [x] Struktura katalogów wg `docs.md` (`/features`, `/components`, `/services`)
 - [x] Instalacja i konfiguracja nawigacji (`expo-router`)
 - [x] Dwa ekrany-placeholdery: **RunScreen** i **HistoryScreen** z bottom tabs
-- [ ] Pierwsze uruchomienie na emulatorze / fizycznym urządzeniu Android
+- [x] Pierwsze uruchomienie na emulatorze / fizycznym urządzeniu Android
 
 **Czego się nauczysz:**
 - Expo workflow vs bare workflow
@@ -27,12 +27,12 @@
 
 **Cel:** Zbieranie punktów GPS w czasie rzeczywistym podczas biegu.
 
-- [ ] Instalacja `expo-location`
-- [ ] Obsługa uprawnień lokalizacji (foreground)
-- [ ] Hook `useRunTracking` — subskrypcja lokalizacji, zbieranie punktów `Coordinate[]`
-- [ ] Stan biegu: `idle` → `running` → `paused` → `stopped`
-- [ ] Logika **Start / Pause / Resume / Stop**
-- [ ] Wyświetlanie aktualnych współrzędnych na ekranie (debug)
+- [x] Instalacja `expo-location`
+- [x] Obsługa uprawnień lokalizacji (foreground)
+- [x] Hook `useRunTracking` — subskrypcja lokalizacji, zbieranie punktów `Coordinate[]`
+- [x] Stan biegu: `idle` → `running` → `paused` → `stopped`
+- [x] Logika **Start / Pause / Resume / Stop**
+- [x] Wyświetlanie aktualnych współrzędnych na ekranie (debug)
 
 **Czego się nauczysz:**
 - Uprawnienia natywne (permissions API)
