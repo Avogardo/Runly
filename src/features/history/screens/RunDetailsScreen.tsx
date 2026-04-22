@@ -1,7 +1,6 @@
 import {FC} from 'react'
 import {useLocalSearchParams} from 'expo-router'
 import {LinearGradient} from 'expo-linear-gradient'
-import i18next from 'i18next'
 import {useTranslation} from 'react-i18next'
 import {View, Text, StyleSheet, ScrollView, ActivityIndicator, Pressable} from 'react-native'
 
@@ -12,7 +11,7 @@ import {calculatePace, formatDistance, formatTime, formatPace} from '@/utils'
 import {useRunDetails} from '../hooks'
 
 export const RunDetailsScreen: FC = () => {
-  const {t} = useTranslation()
+  const {t, i18n: {language}} = useTranslation()
   const {id} = useLocalSearchParams<{id: string}>()
   const {run, isLoading, handleDelete} = useRunDetails(id)
 
@@ -33,19 +32,18 @@ export const RunDetailsScreen: FC = () => {
   }
 
   const pace = calculatePace(run.distance, run.duration * 1000)
-  const locale = i18next.language
   const date = new Date(run.startedAt)
-  const dateStr = date.toLocaleDateString(locale, {
+  const dateStr = date.toLocaleDateString(language, {
     weekday: 'long',
     day: 'numeric',
     month: 'long',
     year: 'numeric'
   })
-  const startTime = date.toLocaleTimeString(locale, {
+  const startTime = date.toLocaleTimeString(language, {
     hour: '2-digit',
     minute: '2-digit'
   })
-  const endTime = new Date(run.endedAt).toLocaleTimeString(locale, {
+  const endTime = new Date(run.endedAt).toLocaleTimeString(language, {
     hour: '2-digit',
     minute: '2-digit'
   })

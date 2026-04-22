@@ -1,20 +1,17 @@
-import {FC} from 'react'
-import {useRouter} from 'expo-router'
+import {type FC} from 'react'
 import {LinearGradient} from 'expo-linear-gradient'
-import i18next from 'i18next'
 import {useTranslation} from 'react-i18next'
-import {View, Text, StyleSheet, FlatList, Pressable} from 'react-native'
+import {Text, StyleSheet, FlatList} from 'react-native'
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
 
-import {GlassCard, theme} from '@/ui'
-import {calculatePace, formatDistance, formatTime, formatPace} from '@/utils'
+import {theme} from '@/ui'
 
+import {RunCard} from '../components'
 import {useRunHistory} from '../hooks'
 
 export const HistoryScreen: FC = () => {
   const {t} = useTranslation()
   const insets = useSafeAreaInsets()
-  const router = useRouter()
   const {runs, isLoading} = useRunHistory()
 
   if (isLoading) {
@@ -41,8 +38,6 @@ export const HistoryScreen: FC = () => {
     )
   }
 
-  const locale = i18next.language
-
   return (
     <LinearGradient colors={[...theme.bgGradient]} style={styles.gradient}>
       <FlatList
@@ -50,48 +45,7 @@ export const HistoryScreen: FC = () => {
         keyExtractor={(item) => item.id}
         style={styles.list}
         contentContainerStyle={[styles.listContent, {paddingTop: insets.top + 16}]}
-        renderItem={({item}) => {
-          const pace = calculatePace(item.distance, item.duration * 1000)
-          const date = new Date(item.startedAt)
-          const dateStr = date.toLocaleDateString(locale, {
-            day: 'numeric',
-            month: 'short',
-            year: 'numeric'
-          })
-          const timeStr = date.toLocaleTimeString(locale, {
-            hour: '2-digit',
-            minute: '2-digit'
-          })
-
-          return (
-            <Pressable
-              style={({pressed}) => [pressed && styles.cardPressed]}
-              onPress={() => router.push(`/run/${item.id}`)}
-            >
-              <GlassCard style={styles.cardWrapper}>
-                <View style={styles.cardHeader}>
-                  <Text style={styles.cardDate}>{dateStr}</Text>
-                  <Text style={styles.cardTime}>{timeStr}</Text>
-                </View>
-                <View style={styles.cardStats}>
-                  <View style={styles.cardStat}>
-                    <Text style={styles.cardStatValue}>{formatDistance(item.distance)}</Text>
-                    <Text style={styles.cardStatLabel}>{t('statsBar.label.distance')}</Text>
-                  </View>
-                  <View style={[styles.cardStat, styles.cardStatDivider]}>
-                    <Text style={styles.cardStatValue}>{formatTime(item.duration * 1000)}</Text>
-                    <Text style={styles.cardStatLabel}>{t('statsBar.label.time')}</Text>
-                  </View>
-                  <View style={styles.cardStat}>
-                    <Text style={styles.cardStatValue}>{formatPace(pace)} /km</Text>
-                    <Text style={styles.cardStatLabel}>{t('statsBar.label.pace')}</Text>
-                  </View>
-                </View>
-                <Text style={styles.cardArrow}>›</Text>
-              </GlassCard>
-            </Pressable>
-          )
-        }}
+        renderItem={({item}) => <RunCard run={item} />}
       />
     </LinearGradient>
   )
@@ -132,58 +86,5 @@ const styles = StyleSheet.create({
   listContent: {
     padding: 16,
     gap: 12
-  },
-  cardWrapper: {
-    marginBottom: 0
-  },
-  cardPressed: {
-    opacity: 0.7,
-    transform: [{scale: 0.98}]
-  },
-  cardHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 14
-  },
-  cardDate: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: theme.textPrimary
-  },
-  cardTime: {
-    fontSize: 14,
-    color: theme.textSecondary
-  },
-  cardStats: {
-    flexDirection: 'row',
-    justifyContent: 'space-around'
-  },
-  cardStat: {
-    alignItems: 'center',
-    flex: 1
-  },
-  cardStatDivider: {
-    borderLeftWidth: 1,
-    borderRightWidth: 1,
-    borderColor: theme.surfaceBorder
-  },
-  cardStatValue: {
-    fontSize: 17,
-    fontWeight: '600',
-    color: theme.textPrimary
-  },
-  cardStatLabel: {
-    fontSize: 10,
-    color: theme.textSecondary,
-    marginTop: 4,
-    textTransform: 'uppercase',
-    letterSpacing: 0.5
-  },
-  cardArrow: {
-    position: 'absolute',
-    right: 16,
-    top: 16,
-    fontSize: 22,
-    color: theme.textMuted
   }
 })
