@@ -1,6 +1,6 @@
 import {StatusBar} from 'expo-status-bar'
 import {LinearGradient} from 'expo-linear-gradient'
-import {useMemo, useCallback, useState, useEffect} from 'react'
+import {useMemo, useCallback, useState, useEffect, FC} from 'react'
 import {useTranslation} from 'react-i18next'
 import {View, Text, StyleSheet, Pressable, ScrollView, Alert} from 'react-native'
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
@@ -15,7 +15,7 @@ import {calculatePace, formatDistance, formatPace, formatTime} from '@/utils'
 import {useRunTracking} from '../hooks'
 import {calculateTotalDistance, generateId} from '../utils'
 
-export function RunScreen() {
+export const RunScreen: FC = () => {
   const {t} = useTranslation()
   const insets = useSafeAreaInsets()
   const router = useRouter()

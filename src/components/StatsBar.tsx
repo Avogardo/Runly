@@ -1,17 +1,18 @@
+import {FC} from 'react'
 import {View, Text, StyleSheet} from 'react-native'
 
 import {GlassCard, theme} from '@/ui'
+
+type StatsBarProps = {
+  stats: Stat[]
+}
 
 type Stat = {
   label: string
   value: string
 }
 
-type StatsBarProps = {
-  stats: Stat[]
-}
-
-export function StatsBar({stats}: StatsBarProps) {
+export const StatsBar: FC<StatsBarProps> = ({stats}) => {
   return (
     <GlassCard style={styles.wrapper}>
       <View style={styles.row}>

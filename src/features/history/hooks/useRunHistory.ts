@@ -6,18 +6,18 @@ import {Run} from '@/types'
 
 export type UseRunHistoryReturn = {
   runs: Run[]
-  loading: boolean
+  isLoading: boolean
 }
 
 export function useRunHistory(): UseRunHistoryReturn {
   const [runs, setRuns] = useState<Run[]>([])
-  const [loading, setLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
 
   const refreshRuns = useCallback(() => {
     getAllRuns()
       .then(setRuns)
       .catch(() => {})
-      .finally(() => setLoading(false))
+      .finally(() => setIsLoading(false))
   }, [])
 
   useFocusEffect(
@@ -26,5 +26,5 @@ export function useRunHistory(): UseRunHistoryReturn {
     }, [refreshRuns])
   )
 
-  return {runs, loading}
+  return {runs, isLoading}
 }

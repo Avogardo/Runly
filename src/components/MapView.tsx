@@ -1,4 +1,4 @@
-import {useRef, useEffect, useState} from 'react'
+import {FC, useRef, useEffect, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import {StyleSheet, View, Text, ActivityIndicator} from 'react-native'
 import RNMapView, {Polyline, Marker} from 'react-native-maps'
@@ -14,7 +14,7 @@ type RunMapViewProps = {
   staticMode?: boolean
 }
 
-export function RunMapView({path, followUser = false, staticMode = false}: RunMapViewProps) {
+export const RunMapView: FC<RunMapViewProps> = ({path, followUser = false, staticMode = false}) => {
   const {t} = useTranslation()
   const mapRef = useRef<RNMapView>(null)
   const [initialLocation, setInitialLocation] = useState<Coordinate | null>(null)

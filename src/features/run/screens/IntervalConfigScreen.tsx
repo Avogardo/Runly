@@ -1,13 +1,13 @@
 import {LinearGradient} from 'expo-linear-gradient'
 import {useRouter} from 'expo-router'
-import {useState} from 'react'
+import {useState, FC} from 'react'
 import {useTranslation} from 'react-i18next'
 import {View, Text, StyleSheet, Pressable, Switch, ScrollView} from 'react-native'
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
 
 import {GlassCard, theme} from '@/ui'
 
-export function IntervalConfigScreen() {
+export const IntervalConfigScreen: FC = () => {
   const {t} = useTranslation()
   const router = useRouter()
   const insets = useSafeAreaInsets()

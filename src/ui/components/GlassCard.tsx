@@ -1,15 +1,16 @@
+import {FC, ReactNode} from 'react'
 import {BlurView} from 'expo-blur'
 import {StyleSheet, View, ViewStyle} from 'react-native'
 
 import {theme} from '../theme'
 
 type GlassCardProps = {
-  children: React.ReactNode
+  children: ReactNode
   style?: ViewStyle
   intensity?: number
 }
 
-export function GlassCard({children, style, intensity = theme.blurIntensity}: GlassCardProps) {
+export const GlassCard: FC<GlassCardProps> = ({children, style, intensity = theme.blurIntensity}) => {
   return (
     <View style={[styles.wrapper, style]}>
       <BlurView intensity={intensity} tint={theme.blurTint} style={styles.blur}>

@@ -1,3 +1,4 @@
+import {FC} from 'react'
 import {useRouter} from 'expo-router'
 import {LinearGradient} from 'expo-linear-gradient'
 import i18next from 'i18next'
@@ -10,13 +11,13 @@ import {calculatePace, formatDistance, formatTime, formatPace} from '@/utils'
 
 import {useRunHistory} from '../hooks'
 
-export function HistoryScreen() {
+export const HistoryScreen: FC = () => {
   const {t} = useTranslation()
   const insets = useSafeAreaInsets()
   const router = useRouter()
-  const {runs, loading} = useRunHistory()
+  const {runs, isLoading} = useRunHistory()
 
-  if (loading) {
+  if (isLoading) {
     return (
       <LinearGradient
         colors={[...theme.bgGradient]}

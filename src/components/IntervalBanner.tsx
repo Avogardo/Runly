@@ -1,3 +1,4 @@
+import {FC} from 'react'
 import {View, Text, StyleSheet} from 'react-native'
 import {useTranslation} from 'react-i18next'
 
@@ -12,12 +13,12 @@ type IntervalBannerProps = {
   finished: boolean
 }
 
-export function IntervalBanner({
+export const IntervalBanner: FC<IntervalBannerProps> = ({
   intervalType,
   timeRemainingMs,
   progress,
   finished
-}: IntervalBannerProps) {
+}) => {
   const {t} = useTranslation()
 
   if (finished) {

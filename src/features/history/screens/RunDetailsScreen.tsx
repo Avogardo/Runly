@@ -1,3 +1,4 @@
+import {FC} from 'react'
 import {useLocalSearchParams} from 'expo-router'
 import {LinearGradient} from 'expo-linear-gradient'
 import i18next from 'i18next'
@@ -10,12 +11,12 @@ import {calculatePace, formatDistance, formatTime, formatPace} from '@/utils'
 
 import {useRunDetails} from '../hooks'
 
-export function RunDetailsScreen() {
+export const RunDetailsScreen: FC = () => {
   const {t} = useTranslation()
   const {id} = useLocalSearchParams<{id: string}>()
-  const {run, loading, handleDelete} = useRunDetails(id)
+  const {run, isLoading, handleDelete} = useRunDetails(id)
 
-  if (loading) {
+  if (isLoading) {
     return (
       <LinearGradient colors={[...theme.bgGradient]} style={styles.centered}>
         <ActivityIndicator size="large" color={theme.accent} />
@@ -81,7 +82,6 @@ export function RunDetailsScreen() {
           />
         </GlassCard>
 
-        {/* Interval details */}
         {run.intervals && (
           <GlassCard style={styles.intervalCard}>
             <Text style={styles.intervalTitle}>⏱️ {t('detailsScreen.label.intervals')}</Text>

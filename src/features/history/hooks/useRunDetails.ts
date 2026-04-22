@@ -3,13 +3,13 @@ import {useEffect, useState, useCallback} from 'react'
 import {useTranslation} from 'react-i18next'
 import {Alert} from 'react-native'
 
-import {getRunById, deleteRun} from '@/services/storageService'
+import {getRunById, deleteRun} from '@/services'
 import {Run} from '@/types'
-import {formatDistance} from '@/utils/formatters'
+import {formatDistance} from '@/utils'
 
 export type UseRunDetailsReturn = {
   run: Run | null
-  loading: boolean
+  isLoading: boolean
   handleDelete: () => void
 }
 
@@ -17,14 +17,14 @@ export function useRunDetails(id: string | undefined): UseRunDetailsReturn {
   const {t} = useTranslation()
   const router = useRouter()
   const [run, setRun] = useState<Run | null>(null)
-  const [loading, setLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     if (id) {
       getRunById(id)
         .then(setRun)
         .catch(() => {})
-        .finally(() => setLoading(false))
+        .finally(() => setIsLoading(false))
     }
   }, [id])
 
@@ -46,5 +46,5 @@ export function useRunDetails(id: string | undefined): UseRunDetailsReturn {
     )
   }, [run, router, t])
 
-  return {run, loading, handleDelete}
+  return {run, isLoading, handleDelete}
 }
