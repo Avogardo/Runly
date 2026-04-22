@@ -1,7 +1,10 @@
 import {Ionicons} from '@expo/vector-icons'
 import {Tabs} from 'expo-router'
+import {useTranslation} from 'react-i18next'
 
 export default function TabsLayout() {
+  const {t} = useTranslation()
+
   return (
     <Tabs
       screenOptions={{
@@ -23,14 +26,14 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Bieg',
+          title: t('tabs.run'),
           tabBarIcon: ({color, size}) => <Ionicons name="fitness" size={size} color={color} />
         }}
       />
       <Tabs.Screen
         name="history"
         options={{
-          title: 'Historia',
+          title: t('tabs.history'),
           tabBarIcon: ({color, size}) => <Ionicons name="list" size={size} color={color} />
         }}
       />

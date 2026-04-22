@@ -1,4 +1,5 @@
 import {useRef, useEffect, useState} from 'react'
+import {useTranslation} from 'react-i18next'
 import {StyleSheet, View, Text, ActivityIndicator} from 'react-native'
 import RNMapView, {Polyline, Marker} from 'react-native-maps'
 
@@ -13,6 +14,7 @@ type RunMapViewProps = {
 }
 
 export function RunMapView({path, followUser = false, staticMode = false}: RunMapViewProps) {
+  const {t} = useTranslation()
   const mapRef = useRef<RNMapView>(null)
   const [initialLocation, setInitialLocation] = useState<Coordinate | null>(null)
 
@@ -58,7 +60,7 @@ export function RunMapView({path, followUser = false, staticMode = false}: RunMa
       return (
         <View style={[styles.container, styles.placeholder]}>
           <ActivityIndicator size="small" color="#007AFF" />
-          <Text style={styles.placeholderText}>Ładowanie mapy...</Text>
+          <Text style={styles.placeholderText}>{t('map.loading')}</Text>
         </View>
       )
     }
@@ -115,7 +117,7 @@ export function RunMapView({path, followUser = false, staticMode = false}: RunMa
               latitude: firstCoord.latitude,
               longitude: firstCoord.longitude
             }}
-            title="Start"
+            title={t('map.markerStart')}
             pinColor="#34C759"
           />
         )}
@@ -126,7 +128,7 @@ export function RunMapView({path, followUser = false, staticMode = false}: RunMa
               latitude: lastCoord.latitude,
               longitude: lastCoord.longitude
             }}
-            title="Aktualna pozycja"
+            title={t('map.markerCurrent')}
             pinColor="#007AFF"
           />
         )}

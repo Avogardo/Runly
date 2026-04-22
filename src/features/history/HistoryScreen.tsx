@@ -1,4 +1,6 @@
 import {useRouter} from 'expo-router'
+import i18next from 'i18next'
+import {useTranslation} from 'react-i18next'
 import {View, Text, StyleSheet, FlatList, Pressable} from 'react-native'
 
 import {calculatePace} from '@/features/run/metrics'
@@ -7,13 +9,14 @@ import {formatDistance, formatTime, formatPace} from '@/utils/formatters'
 import {useRunHistory} from './useRunHistory'
 
 export function HistoryScreen() {
+  const {t} = useTranslation()
   const router = useRouter()
   const {runs, loading} = useRunHistory()
 
   if (loading) {
     return (
       <View style={styles.centered}>
-        <Text style={styles.loadingText}>Ładowanie...</Text>
+        <Text style={styles.loadingText}>{t('history.loading')}</Text>
       </View>
     )
   }
@@ -22,11 +25,13 @@ export function HistoryScreen() {
     return (
       <View style={styles.centered}>
         <Text style={styles.emptyIcon}>🏁</Text>
-        <Text style={styles.emptyText}>Brak zapisanych biegów</Text>
-        <Text style={styles.emptyHint}>Ukończ swój pierwszy bieg, aby zobaczyć go tutaj!</Text>
+        <Text style={styles.emptyText}>{t('history.emptyTitle')}</Text>
+        <Text style={styles.emptyHint}>{t('history.emptyHint')}</Text>
       </View>
     )
   }
+
+  const locale = i18next.language
 
   return (
     <FlatList
@@ -37,12 +42,12 @@ export function HistoryScreen() {
       renderItem={({item}) => {
         const pace = calculatePace(item.distance, item.duration * 1000)
         const date = new Date(item.startedAt)
-        const dateStr = date.toLocaleDateString('pl-PL', {
+        const dateStr = date.toLocaleDateString(locale, {
           day: 'numeric',
           month: 'short',
           year: 'numeric'
         })
-        const timeStr = date.toLocaleTimeString('pl-PL', {
+        const timeStr = date.toLocaleTimeString(locale, {
           hour: '2-digit',
           minute: '2-digit'
         })
@@ -56,15 +61,15 @@ export function HistoryScreen() {
             <View style={styles.cardStats}>
               <View style={styles.cardStat}>
                 <Text style={styles.cardStatValue}>{formatDistance(item.distance)}</Text>
-                <Text style={styles.cardStatLabel}>Dystans</Text>
+                <Text style={styles.cardStatLabel}>{t('stats.distance')}</Text>
               </View>
               <View style={styles.cardStat}>
                 <Text style={styles.cardStatValue}>{formatTime(item.duration * 1000)}</Text>
-                <Text style={styles.cardStatLabel}>Czas</Text>
+                <Text style={styles.cardStatLabel}>{t('stats.time')}</Text>
               </View>
               <View style={styles.cardStat}>
                 <Text style={styles.cardStatValue}>{formatPace(pace)} /km</Text>
-                <Text style={styles.cardStatLabel}>Tempo</Text>
+                <Text style={styles.cardStatLabel}>{t('stats.pace')}</Text>
               </View>
             </View>
             <Text style={styles.cardArrow}>›</Text>

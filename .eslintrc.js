@@ -65,12 +65,22 @@ module.exports = {
     'react/prop-types': 'off', // using TypeScript
 
     // --- Prettier ---
-    'prettier/prettier': 'warn'
+    'prettier/prettier': 'warn',
+
+    // --- i18next (i18next.t() is the standard usage pattern) ---
+    'import/no-named-as-default-member': 'off'
   },
   overrides: [
     {
       // expo-router requires default exports in app/ directory
       files: ['app/**/*.tsx', 'app/**/*.ts', 'app.config.ts'],
+      rules: {
+        'import/no-default-export': 'off'
+      }
+    },
+    {
+      // i18n init exports default instance
+      files: ['src/i18n/**/*.ts'],
       rules: {
         'import/no-default-export': 'off'
       }

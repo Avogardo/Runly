@@ -1,4 +1,6 @@
 import {useLocalSearchParams} from 'expo-router'
+import i18next from 'i18next'
+import {useTranslation} from 'react-i18next'
 import {View, Text, StyleSheet, ScrollView, ActivityIndicator, Pressable} from 'react-native'
 
 import {RunMapView} from '@/components/MapView'
@@ -9,6 +11,7 @@ import {formatDistance, formatTime, formatPace} from '@/utils/formatters'
 import {useRunDetails} from './useRunDetails'
 
 export function RunDetailsScreen() {
+  const {t} = useTranslation()
   const {id} = useLocalSearchParams<{id: string}>()
   const {run, loading, handleDelete} = useRunDetails(id)
 
@@ -23,32 +26,33 @@ export function RunDetailsScreen() {
   if (!run) {
     return (
       <View style={styles.centered}>
-        <Text style={styles.errorText}>Nie znaleziono biegu</Text>
+        <Text style={styles.errorText}>{t('details.notFound')}</Text>
       </View>
     )
   }
 
   const pace = calculatePace(run.distance, run.duration * 1000)
+  const locale = i18next.language
   const date = new Date(run.startedAt)
-  const dateStr = date.toLocaleDateString('pl-PL', {
+  const dateStr = date.toLocaleDateString(locale, {
     weekday: 'long',
     day: 'numeric',
     month: 'long',
     year: 'numeric'
   })
-  const startTime = date.toLocaleTimeString('pl-PL', {
+  const startTime = date.toLocaleTimeString(locale, {
     hour: '2-digit',
     minute: '2-digit'
   })
-  const endTime = new Date(run.endedAt).toLocaleTimeString('pl-PL', {
+  const endTime = new Date(run.endedAt).toLocaleTimeString(locale, {
     hour: '2-digit',
     minute: '2-digit'
   })
 
   const stats = [
-    {label: 'Dystans', value: formatDistance(run.distance)},
-    {label: 'Czas', value: formatTime(run.duration * 1000)},
-    {label: 'Tempo', value: `${formatPace(pace)} /km`}
+    {label: t('stats.distance'), value: formatDistance(run.distance)},
+    {label: t('stats.time'), value: formatTime(run.duration * 1000)},
+    {label: t('stats.pace'), value: `${formatPace(pace)} /km`}
   ]
 
   return (
@@ -63,17 +67,17 @@ export function RunDetailsScreen() {
       <StatsBar stats={stats} />
 
       <View style={styles.detailsCard}>
-        <DetailRow label="Punkty GPS" value={String(run.path.length)} />
-        <DetailRow label="Śr. tempo" value={`${formatPace(pace)} /km`} />
-        <DetailRow label="Dystans" value={formatDistance(run.distance)} />
-        <DetailRow label="Czas trwania" value={formatTime(run.duration * 1000)} />
+        <DetailRow label={t('details.gpsPoints')} value={String(run.path.length)} />
+        <DetailRow label={t('details.avgPace')} value={`${formatPace(pace)} /km`} />
+        <DetailRow label={t('details.distance')} value={formatDistance(run.distance)} />
+        <DetailRow label={t('details.duration')} value={formatTime(run.duration * 1000)} />
       </View>
 
       <Pressable
         style={({pressed}) => [styles.deleteBtn, pressed && styles.deleteBtnPressed]}
         onPress={handleDelete}
       >
-        <Text style={styles.deleteBtnText}>Usuń bieg</Text>
+        <Text style={styles.deleteBtnText}>{t('details.deleteBtn')}</Text>
       </Pressable>
     </ScrollView>
   )

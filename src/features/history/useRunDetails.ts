@@ -1,5 +1,6 @@
 import {useRouter} from 'expo-router'
 import {useEffect, useState, useCallback} from 'react'
+import {useTranslation} from 'react-i18next'
 import {Alert} from 'react-native'
 
 import {getRunById, deleteRun} from '@/services/storageService'
@@ -13,6 +14,7 @@ export type UseRunDetailsReturn = {
 }
 
 export function useRunDetails(id: string | undefined): UseRunDetailsReturn {
+  const {t} = useTranslation()
   const router = useRouter()
   const [run, setRun] = useState<Run | null>(null)
   const [loading, setLoading] = useState(true)
@@ -29,12 +31,12 @@ export function useRunDetails(id: string | undefined): UseRunDetailsReturn {
   const handleDelete = useCallback(() => {
     if (!run) return
     Alert.alert(
-      'Usuń bieg',
-      `Czy na pewno chcesz usunąć ten bieg (${formatDistance(run.distance)})?`,
+      t('details.deleteTitle'),
+      t('details.deleteMessage', {distance: formatDistance(run.distance)}),
       [
-        {text: 'Anuluj', style: 'cancel'},
+        {text: t('details.deleteCancel'), style: 'cancel'},
         {
-          text: 'Usuń',
+          text: t('details.deleteConfirm'),
           style: 'destructive',
           onPress: () => {
             void deleteRun(run.id).then(() => router.back())
@@ -42,7 +44,7 @@ export function useRunDetails(id: string | undefined): UseRunDetailsReturn {
         }
       ]
     )
-  }, [run, router])
+  }, [run, router, t])
 
   return {run, loading, handleDelete}
 }

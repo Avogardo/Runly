@@ -1,4 +1,5 @@
 import * as SQLite from 'expo-sqlite'
+import i18next from 'i18next'
 
 import {DB_NAME} from '@/constants/config'
 import {Run, Coordinate} from '@/types'
@@ -7,7 +8,6 @@ let _db: SQLite.SQLiteDatabase | null = null
 
 async function getDb(): Promise<SQLite.SQLiteDatabase> {
   if (!_db) {
-    console.log(DB_NAME)
     _db = await SQLite.openDatabaseAsync(DB_NAME)
     await _db.execAsync(`
       CREATE TABLE IF NOT EXISTS runs (
@@ -25,7 +25,7 @@ async function getDb(): Promise<SQLite.SQLiteDatabase> {
 
 export async function saveRun(run: Run): Promise<Run> {
   if (run.path.length === 0 || run.duration <= 0) {
-    throw new Error('Nie można zapisać pustego biegu')
+    throw new Error(i18next.t('storage.emptyRunError'))
   }
 
   const db = await getDb()

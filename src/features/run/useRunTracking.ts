@@ -1,5 +1,6 @@
 import {LocationSubscription} from 'expo-location'
 import {useReducer, useRef, useCallback, useEffect} from 'react'
+import {useTranslation} from 'react-i18next'
 import {Alert} from 'react-native'
 
 import {TIMER_INTERVAL_MS} from '@/constants/config'
@@ -18,6 +19,7 @@ export type UseRunTrackingReturn = {
 }
 
 export function useRunTracking(): UseRunTrackingReturn {
+  const {t} = useTranslation()
   const [state, dispatch] = useReducer(runReducer, initialRunState)
 
   const locationSubRef = useRef<LocationSubscription | null>(null)
@@ -52,17 +54,14 @@ export function useRunTracking(): UseRunTrackingReturn {
   const start = useCallback(async () => {
     const granted = await requestLocationPermission()
     if (!granted) {
-      Alert.alert(
-        'Brak uprawnień',
-        'Aplikacja potrzebuje dostępu do lokalizacji, aby śledzić bieg. Włącz uprawnienia w ustawieniach.'
-      )
+      Alert.alert(t('permissions.noPermissionTitle'), t('permissions.noPermissionMessage'))
       return
     }
 
     dispatch({type: 'START', startedAt: new Date().toISOString()})
     await startLocationWatch()
     startTimer()
-  }, [startLocationWatch, startTimer])
+  }, [startLocationWatch, startTimer, t])
 
   const pause = useCallback(() => {
     dispatch({type: 'PAUSE'})
