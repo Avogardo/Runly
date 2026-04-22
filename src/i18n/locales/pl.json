@@ -9,6 +9,7 @@
     "label": {
       "title": "Runly",
       "statusIdle": "Gotowy do biegu?",
+      "statusIntervalReady": "Interwały gotowe ⏱️",
       "statusRunning": "Bieg w toku...",
       "statusPaused": "Pauza",
       "statusStopped": "Bieg zakończony!"
@@ -19,7 +20,9 @@
       "stop": "STOP",
       "resume": "WZNÓW",
       "save": "ZAPISZ",
-      "newRun": "NOWY BIEG"
+      "newRun": "NOWY BIEG",
+      "intervalRun": "INTERWAŁY",
+      "cancelIntervals": "ANULUJ"
     },
     "alert": {
       "saveSuccessTitle": "Zapisano!",
@@ -44,7 +47,10 @@
       "gpsPoints": "Punkty GPS",
       "avgPace": "Śr. tempo",
       "distance": "Dystans",
-      "duration": "Czas trwania"
+      "duration": "Czas trwania",
+      "intervals": "Interwały",
+      "intervalConfig": "Konfiguracja",
+      "intervalsCompleted": "Ukończone"
     },
     "action": {
       "delete": "Usuń bieg"
@@ -80,5 +86,33 @@
     "error": {
       "emptyRun": "Nie można zapisać pustego biegu"
     }
+  },
+  "intervalConfig": {
+    "label": {
+      "title": "Trening interwałowy",
+      "intervals": "Liczba interwałów",
+      "lightDuration": "Lekki interwał (odpoczynek)",
+      "heavyDuration": "Ciężki interwał (sprint)",
+      "startWithHeavy": "Zacznij od ciężkiego",
+      "voiceFeedback": "Komunikaty głosowe"
+    },
+    "action": {
+      "startRun": "START INTERWAŁÓW"
+    }
+  },
+  "interval": {
+    "label": {
+      "heavy": "Ciężki",
+      "light": "Lekki",
+      "remaining": "Pozostało",
+      "intervals": "Interwały",
+      "completed": "Interwały ukończone!"
+    }
+  },
+  "speech": {
+    "startHeavy": "Start ciężkiego interwału",
+    "startLight": "Start lekkiego interwału",
+    "remaining": "Pozostało {{count}} interwałów",
+    "intervalsComplete": "Wszystkie interwały ukończone. Świetna robota!"
   }
 }

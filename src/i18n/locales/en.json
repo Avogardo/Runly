@@ -9,6 +9,7 @@
     "label": {
       "title": "Runly",
       "statusIdle": "Ready to run?",
+      "statusIntervalReady": "Interval run ready ⏱️",
       "statusRunning": "Run in progress...",
       "statusPaused": "Paused",
       "statusStopped": "Run finished!"
@@ -19,7 +20,9 @@
       "stop": "STOP",
       "resume": "RESUME",
       "save": "SAVE",
-      "newRun": "NEW RUN"
+      "newRun": "NEW RUN",
+      "intervalRun": "INTERVALS",
+      "cancelIntervals": "CANCEL"
     },
     "alert": {
       "saveSuccessTitle": "Saved!",
@@ -44,7 +47,10 @@
       "gpsPoints": "GPS points",
       "avgPace": "Avg. pace",
       "distance": "Distance",
-      "duration": "Duration"
+      "duration": "Duration",
+      "intervals": "Intervals",
+      "intervalConfig": "Configuration",
+      "intervalsCompleted": "Completed"
     },
     "action": {
       "delete": "Delete run"
@@ -80,5 +86,33 @@
     "error": {
       "emptyRun": "Cannot save an empty run"
     }
+  },
+  "intervalConfig": {
+    "label": {
+      "title": "Interval Training",
+      "intervals": "Number of intervals",
+      "lightDuration": "Light interval (recovery)",
+      "heavyDuration": "Heavy interval (sprint)",
+      "startWithHeavy": "Start with heavy",
+      "voiceFeedback": "Voice feedback"
+    },
+    "action": {
+      "startRun": "START INTERVAL RUN"
+    }
+  },
+  "interval": {
+    "label": {
+      "heavy": "Heavy",
+      "light": "Light",
+      "remaining": "Remaining",
+      "intervals": "Intervals",
+      "completed": "Intervals completed!"
+    }
+  },
+  "speech": {
+    "startHeavy": "Start heavy interval",
+    "startLight": "Start light interval",
+    "remaining": "{{count}} intervals remaining",
+    "intervalsComplete": "All intervals completed. Great job!"
   }
 }

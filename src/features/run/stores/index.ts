@@ -1,1 +1,1 @@
-export {runReducer, initialRunState} from './runStore'
+export {runReducer, initialRunState, getCurrentIntervalDurationMs, getCurrentIntervalType} from './runStore'

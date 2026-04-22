@@ -79,6 +79,22 @@ export function RunDetailsScreen() {
           />
         </GlassCard>
 
+        {/* Interval details */}
+        {run.intervals && (
+          <GlassCard style={styles.intervalCard}>
+            <Text style={styles.intervalTitle}>⏱️ {t('detailsScreen.label.intervals')}</Text>
+            <DetailRow
+              label={t('detailsScreen.label.intervalConfig')}
+              value={`${run.intervals.config.total} × ${run.intervals.config.heavyDurationSec / 60}min 🔴 / ${run.intervals.config.lightDurationSec / 60}min 🟢`}
+            />
+            <DetailRow
+              label={t('detailsScreen.label.intervalsCompleted')}
+              value={`${run.intervals.intervals.length} / ${run.intervals.config.total}`}
+              last
+            />
+          </GlassCard>
+        )}
+
         <Pressable
           style={({pressed}) => [styles.deleteBtn, pressed && styles.deleteBtnPressed]}
           onPress={handleDelete}
@@ -140,6 +156,15 @@ const styles = StyleSheet.create({
   },
   detailRowLast: {
     borderBottomWidth: 0
+  },
+  intervalCard: {
+    marginTop: 16,
+  },
+  intervalTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: theme.textPrimary,
+    marginBottom: 12,
   },
   detailLabel: {
     fontSize: 15,

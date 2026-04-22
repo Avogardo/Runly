@@ -4,11 +4,13 @@ import {useTranslation} from 'react-i18next'
 import {Alert} from 'react-native'
 
 import {requestLocationPermission, watchPosition} from '@/services/locationService'
-import {Coordinate} from '@/types'
+import {Coordinate, IntervalConfig} from '@/types'
 
 import {TIMER_INTERVAL_MS} from '../consts'
-import {runReducer, initialRunState} from '../stores'
+import {runReducer, initialRunState, getCurrentIntervalDurationMs, getCurrentIntervalType} from '../stores'
 import {RunState} from '../types'
+
+import {useIntervalTimer} from './useIntervalTimer'
 
 export type UseRunTrackingReturn = {
   state: RunState
@@ -17,11 +19,20 @@ export type UseRunTrackingReturn = {
   resume: () => void
   stop: () => void
   reset: () => void
+  setIntervalConfig: (config: IntervalConfig) => void
+  clearIntervalConfig: () => void
+  // Interval derived values
+  currentIntervalType: 'light' | 'heavy'
+  intervalTimeRemainingMs: number
+  intervalProgress: string
 }
 
 export function useRunTracking(): UseRunTrackingReturn {
   const {t} = useTranslation()
   const [state, dispatch] = useReducer(runReducer, initialRunState)
+
+  // Interval timer hook
+  useIntervalTimer(state, dispatch)
 
   const locationSubRef = useRef<LocationSubscription | null>(null)
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
@@ -88,6 +99,14 @@ export function useRunTracking(): UseRunTrackingReturn {
     dispatch({type: 'RESET'})
   }, [stopLocationWatch, stopTimer])
 
+  const setIntervalConfig = useCallback((config: IntervalConfig) => {
+    dispatch({type: 'SET_INTERVAL_CONFIG', config})
+  }, [])
+
+  const clearIntervalConfig = useCallback(() => {
+    dispatch({type: 'SET_INTERVAL_CONFIG', config: null})
+  }, [])
+
   useEffect(() => {
     return () => {
       locationSubRef.current?.remove()
@@ -95,12 +114,25 @@ export function useRunTracking(): UseRunTrackingReturn {
     }
   }, [])
 
+  // Derived interval values
+  const currentIntervalType = getCurrentIntervalType(state)
+  const durationMs = getCurrentIntervalDurationMs(state)
+  const intervalTimeRemainingMs = Math.max(0, durationMs - state.intervalElapsedMs)
+  const intervalProgress = state.intervalConfig
+    ? `${state.currentIntervalIndex + 1}/${state.intervalConfig.total}`
+    : ''
+
   return {
     state,
     start: () => void start(),
     pause,
     resume: () => void resume(),
     stop,
-    reset
+    reset,
+    setIntervalConfig,
+    clearIntervalConfig,
+    currentIntervalType,
+    intervalTimeRemainingMs,
+    intervalProgress,
   }
 }

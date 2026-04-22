@@ -1,2 +1,2 @@
 export {Coordinate} from './gps.types'
-export {Run} from './run.types'
+export {Run, IntervalConfig, Interval, IntervalSummary} from './run.types'

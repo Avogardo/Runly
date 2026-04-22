@@ -23,6 +23,7 @@
     "expo-localization": "^55.0.13",
     "expo-location": "~19.0.8",
     "expo-router": "~6.0.23",
+    "expo-speech": "~14.0.8",
     "expo-sqlite": "~16.0.10",
     "expo-status-bar": "~3.0.9",
     "i18next": "^26.0.6",

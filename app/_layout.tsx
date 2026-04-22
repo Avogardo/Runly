@@ -21,6 +21,16 @@ export default function RootLayout() {
           headerShadowVisible: false,
         }}
       />
+      <Stack.Screen
+        name="interval-config"
+        options={{
+          title: t('intervalConfig.label.title'),
+          headerStyle: {backgroundColor: theme.bg},
+          headerTintColor: theme.textPrimary,
+          headerTitleStyle: {fontWeight: 'bold'},
+          headerShadowVisible: false,
+        }}
+      />
     </Stack>
   )
 }

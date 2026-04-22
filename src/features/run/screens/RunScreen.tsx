@@ -1,15 +1,17 @@
 import {StatusBar} from 'expo-status-bar'
 import {LinearGradient} from 'expo-linear-gradient'
-import {useMemo, useCallback, useState} from 'react'
+import {useMemo, useCallback, useState, useEffect} from 'react'
 import {useTranslation} from 'react-i18next'
 import {View, Text, StyleSheet, Pressable, ScrollView, Alert} from 'react-native'
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
+import {useRouter, useLocalSearchParams} from 'expo-router'
 
 import {StatsBar} from '@/components/StatsBar'
 import {RunMapView} from '@/components/MapView'
+import {IntervalBanner} from '@/components/IntervalBanner'
 import {theme} from '@/ui'
 import {saveRun} from '@/services/storageService'
-import {Run} from '@/types'
+import {Run, IntervalConfig} from '@/types'
 import {calculatePace, formatDistance, formatPace, formatTime} from '@/utils'
 
 import {useRunTracking} from '../hooks'
@@ -18,8 +20,34 @@ import {calculateTotalDistance, generateId} from '../utils'
 export function RunScreen() {
   const {t} = useTranslation()
   const insets = useSafeAreaInsets()
-  const {state, start, pause, resume, stop, reset} = useRunTracking()
+  const router = useRouter()
+  const params = useLocalSearchParams<{
+    intervalTotal?: string
+    intervalLightSec?: string
+    intervalHeavySec?: string
+    intervalStartHeavy?: string
+    intervalVoice?: string
+  }>()
+
+  const {
+    state, start, pause, resume, stop, reset, setIntervalConfig, clearIntervalConfig,
+    currentIntervalType, intervalTimeRemainingMs, intervalProgress,
+  } = useRunTracking()
   const {status, path, elapsedMs} = state
+
+  // Apply interval config from route params
+  useEffect(() => {
+    if (params.intervalTotal) {
+      const config: IntervalConfig = {
+        total: Number(params.intervalTotal),
+        lightDurationSec: Number(params.intervalLightSec || 120),
+        heavyDurationSec: Number(params.intervalHeavySec || 60),
+        startWithHeavy: params.intervalStartHeavy === '1',
+        voiceEnabled: params.intervalVoice === '1',
+      }
+      setIntervalConfig(config)
+    }
+  }, [params.intervalTotal])
 
   const distance = useMemo(() => calculateTotalDistance(path), [path])
   const pace = useMemo(() => calculatePace(distance, elapsedMs), [distance, elapsedMs])
@@ -47,7 +75,13 @@ export function RunScreen() {
       endedAt: new Date().toISOString(),
       distance,
       duration: Math.floor(elapsedMs / 1000),
-      path
+      path,
+      ...(state.intervalConfig && {
+        intervals: {
+          config: state.intervalConfig,
+          intervals: state.completedIntervals,
+        }
+      }),
     }
 
     try {
@@ -61,23 +95,36 @@ export function RunScreen() {
       const message = e instanceof Error ? e.message : t('runScreen.alert.unknownError')
       Alert.alert(t('runScreen.alert.saveErrorTitle'), message)
     }
-  }, [state.startedAt, path, distance, elapsedMs, t])
+  }, [state.startedAt, path, distance, elapsedMs, state.intervalConfig, state.completedIntervals, t])
 
   const handleReset = useCallback(() => {
     reset()
     setSaved(false)
   }, [reset])
 
+  const hasIntervals = !!state.intervalConfig
+
   return (
     <LinearGradient colors={[...theme.bgGradient]} style={styles.gradient}>
       <ScrollView style={styles.scrollView} contentContainerStyle={[styles.container, {paddingTop: insets.top + 12}]}>
         <Text style={styles.title}>Runly</Text>
         <Text style={styles.subtitle}>
-          {status === 'idle' && t('runScreen.label.statusIdle')}
+          {status === 'idle' && !hasIntervals && t('runScreen.label.statusIdle')}
+          {status === 'idle' && hasIntervals && t('runScreen.label.statusIntervalReady')}
           {status === 'running' && t('runScreen.label.statusRunning')}
           {status === 'paused' && t('runScreen.label.statusPaused')}
           {status === 'stopped' && t('runScreen.label.statusStopped')}
         </Text>
+
+        {/* Interval banner during run */}
+        {hasIntervals && (status === 'running' || status === 'paused') && (
+          <IntervalBanner
+            intervalType={currentIntervalType}
+            timeRemainingMs={intervalTimeRemainingMs}
+            progress={intervalProgress}
+            finished={state.intervalsFinished}
+          />
+        )}
 
         <RunMapView path={path} followUser={status === 'running'} staticMode={status === 'stopped'} />
 
@@ -85,12 +132,29 @@ export function RunScreen() {
 
         <View style={styles.buttonsRow}>
           {status === 'idle' && (
-            <Pressable
-              style={({pressed}) => [styles.btn, styles.btnStart, pressed && styles.btnPressed]}
-              onPress={() => void start()}
-            >
-              <Text style={styles.btnText}>▶ {t('runScreen.action.start')}</Text>
-            </Pressable>
+            <>
+              <Pressable
+                style={({pressed}) => [styles.btn, styles.btnStart, pressed && styles.btnPressed]}
+                onPress={() => void start()}
+              >
+                <Text style={styles.btnText}>▶ {t('runScreen.action.start')}</Text>
+              </Pressable>
+              {hasIntervals ? (
+                <Pressable
+                  style={({pressed}) => [styles.btn, styles.btnStop, pressed && styles.btnPressed]}
+                  onPress={clearIntervalConfig}
+                >
+                  <Text style={styles.btnText}>✕ {t('runScreen.action.cancelIntervals')}</Text>
+                </Pressable>
+              ) : (
+                <Pressable
+                  style={({pressed}) => [styles.btn, styles.btnInterval, pressed && styles.btnPressed]}
+                  onPress={() => router.push('/interval-config')}
+                >
+                  <Text style={styles.btnText}>⏱️ {t('runScreen.action.intervalRun')}</Text>
+                </Pressable>
+              )}
+            </>
           )}
 
           {status === 'running' && (
@@ -181,10 +245,12 @@ const styles = StyleSheet.create({
   buttonsRow: {
     flexDirection: 'row',
     gap: 14,
-    marginTop: 12
+    marginTop: 12,
+    flexWrap: 'wrap',
+    justifyContent: 'center',
   },
   btn: {
-    paddingHorizontal: 34,
+    paddingHorizontal: 28,
     paddingVertical: 16,
     borderRadius: theme.radius.full,
     borderWidth: 1
@@ -194,29 +260,34 @@ const styles = StyleSheet.create({
     transform: [{scale: 0.96}]
   },
   btnStart: {
-    backgroundColor: 'rgba(0, 230, 118, 0.15)',
+    backgroundColor: 'rgba(52, 211, 153, 0.15)',
     borderColor: theme.success,
     ...theme.glow(theme.success, 0.4)
   },
   btnPause: {
-    backgroundColor: 'rgba(255, 179, 0, 0.15)',
+    backgroundColor: 'rgba(251, 191, 36, 0.15)',
     borderColor: theme.warning,
     ...theme.glow(theme.warning, 0.4)
   },
   btnStop: {
-    backgroundColor: 'rgba(255, 82, 82, 0.15)',
+    backgroundColor: 'rgba(248, 113, 113, 0.15)',
     borderColor: theme.danger,
     ...theme.glow(theme.danger, 0.4)
   },
   btnReset: {
-    backgroundColor: 'rgba(0, 210, 255, 0.15)',
+    backgroundColor: 'rgba(168, 85, 247, 0.15)',
     borderColor: theme.accent,
     ...theme.glow(theme.accent, 0.4)
   },
   btnSave: {
-    backgroundColor: 'rgba(0, 230, 118, 0.15)',
+    backgroundColor: 'rgba(52, 211, 153, 0.15)',
     borderColor: theme.success,
     ...theme.glow(theme.success, 0.4)
+  },
+  btnInterval: {
+    backgroundColor: 'rgba(129, 140, 248, 0.15)',
+    borderColor: theme.info,
+    ...theme.glow(theme.info, 0.4)
   },
   btnText: {
     color: theme.textPrimary,

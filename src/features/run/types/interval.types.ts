@@ -1,5 +1,3 @@
-import {Coordinate} from './gps.types'
-
 export type IntervalConfig = {
   total: number
   lightDurationSec: number
@@ -20,12 +18,3 @@ export type IntervalSummary = {
   intervals: Interval[]
 }
 
-export type Run = {
-  id: string
-  startedAt: string
-  endedAt: string
-  distance: number // in meters
-  duration: number // in seconds
-  path: Coordinate[]
-  intervals?: IntervalSummary
-}
