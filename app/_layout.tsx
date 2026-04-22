@@ -3,6 +3,8 @@ import '@/i18n'
 import {Stack} from 'expo-router'
 import {useTranslation} from 'react-i18next'
 
+import {theme} from '@/constants/theme'
+
 export default function RootLayout() {
   const {t} = useTranslation()
 
@@ -13,9 +15,10 @@ export default function RootLayout() {
         name="run/[id]"
         options={{
           title: t('detailsScreen.label.screenTitle'),
-          headerStyle: {backgroundColor: '#007AFF'},
-          headerTintColor: '#fff',
-          headerTitleStyle: {fontWeight: 'bold'}
+          headerStyle: {backgroundColor: theme.bg},
+          headerTintColor: theme.textPrimary,
+          headerTitleStyle: {fontWeight: 'bold'},
+          headerShadowVisible: false,
         }}
       />
     </Stack>

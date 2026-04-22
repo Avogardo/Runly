@@ -1,8 +1,12 @@
 import {useRouter} from 'expo-router'
+import {LinearGradient} from 'expo-linear-gradient'
 import i18next from 'i18next'
 import {useTranslation} from 'react-i18next'
 import {View, Text, StyleSheet, FlatList, Pressable} from 'react-native'
+import {useSafeAreaInsets} from 'react-native-safe-area-context'
 
+import {GlassCard} from '@/components/GlassCard'
+import {theme} from '@/constants/theme'
 import {calculatePace} from '@/features/run/metrics'
 import {formatDistance, formatTime, formatPace} from '@/utils/formatters'
 
@@ -10,87 +14,97 @@ import {useRunHistory} from './useRunHistory'
 
 export function HistoryScreen() {
   const {t} = useTranslation()
+  const insets = useSafeAreaInsets()
   const router = useRouter()
   const {runs, loading} = useRunHistory()
 
   if (loading) {
     return (
-      <View style={styles.centered}>
+      <LinearGradient colors={[...theme.bgGradient]} style={[styles.centered, {paddingTop: insets.top}]}>
         <Text style={styles.loadingText}>{t('historyScreen.label.loading')}</Text>
-      </View>
+      </LinearGradient>
     )
   }
 
   if (runs.length === 0) {
     return (
-      <View style={styles.centered}>
+      <LinearGradient colors={[...theme.bgGradient]} style={[styles.centered, {paddingTop: insets.top}]}>
         <Text style={styles.emptyIcon}>🏁</Text>
         <Text style={styles.emptyText}>{t('historyScreen.label.emptyTitle')}</Text>
         <Text style={styles.emptyHint}>{t('historyScreen.label.emptyHint')}</Text>
-      </View>
+      </LinearGradient>
     )
   }
 
   const locale = i18next.language
 
   return (
-    <FlatList
-      data={runs}
-      keyExtractor={(item) => item.id}
-      style={styles.list}
-      contentContainerStyle={styles.listContent}
-      renderItem={({item}) => {
-        const pace = calculatePace(item.distance, item.duration * 1000)
-        const date = new Date(item.startedAt)
-        const dateStr = date.toLocaleDateString(locale, {
-          day: 'numeric',
-          month: 'short',
-          year: 'numeric'
-        })
-        const timeStr = date.toLocaleTimeString(locale, {
-          hour: '2-digit',
-          minute: '2-digit'
-        })
+    <LinearGradient colors={[...theme.bgGradient]} style={styles.gradient}>
+      <FlatList
+        data={runs}
+        keyExtractor={(item) => item.id}
+        style={styles.list}
+        contentContainerStyle={[styles.listContent, {paddingTop: insets.top + 16}]}
+        renderItem={({item}) => {
+          const pace = calculatePace(item.distance, item.duration * 1000)
+          const date = new Date(item.startedAt)
+          const dateStr = date.toLocaleDateString(locale, {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric'
+          })
+          const timeStr = date.toLocaleTimeString(locale, {
+            hour: '2-digit',
+            minute: '2-digit'
+          })
 
-        return (
-          <Pressable style={styles.card} onPress={() => router.push(`/run/${item.id}`)}>
-            <View style={styles.cardHeader}>
-              <Text style={styles.cardDate}>{dateStr}</Text>
-              <Text style={styles.cardTime}>{timeStr}</Text>
-            </View>
-            <View style={styles.cardStats}>
-              <View style={styles.cardStat}>
-                <Text style={styles.cardStatValue}>{formatDistance(item.distance)}</Text>
-                <Text style={styles.cardStatLabel}>{t('statsBar.label.distance')}</Text>
-              </View>
-              <View style={styles.cardStat}>
-                <Text style={styles.cardStatValue}>{formatTime(item.duration * 1000)}</Text>
-                <Text style={styles.cardStatLabel}>{t('statsBar.label.time')}</Text>
-              </View>
-              <View style={styles.cardStat}>
-                <Text style={styles.cardStatValue}>{formatPace(pace)} /km</Text>
-                <Text style={styles.cardStatLabel}>{t('statsBar.label.pace')}</Text>
-              </View>
-            </View>
-            <Text style={styles.cardArrow}>›</Text>
-          </Pressable>
-        )
-      }}
-    />
+          return (
+            <Pressable
+              style={({pressed}) => [pressed && styles.cardPressed]}
+              onPress={() => router.push(`/run/${item.id}`)}
+            >
+              <GlassCard style={styles.cardWrapper}>
+                <View style={styles.cardHeader}>
+                  <Text style={styles.cardDate}>{dateStr}</Text>
+                  <Text style={styles.cardTime}>{timeStr}</Text>
+                </View>
+                <View style={styles.cardStats}>
+                  <View style={styles.cardStat}>
+                    <Text style={styles.cardStatValue}>{formatDistance(item.distance)}</Text>
+                    <Text style={styles.cardStatLabel}>{t('statsBar.label.distance')}</Text>
+                  </View>
+                  <View style={[styles.cardStat, styles.cardStatDivider]}>
+                    <Text style={styles.cardStatValue}>{formatTime(item.duration * 1000)}</Text>
+                    <Text style={styles.cardStatLabel}>{t('statsBar.label.time')}</Text>
+                  </View>
+                  <View style={styles.cardStat}>
+                    <Text style={styles.cardStatValue}>{formatPace(pace)} /km</Text>
+                    <Text style={styles.cardStatLabel}>{t('statsBar.label.pace')}</Text>
+                  </View>
+                </View>
+                <Text style={styles.cardArrow}>›</Text>
+              </GlassCard>
+            </Pressable>
+          )
+        }}
+      />
+    </LinearGradient>
   )
 }
 
 const styles = StyleSheet.create({
+  gradient: {
+    flex: 1
+  },
   centered: {
     flex: 1,
-    backgroundColor: '#F2F2F7',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20
   },
   loadingText: {
     fontSize: 16,
-    color: '#8E8E93'
+    color: theme.textSecondary
   },
   emptyIcon: {
     fontSize: 48,
@@ -99,70 +113,72 @@ const styles = StyleSheet.create({
   emptyText: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#1C1C1E',
+    color: theme.textPrimary,
     marginBottom: 8
   },
   emptyHint: {
     fontSize: 14,
-    color: '#8E8E93',
+    color: theme.textSecondary,
     textAlign: 'center'
   },
   list: {
-    flex: 1,
-    backgroundColor: '#F2F2F7'
+    flex: 1
   },
   listContent: {
     padding: 16,
     gap: 12
   },
-  card: {
-    backgroundColor: '#fff',
-    borderRadius: 16,
-    padding: 16,
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.08,
-    shadowRadius: 4,
-    elevation: 2,
-    position: 'relative'
+  cardWrapper: {
+    marginBottom: 0
+  },
+  cardPressed: {
+    opacity: 0.7,
+    transform: [{scale: 0.98}]
   },
   cardHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 12
+    marginBottom: 14
   },
   cardDate: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#1C1C1E'
+    color: theme.textPrimary
   },
   cardTime: {
     fontSize: 14,
-    color: '#8E8E93'
+    color: theme.textSecondary
   },
   cardStats: {
     flexDirection: 'row',
     justifyContent: 'space-around'
   },
   cardStat: {
-    alignItems: 'center'
+    alignItems: 'center',
+    flex: 1
+  },
+  cardStatDivider: {
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
+    borderColor: theme.surfaceBorder
   },
   cardStatValue: {
     fontSize: 17,
     fontWeight: '600',
-    color: '#1C1C1E'
+    color: theme.textPrimary
   },
   cardStatLabel: {
-    fontSize: 11,
-    color: '#8E8E93',
-    marginTop: 2,
-    textTransform: 'uppercase'
+    fontSize: 10,
+    color: theme.textSecondary,
+    marginTop: 4,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5
   },
   cardArrow: {
     position: 'absolute',
     right: 16,
     top: 16,
     fontSize: 22,
-    color: '#C7C7CC'
+    color: theme.textMuted
   }
 })

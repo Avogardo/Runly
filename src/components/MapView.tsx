@@ -5,6 +5,7 @@ import RNMapView, {Polyline, Marker} from 'react-native-maps'
 
 import {getCurrentPosition} from '@/services/locationService'
 import {Coordinate} from '@/types'
+import {theme} from '@/constants/theme'
 
 type RunMapViewProps = {
   path: Coordinate[]
@@ -106,7 +107,7 @@ export function RunMapView({path, followUser = false, staticMode = false}: RunMa
               latitude: p.latitude,
               longitude: p.longitude
             }))}
-            strokeColor="#007AFF"
+            strokeColor={theme.accent}
             strokeWidth={4}
           />
         )}
@@ -140,22 +141,25 @@ export function RunMapView({path, followUser = false, staticMode = false}: RunMa
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    height: 250,
-    borderRadius: 16,
+    height: 260,
+    borderRadius: theme.radius.md,
     overflow: 'hidden',
-    marginBottom: 20
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: theme.surfaceBorder,
+    ...theme.glow(theme.accent, 0.15),
   },
   map: {
     flex: 1
   },
   placeholder: {
-    backgroundColor: '#E5E5EA',
+    backgroundColor: theme.surface,
     alignItems: 'center',
     justifyContent: 'center',
     gap: 8
   },
   placeholderText: {
-    color: '#8E8E93',
+    color: theme.textSecondary,
     fontSize: 14
   }
 })

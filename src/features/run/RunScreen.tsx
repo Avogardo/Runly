@@ -1,10 +1,13 @@
 import {StatusBar} from 'expo-status-bar'
+import {LinearGradient} from 'expo-linear-gradient'
 import {useMemo, useCallback, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import {View, Text, StyleSheet, Pressable, ScrollView, Alert} from 'react-native'
+import {useSafeAreaInsets} from 'react-native-safe-area-context'
 
-import {RunMapView} from '@/components/MapView'
 import {StatsBar} from '@/components/StatsBar'
+import {RunMapView} from '@/components/MapView'
+import {theme} from '@/constants/theme'
 import {saveRun} from '@/services/storageService'
 import {Run} from '@/types'
 import {formatDistance, formatPace, formatTime} from '@/utils/formatters'
@@ -15,6 +18,7 @@ import {useRunTracking} from './useRunTracking'
 
 export function RunScreen() {
   const {t} = useTranslation()
+  const insets = useSafeAreaInsets()
   const {state, start, pause, resume, stop, reset} = useRunTracking()
   const {status, path, elapsedMs} = state
 
@@ -66,130 +70,159 @@ export function RunScreen() {
   }, [reset])
 
   return (
-    <ScrollView style={styles.scrollView} contentContainerStyle={styles.container}>
-      <Text style={styles.emoji}>🏃</Text>
-      <Text style={styles.title}>Runly</Text>
-      <Text style={styles.subtitle}>
-        {status === 'idle' && t('runScreen.label.statusIdle')}
-        {status === 'running' && t('runScreen.label.statusRunning')}
-        {status === 'paused' && t('runScreen.label.statusPaused')}
-        {status === 'stopped' && t('runScreen.label.statusStopped')}
-      </Text>
+    <LinearGradient colors={[...theme.bgGradient]} style={styles.gradient}>
+      <ScrollView style={styles.scrollView} contentContainerStyle={[styles.container, {paddingTop: insets.top + 12}]}>
+        <Text style={styles.title}>Runly</Text>
+        <Text style={styles.subtitle}>
+          {status === 'idle' && t('runScreen.label.statusIdle')}
+          {status === 'running' && t('runScreen.label.statusRunning')}
+          {status === 'paused' && t('runScreen.label.statusPaused')}
+          {status === 'stopped' && t('runScreen.label.statusStopped')}
+        </Text>
 
-      <RunMapView path={path} followUser={status === 'running'} staticMode={status === 'stopped'} />
+        <RunMapView path={path} followUser={status === 'running'} staticMode={status === 'stopped'} />
 
-      <StatsBar stats={stats} />
+        <StatsBar stats={stats} />
 
-      <View style={styles.buttonsRow}>
-        {status === 'idle' && (
-          <Pressable style={[styles.btn, styles.btnStart]} onPress={() => void start()}>
-            <Text style={styles.btnText}>▶ {t('runScreen.action.start')}</Text>
-          </Pressable>
-        )}
-
-        {status === 'running' && (
-          <>
-            <Pressable style={[styles.btn, styles.btnPause]} onPress={pause}>
-              <Text style={styles.btnText}>⏸ {t('runScreen.action.pause')}</Text>
+        <View style={styles.buttonsRow}>
+          {status === 'idle' && (
+            <Pressable
+              style={({pressed}) => [styles.btn, styles.btnStart, pressed && styles.btnPressed]}
+              onPress={() => void start()}
+            >
+              <Text style={styles.btnText}>▶ {t('runScreen.action.start')}</Text>
             </Pressable>
-            <Pressable style={[styles.btn, styles.btnStop]} onPress={stop}>
-              <Text style={styles.btnText}>⏹ {t('runScreen.action.stop')}</Text>
-            </Pressable>
-          </>
-        )}
+          )}
 
-        {status === 'paused' && (
-          <>
-            <Pressable style={[styles.btn, styles.btnStart]} onPress={() => void resume()}>
-              <Text style={styles.btnText}>▶ {t('runScreen.action.resume')}</Text>
-            </Pressable>
-            <Pressable style={[styles.btn, styles.btnStop]} onPress={stop}>
-              <Text style={styles.btnText}>⏹ {t('runScreen.action.stop')}</Text>
-            </Pressable>
-          </>
-        )}
-
-        {status === 'stopped' && (
-          <>
-            {!saved && (
-              <Pressable style={[styles.btn, styles.btnSave]} onPress={() => void handleSave()}>
-                <Text style={styles.btnText}>💾 {t('runScreen.action.save')}</Text>
+          {status === 'running' && (
+            <>
+              <Pressable
+                style={({pressed}) => [styles.btn, styles.btnPause, pressed && styles.btnPressed]}
+                onPress={pause}
+              >
+                <Text style={styles.btnText}>⏸ {t('runScreen.action.pause')}</Text>
               </Pressable>
-            )}
-            <Pressable style={[styles.btn, styles.btnReset]} onPress={handleReset}>
-              <Text style={styles.btnText}>🔄 {t('runScreen.action.newRun')}</Text>
-            </Pressable>
-          </>
-        )}
-      </View>
+              <Pressable
+                style={({pressed}) => [styles.btn, styles.btnStop, pressed && styles.btnPressed]}
+                onPress={stop}
+              >
+                <Text style={styles.btnText}>⏹ {t('runScreen.action.stop')}</Text>
+              </Pressable>
+            </>
+          )}
 
-      <StatusBar style="light" />
-    </ScrollView>
+          {status === 'paused' && (
+            <>
+              <Pressable
+                style={({pressed}) => [styles.btn, styles.btnStart, pressed && styles.btnPressed]}
+                onPress={() => void resume()}
+              >
+                <Text style={styles.btnText}>▶ {t('runScreen.action.resume')}</Text>
+              </Pressable>
+              <Pressable
+                style={({pressed}) => [styles.btn, styles.btnStop, pressed && styles.btnPressed]}
+                onPress={stop}
+              >
+                <Text style={styles.btnText}>⏹ {t('runScreen.action.stop')}</Text>
+              </Pressable>
+            </>
+          )}
+
+          {status === 'stopped' && (
+            <>
+              {!saved && (
+                <Pressable
+                  style={({pressed}) => [styles.btn, styles.btnSave, pressed && styles.btnPressed]}
+                  onPress={() => void handleSave()}
+                >
+                  <Text style={styles.btnText}>💾 {t('runScreen.action.save')}</Text>
+                </Pressable>
+              )}
+              <Pressable
+                style={({pressed}) => [styles.btn, styles.btnReset, pressed && styles.btnPressed]}
+                onPress={handleReset}
+              >
+                <Text style={styles.btnText}>🔄 {t('runScreen.action.newRun')}</Text>
+              </Pressable>
+            </>
+          )}
+        </View>
+
+        <StatusBar style="light" />
+      </ScrollView>
+    </LinearGradient>
   )
 }
 
 const styles = StyleSheet.create({
+  gradient: {
+    flex: 1
+  },
   scrollView: {
-    flex: 1,
-    backgroundColor: '#F2F2F7'
+    flex: 1
   },
   container: {
     alignItems: 'center',
     padding: 20,
-    paddingTop: 20,
+    paddingTop: 16,
     paddingBottom: 40
   },
-  emoji: {
-    fontSize: 64,
-    marginBottom: 8
-  },
   title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#1C1C1E'
+    fontSize: 34,
+    fontWeight: '800',
+    color: theme.textPrimary,
+    letterSpacing: 1
   },
   subtitle: {
-    fontSize: 16,
-    color: '#8E8E93',
-    marginBottom: 20
+    fontSize: 15,
+    color: theme.textSecondary,
+    marginBottom: 24,
+    marginTop: 4
   },
   buttonsRow: {
     flexDirection: 'row',
-    gap: 12,
-    marginTop: 10
+    gap: 14,
+    marginTop: 12
   },
   btn: {
-    paddingHorizontal: 32,
+    paddingHorizontal: 34,
     paddingVertical: 16,
-    borderRadius: 32,
-    shadowOffset: {width: 0, height: 4},
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 5
+    borderRadius: theme.radius.full,
+    borderWidth: 1
+  },
+  btnPressed: {
+    opacity: 0.7,
+    transform: [{scale: 0.96}]
   },
   btnStart: {
-    backgroundColor: '#34C759',
-    shadowColor: '#34C759'
+    backgroundColor: 'rgba(0, 230, 118, 0.15)',
+    borderColor: theme.success,
+    ...theme.glow(theme.success, 0.4)
   },
   btnPause: {
-    backgroundColor: '#FF9500',
-    shadowColor: '#FF9500'
+    backgroundColor: 'rgba(255, 179, 0, 0.15)',
+    borderColor: theme.warning,
+    ...theme.glow(theme.warning, 0.4)
   },
   btnStop: {
-    backgroundColor: '#FF3B30',
-    shadowColor: '#FF3B30'
+    backgroundColor: 'rgba(255, 82, 82, 0.15)',
+    borderColor: theme.danger,
+    ...theme.glow(theme.danger, 0.4)
   },
   btnReset: {
-    backgroundColor: '#007AFF',
-    shadowColor: '#007AFF'
+    backgroundColor: 'rgba(0, 210, 255, 0.15)',
+    borderColor: theme.accent,
+    ...theme.glow(theme.accent, 0.4)
   },
   btnSave: {
-    backgroundColor: '#34C759',
-    shadowColor: '#34C759'
+    backgroundColor: 'rgba(0, 230, 118, 0.15)',
+    borderColor: theme.success,
+    ...theme.glow(theme.success, 0.4)
   },
   btnText: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: 'bold'
+    color: theme.textPrimary,
+    fontSize: 17,
+    fontWeight: '700',
+    letterSpacing: 0.5
   }
 })

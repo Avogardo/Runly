@@ -1,10 +1,13 @@
 import {useLocalSearchParams} from 'expo-router'
+import {LinearGradient} from 'expo-linear-gradient'
 import i18next from 'i18next'
 import {useTranslation} from 'react-i18next'
 import {View, Text, StyleSheet, ScrollView, ActivityIndicator, Pressable} from 'react-native'
 
+import {GlassCard} from '@/components/GlassCard'
 import {RunMapView} from '@/components/MapView'
 import {StatsBar} from '@/components/StatsBar'
+import {theme} from '@/constants/theme'
 import {calculatePace} from '@/features/run/metrics'
 import {formatDistance, formatTime, formatPace} from '@/utils/formatters'
 
@@ -17,17 +20,17 @@ export function RunDetailsScreen() {
 
   if (loading) {
     return (
-      <View style={styles.centered}>
-        <ActivityIndicator size="large" color="#007AFF" />
-      </View>
+      <LinearGradient colors={[...theme.bgGradient]} style={styles.centered}>
+        <ActivityIndicator size="large" color={theme.accent} />
+      </LinearGradient>
     )
   }
 
   if (!run) {
     return (
-      <View style={styles.centered}>
+      <LinearGradient colors={[...theme.bgGradient]} style={styles.centered}>
         <Text style={styles.errorText}>{t('detailsScreen.label.notFound')}</Text>
-      </View>
+      </LinearGradient>
     )
   }
 
@@ -56,39 +59,42 @@ export function RunDetailsScreen() {
   ]
 
   return (
-    <ScrollView style={styles.scrollView} contentContainerStyle={styles.container}>
-      <Text style={styles.date}>{dateStr}</Text>
-      <Text style={styles.timeRange}>
-        {startTime} — {endTime}
-      </Text>
+    <LinearGradient colors={[...theme.bgGradient]} style={styles.gradient}>
+      <ScrollView style={styles.scrollView} contentContainerStyle={styles.container}>
+        <Text style={styles.date}>{dateStr}</Text>
+        <Text style={styles.timeRange}>
+          {startTime} — {endTime}
+        </Text>
 
-      <RunMapView path={run.path} staticMode={true} />
+        <RunMapView path={run.path} staticMode={true} />
 
-      <StatsBar stats={stats} />
+        <StatsBar stats={stats} />
 
-      <View style={styles.detailsCard}>
-        <DetailRow label={t('detailsScreen.label.gpsPoints')} value={String(run.path.length)} />
-        <DetailRow label={t('detailsScreen.label.avgPace')} value={`${formatPace(pace)} /km`} />
-        <DetailRow label={t('detailsScreen.label.distance')} value={formatDistance(run.distance)} />
-        <DetailRow
-          label={t('detailsScreen.label.duration')}
-          value={formatTime(run.duration * 1000)}
-        />
-      </View>
+        <GlassCard>
+          <DetailRow label={t('detailsScreen.label.gpsPoints')} value={String(run.path.length)} />
+          <DetailRow label={t('detailsScreen.label.avgPace')} value={`${formatPace(pace)} /km`} />
+          <DetailRow label={t('detailsScreen.label.distance')} value={formatDistance(run.distance)} />
+          <DetailRow
+            label={t('detailsScreen.label.duration')}
+            value={formatTime(run.duration * 1000)}
+            last
+          />
+        </GlassCard>
 
-      <Pressable
-        style={({pressed}) => [styles.deleteBtn, pressed && styles.deleteBtnPressed]}
-        onPress={handleDelete}
-      >
-        <Text style={styles.deleteBtnText}>{t('detailsScreen.action.delete')}</Text>
-      </Pressable>
-    </ScrollView>
+        <Pressable
+          style={({pressed}) => [styles.deleteBtn, pressed && styles.deleteBtnPressed]}
+          onPress={handleDelete}
+        >
+          <Text style={styles.deleteBtnText}>{t('detailsScreen.action.delete')}</Text>
+        </Pressable>
+      </ScrollView>
+    </LinearGradient>
   )
 }
 
-function DetailRow({label, value}: {label: string; value: string}) {
+function DetailRow({label, value, last}: {label: string; value: string; last?: boolean}) {
   return (
-    <View style={styles.detailRow}>
+    <View style={[styles.detailRow, last && styles.detailRowLast]}>
       <Text style={styles.detailLabel}>{label}</Text>
       <Text style={styles.detailValue}>{value}</Text>
     </View>
@@ -96,19 +102,20 @@ function DetailRow({label, value}: {label: string; value: string}) {
 }
 
 const styles = StyleSheet.create({
+  gradient: {
+    flex: 1
+  },
   centered: {
     flex: 1,
-    backgroundColor: '#F2F2F7',
     justifyContent: 'center',
     alignItems: 'center'
   },
   errorText: {
     fontSize: 16,
-    color: '#FF3B30'
+    color: theme.danger
   },
   scrollView: {
-    flex: 1,
-    backgroundColor: '#F2F2F7'
+    flex: 1
   },
   container: {
     padding: 20,
@@ -117,54 +124,50 @@ const styles = StyleSheet.create({
   date: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#1C1C1E',
+    color: theme.textPrimary,
     textTransform: 'capitalize',
     marginBottom: 4
   },
   timeRange: {
     fontSize: 14,
-    color: '#8E8E93',
+    color: theme.textSecondary,
     marginBottom: 20
-  },
-  detailsCard: {
-    backgroundColor: '#fff',
-    borderRadius: 16,
-    padding: 16,
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.08,
-    shadowRadius: 4,
-    elevation: 2
   },
   detailRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: 12,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#E5E5EA'
+    paddingVertical: 13,
+    borderBottomWidth: 1,
+    borderBottomColor: theme.surfaceBorder
+  },
+  detailRowLast: {
+    borderBottomWidth: 0
   },
   detailLabel: {
     fontSize: 15,
-    color: '#8E8E93'
+    color: theme.textSecondary
   },
   detailValue: {
     fontSize: 15,
     fontWeight: '600',
-    color: '#1C1C1E'
+    color: theme.textPrimary
   },
   deleteBtn: {
     marginTop: 32,
-    backgroundColor: 'rgba(255, 59, 48, 0.08)',
-    borderRadius: 14,
+    backgroundColor: 'rgba(255, 82, 82, 0.10)',
+    borderRadius: theme.radius.sm,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 82, 82, 0.25)',
     paddingVertical: 14,
     alignItems: 'center'
   },
   deleteBtnPressed: {
-    backgroundColor: 'rgba(255, 59, 48, 0.18)'
+    backgroundColor: 'rgba(255, 82, 82, 0.22)',
+    transform: [{scale: 0.98}]
   },
   deleteBtnText: {
     fontSize: 15,
     fontWeight: '600',
-    color: '#FF3B30'
+    color: theme.danger
   }
 })

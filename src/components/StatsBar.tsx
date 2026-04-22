@@ -1,5 +1,9 @@
 import {View, Text, StyleSheet} from 'react-native'
 
+import {theme} from '@/constants/theme'
+
+import {GlassCard} from './GlassCard'
+
 type Stat = {
   label: string
   value: string
@@ -11,46 +15,45 @@ type StatsBarProps = {
 
 export function StatsBar({stats}: StatsBarProps) {
   return (
-    <View style={styles.container}>
-      {stats.map((stat) => (
-        <View key={stat.label} style={styles.statItem}>
-          <Text style={styles.value}>{stat.value}</Text>
-          <Text style={styles.label}>{stat.label}</Text>
-        </View>
-      ))}
-    </View>
+    <GlassCard style={styles.wrapper}>
+      <View style={styles.row}>
+        {stats.map((stat, i) => (
+          <View key={stat.label} style={[styles.statItem, i < stats.length - 1 && styles.divider]}>
+            <Text style={styles.value}>{stat.value}</Text>
+            <Text style={styles.label}>{stat.label}</Text>
+          </View>
+        ))}
+      </View>
+    </GlassCard>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
+  wrapper: {
+    marginBottom: 20
+  },
+  row: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '100%',
-    backgroundColor: '#fff',
-    borderRadius: 16,
-    padding: 20,
-    marginBottom: 20,
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3
+    justifyContent: 'space-around'
   },
   statItem: {
     alignItems: 'center',
     flex: 1
   },
+  divider: {
+    borderRightWidth: 1,
+    borderRightColor: theme.surfaceBorder
+  },
   value: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: '700',
-    color: '#1C1C1E'
+    color: theme.textPrimary
   },
   label: {
-    fontSize: 11,
-    color: '#8E8E93',
-    marginTop: 4,
+    fontSize: 10,
+    color: theme.textSecondary,
+    marginTop: 6,
     textTransform: 'uppercase',
-    letterSpacing: 0.5
+    letterSpacing: 1
   }
 })
