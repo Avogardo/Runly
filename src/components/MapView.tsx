@@ -5,7 +5,7 @@ import RNMapView, {Polyline, Marker} from 'react-native-maps'
 
 import {getCurrentPosition} from '@/services/locationService'
 import {Coordinate} from '@/types'
-import {theme} from '@/constants/theme'
+import {theme} from '@/ui'
 
 type RunMapViewProps = {
   path: Coordinate[]

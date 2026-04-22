@@ -3,7 +3,7 @@ import '@/i18n'
 import {Stack} from 'expo-router'
 import {useTranslation} from 'react-i18next'
 
-import {theme} from '@/constants/theme'
+import {theme} from '@/ui'
 
 export default function RootLayout() {
   const {t} = useTranslation()

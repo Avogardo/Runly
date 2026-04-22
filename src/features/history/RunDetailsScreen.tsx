@@ -4,10 +4,9 @@ import i18next from 'i18next'
 import {useTranslation} from 'react-i18next'
 import {View, Text, StyleSheet, ScrollView, ActivityIndicator, Pressable} from 'react-native'
 
-import {GlassCard} from '@/components/GlassCard'
+import {GlassCard, theme} from '@/ui'
 import {RunMapView} from '@/components/MapView'
 import {StatsBar} from '@/components/StatsBar'
-import {theme} from '@/constants/theme'
 import {calculatePace} from '@/features/run/metrics'
 import {formatDistance, formatTime, formatPace} from '@/utils/formatters'
 

@@ -1,8 +1,6 @@
 import {View, Text, StyleSheet} from 'react-native'
 
-import {theme} from '@/constants/theme'
-
-import {GlassCard} from './GlassCard'
+import {GlassCard, theme} from '@/ui'
 
 type Stat = {
   label: string

@@ -1,7 +1,7 @@
 import {BlurView} from 'expo-blur'
 import {StyleSheet, View, ViewStyle} from 'react-native'
 
-import {theme} from '@/constants/theme'
+import {theme} from '../theme'
 
 type GlassCardProps = {
   children: React.ReactNode

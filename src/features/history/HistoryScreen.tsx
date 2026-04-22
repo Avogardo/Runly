@@ -5,8 +5,7 @@ import {useTranslation} from 'react-i18next'
 import {View, Text, StyleSheet, FlatList, Pressable} from 'react-native'
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
 
-import {GlassCard} from '@/components/GlassCard'
-import {theme} from '@/constants/theme'
+import {GlassCard, theme} from '@/ui'
 import {calculatePace} from '@/features/run/metrics'
 import {formatDistance, formatTime, formatPace} from '@/utils/formatters'
 

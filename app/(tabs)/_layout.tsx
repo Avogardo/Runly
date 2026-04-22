@@ -2,7 +2,7 @@ import {Ionicons} from '@expo/vector-icons'
 import {Tabs} from 'expo-router'
 import {useTranslation} from 'react-i18next'
 
-import {theme} from '@/constants/theme'
+import {theme} from '@/ui'
 
 export default function TabsLayout() {
   const {t} = useTranslation()

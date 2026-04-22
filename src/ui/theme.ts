@@ -1,22 +1,20 @@
 /**
  * Runly — Dark Glassmorphism Theme
- *
- * Ciemne tło z gradient accents i glass-effect kartami.
  */
 export const theme = {
-  // Tła
+  // Backgrounds
   bg: '#0D0D1A',
   bgGradient: ['#0D0D1A', '#1A1A2E', '#16213E'] as const,
   surface: 'rgba(255, 255, 255, 0.06)',
   surfaceBorder: 'rgba(255, 255, 255, 0.10)',
   surfaceHover: 'rgba(255, 255, 255, 0.10)',
 
-  // Tekst
+  // Texts
   textPrimary: '#FFFFFF',
   textSecondary: 'rgba(255, 255, 255, 0.55)',
   textMuted: 'rgba(255, 255, 255, 0.35)',
 
-  // Accenty
+  // Accents
   accent: '#00D2FF',
   accentGradient: ['#00D2FF', '#7B61FF'] as const,
   success: '#00E676',
@@ -37,7 +35,7 @@ export const theme = {
     full: 999,
   },
 
-  // Shadows (glow effect)
+  // Shadows
   glow: (color: string, opacity = 0.3) => ({
     shadowColor: color,
     shadowOffset: {width: 0, height: 0},

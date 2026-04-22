@@ -7,7 +7,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context'
 
 import {StatsBar} from '@/components/StatsBar'
 import {RunMapView} from '@/components/MapView'
-import {theme} from '@/constants/theme'
+import {theme} from '@/ui'
 import {saveRun} from '@/services/storageService'
 import {Run} from '@/types'
 import {formatDistance, formatPace, formatTime} from '@/utils/formatters'
