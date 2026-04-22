@@ -23,9 +23,9 @@ export function RunScreen() {
 
   const stats = useMemo(
     () => [
-      {label: t('stats.distance'), value: formatDistance(distance)},
-      {label: t('stats.time'), value: formatTime(elapsedMs)},
-      {label: t('stats.pace'), value: `${formatPace(pace)} /km`}
+      {label: t('statsBar.label.distance'), value: formatDistance(distance)},
+      {label: t('statsBar.label.time'), value: formatTime(elapsedMs)},
+      {label: t('statsBar.label.pace'), value: `${formatPace(pace)} /km`}
     ],
     [distance, elapsedMs, pace, t]
   )
@@ -34,7 +34,7 @@ export function RunScreen() {
 
   const handleSave = useCallback(async () => {
     if (!state.startedAt || path.length === 0) {
-      Alert.alert(t('run.errorTitle'), t('run.saveNoData'))
+      Alert.alert(t('runScreen.alert.errorTitle'), t('runScreen.alert.saveNoData'))
       return
     }
 
@@ -51,12 +51,12 @@ export function RunScreen() {
       await saveRun(run)
       setSaved(true)
       Alert.alert(
-        t('run.saveSuccessTitle'),
-        t('run.saveSuccess', {distance: formatDistance(distance)})
+        `✅ ${t('runScreen.alert.saveSuccessTitle')}`,
+        t('runScreen.alert.saveSuccess', {distance: formatDistance(distance)})
       )
     } catch (e: unknown) {
-      const message = e instanceof Error ? e.message : t('run.unknownError')
-      Alert.alert(t('run.saveErrorTitle'), message)
+      const message = e instanceof Error ? e.message : t('runScreen.alert.unknownError')
+      Alert.alert(t('runScreen.alert.saveErrorTitle'), message)
     }
   }, [state.startedAt, path, distance, elapsedMs, t])
 
@@ -70,10 +70,10 @@ export function RunScreen() {
       <Text style={styles.emoji}>🏃</Text>
       <Text style={styles.title}>Runly</Text>
       <Text style={styles.subtitle}>
-        {status === 'idle' && t('run.statusIdle')}
-        {status === 'running' && t('run.statusRunning')}
-        {status === 'paused' && t('run.statusPaused')}
-        {status === 'stopped' && t('run.statusStopped')}
+        {status === 'idle' && t('runScreen.label.statusIdle')}
+        {status === 'running' && t('runScreen.label.statusRunning')}
+        {status === 'paused' && t('runScreen.label.statusPaused')}
+        {status === 'stopped' && t('runScreen.label.statusStopped')}
       </Text>
 
       <RunMapView path={path} followUser={status === 'running'} staticMode={status === 'stopped'} />
@@ -83,17 +83,17 @@ export function RunScreen() {
       <View style={styles.buttonsRow}>
         {status === 'idle' && (
           <Pressable style={[styles.btn, styles.btnStart]} onPress={() => void start()}>
-            <Text style={styles.btnText}>{t('run.btnStart')}</Text>
+            <Text style={styles.btnText}>▶ {t('runScreen.action.start')}</Text>
           </Pressable>
         )}
 
         {status === 'running' && (
           <>
             <Pressable style={[styles.btn, styles.btnPause]} onPress={pause}>
-              <Text style={styles.btnText}>{t('run.btnPause')}</Text>
+              <Text style={styles.btnText}>⏸ {t('runScreen.action.pause')}</Text>
             </Pressable>
             <Pressable style={[styles.btn, styles.btnStop]} onPress={stop}>
-              <Text style={styles.btnText}>{t('run.btnStop')}</Text>
+              <Text style={styles.btnText}>⏹ {t('runScreen.action.stop')}</Text>
             </Pressable>
           </>
         )}
@@ -101,10 +101,10 @@ export function RunScreen() {
         {status === 'paused' && (
           <>
             <Pressable style={[styles.btn, styles.btnStart]} onPress={() => void resume()}>
-              <Text style={styles.btnText}>{t('run.btnResume')}</Text>
+              <Text style={styles.btnText}>▶ {t('runScreen.action.resume')}</Text>
             </Pressable>
             <Pressable style={[styles.btn, styles.btnStop]} onPress={stop}>
-              <Text style={styles.btnText}>{t('run.btnStop')}</Text>
+              <Text style={styles.btnText}>⏹ {t('runScreen.action.stop')}</Text>
             </Pressable>
           </>
         )}
@@ -113,11 +113,11 @@ export function RunScreen() {
           <>
             {!saved && (
               <Pressable style={[styles.btn, styles.btnSave]} onPress={() => void handleSave()}>
-                <Text style={styles.btnText}>{t('run.btnSave')}</Text>
+                <Text style={styles.btnText}>💾 {t('runScreen.action.save')}</Text>
               </Pressable>
             )}
             <Pressable style={[styles.btn, styles.btnReset]} onPress={handleReset}>
-              <Text style={styles.btnText}>{t('run.btnNewRun')}</Text>
+              <Text style={styles.btnText}>🔄 {t('runScreen.action.newRun')}</Text>
             </Pressable>
           </>
         )}

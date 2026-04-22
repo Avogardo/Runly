@@ -26,7 +26,7 @@ export function RunDetailsScreen() {
   if (!run) {
     return (
       <View style={styles.centered}>
-        <Text style={styles.errorText}>{t('details.notFound')}</Text>
+        <Text style={styles.errorText}>{t('detailsScreen.label.notFound')}</Text>
       </View>
     )
   }
@@ -50,9 +50,9 @@ export function RunDetailsScreen() {
   })
 
   const stats = [
-    {label: t('stats.distance'), value: formatDistance(run.distance)},
-    {label: t('stats.time'), value: formatTime(run.duration * 1000)},
-    {label: t('stats.pace'), value: `${formatPace(pace)} /km`}
+    {label: t('statsBar.label.distance'), value: formatDistance(run.distance)},
+    {label: t('statsBar.label.time'), value: formatTime(run.duration * 1000)},
+    {label: t('statsBar.label.pace'), value: `${formatPace(pace)} /km`}
   ]
 
   return (
@@ -67,17 +67,20 @@ export function RunDetailsScreen() {
       <StatsBar stats={stats} />
 
       <View style={styles.detailsCard}>
-        <DetailRow label={t('details.gpsPoints')} value={String(run.path.length)} />
-        <DetailRow label={t('details.avgPace')} value={`${formatPace(pace)} /km`} />
-        <DetailRow label={t('details.distance')} value={formatDistance(run.distance)} />
-        <DetailRow label={t('details.duration')} value={formatTime(run.duration * 1000)} />
+        <DetailRow label={t('detailsScreen.label.gpsPoints')} value={String(run.path.length)} />
+        <DetailRow label={t('detailsScreen.label.avgPace')} value={`${formatPace(pace)} /km`} />
+        <DetailRow label={t('detailsScreen.label.distance')} value={formatDistance(run.distance)} />
+        <DetailRow
+          label={t('detailsScreen.label.duration')}
+          value={formatTime(run.duration * 1000)}
+        />
       </View>
 
       <Pressable
         style={({pressed}) => [styles.deleteBtn, pressed && styles.deleteBtnPressed]}
         onPress={handleDelete}
       >
-        <Text style={styles.deleteBtnText}>{t('details.deleteBtn')}</Text>
+        <Text style={styles.deleteBtnText}>{t('detailsScreen.action.delete')}</Text>
       </Pressable>
     </ScrollView>
   )

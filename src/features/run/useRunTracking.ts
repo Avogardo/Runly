@@ -54,7 +54,7 @@ export function useRunTracking(): UseRunTrackingReturn {
   const start = useCallback(async () => {
     const granted = await requestLocationPermission()
     if (!granted) {
-      Alert.alert(t('permissions.noPermissionTitle'), t('permissions.noPermissionMessage'))
+      Alert.alert(t('permissions.alert.title'), t('permissions.alert.message'))
       return
     }
 

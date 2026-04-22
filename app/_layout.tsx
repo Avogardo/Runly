@@ -12,7 +12,7 @@ export default function RootLayout() {
       <Stack.Screen
         name="run/[id]"
         options={{
-          title: t('details.screenTitle'),
+          title: t('detailsScreen.label.screenTitle'),
           headerStyle: {backgroundColor: '#007AFF'},
           headerTintColor: '#fff',
           headerTitleStyle: {fontWeight: 'bold'}

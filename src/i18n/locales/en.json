@@ -1,61 +1,84 @@
 {
   "tabs": {
-    "run": "Run",
-    "history": "History"
+    "label": {
+      "run": "Run",
+      "history": "History"
+    }
   },
-  "run": {
-    "title": "Runly",
-    "statusIdle": "Ready to run?",
-    "statusRunning": "Run in progress...",
-    "statusPaused": "Paused",
-    "statusStopped": "Run finished!",
-    "btnStart": "▶ START",
-    "btnPause": "⏸ PAUSE",
-    "btnStop": "⏹ STOP",
-    "btnResume": "▶ RESUME",
-    "btnSave": "💾 SAVE",
-    "btnNewRun": "🔄 NEW RUN",
-    "saveSuccess": "Run {{distance}} has been saved.",
-    "saveSuccessTitle": "✅ Saved!",
-    "saveErrorTitle": "Save error",
-    "saveNoData": "No data to save.",
-    "errorTitle": "Error",
-    "unknownError": "Unknown error"
+  "runScreen": {
+    "label": {
+      "title": "Runly",
+      "statusIdle": "Ready to run?",
+      "statusRunning": "Run in progress...",
+      "statusPaused": "Paused",
+      "statusStopped": "Run finished!"
+    },
+    "action": {
+      "start": "START",
+      "pause": "PAUSE",
+      "stop": "STOP",
+      "resume": "RESUME",
+      "save": "SAVE",
+      "newRun": "NEW RUN"
+    },
+    "alert": {
+      "saveSuccessTitle": "Saved!",
+      "saveSuccess": "Run {{distance}} has been saved.",
+      "saveErrorTitle": "Save error",
+      "saveNoData": "No data to save.",
+      "errorTitle": "Error",
+      "unknownError": "Unknown error"
+    }
   },
-  "permissions": {
-    "noPermissionTitle": "No permissions",
-    "noPermissionMessage": "The app needs location access to track your run. Enable permissions in settings."
+  "historyScreen": {
+    "label": {
+      "loading": "Loading...",
+      "emptyTitle": "No saved runs",
+      "emptyHint": "Complete your first run to see it here!"
+    }
   },
-  "history": {
-    "loading": "Loading...",
-    "emptyTitle": "No saved runs",
-    "emptyHint": "Complete your first run to see it here!"
+  "detailsScreen": {
+    "label": {
+      "screenTitle": "Run details",
+      "notFound": "Run not found",
+      "gpsPoints": "GPS points",
+      "avgPace": "Avg. pace",
+      "distance": "Distance",
+      "duration": "Duration"
+    },
+    "action": {
+      "delete": "Delete run"
+    },
+    "alert": {
+      "deleteTitle": "Delete run",
+      "deleteMessage": "Are you sure you want to delete this run ({{distance}})?",
+      "deleteCancel": "Cancel",
+      "deleteConfirm": "Delete"
+    }
   },
-  "details": {
-    "screenTitle": "Run details",
-    "notFound": "Run not found",
-    "gpsPoints": "GPS points",
-    "avgPace": "Avg. pace",
-    "distance": "Distance",
-    "duration": "Duration",
-    "deleteBtn": "Delete run",
-    "deleteTitle": "Delete run",
-    "deleteMessage": "Are you sure you want to delete this run ({{distance}})?",
-    "deleteCancel": "Cancel",
-    "deleteConfirm": "Delete"
-  },
-  "stats": {
-    "distance": "Distance",
-    "time": "Time",
-    "pace": "Pace"
+  "statsBar": {
+    "label": {
+      "distance": "Distance",
+      "time": "Time",
+      "pace": "Pace"
+    }
   },
   "map": {
-    "loading": "Loading map...",
-    "markerStart": "Start",
-    "markerCurrent": "Current position"
+    "label": {
+      "loading": "Loading map...",
+      "markerStart": "Start",
+      "markerCurrent": "Current position"
+    }
+  },
+  "permissions": {
+    "alert": {
+      "title": "No permissions",
+      "message": "The app needs location access to track your run. Enable permissions in settings."
+    }
   },
   "storage": {
-    "emptyRunError": "Cannot save an empty run"
+    "error": {
+      "emptyRun": "Cannot save an empty run"
+    }
   }
 }
-

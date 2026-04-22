@@ -16,7 +16,7 @@ export function HistoryScreen() {
   if (loading) {
     return (
       <View style={styles.centered}>
-        <Text style={styles.loadingText}>{t('history.loading')}</Text>
+        <Text style={styles.loadingText}>{t('historyScreen.label.loading')}</Text>
       </View>
     )
   }
@@ -25,8 +25,8 @@ export function HistoryScreen() {
     return (
       <View style={styles.centered}>
         <Text style={styles.emptyIcon}>🏁</Text>
-        <Text style={styles.emptyText}>{t('history.emptyTitle')}</Text>
-        <Text style={styles.emptyHint}>{t('history.emptyHint')}</Text>
+        <Text style={styles.emptyText}>{t('historyScreen.label.emptyTitle')}</Text>
+        <Text style={styles.emptyHint}>{t('historyScreen.label.emptyHint')}</Text>
       </View>
     )
   }
@@ -61,15 +61,15 @@ export function HistoryScreen() {
             <View style={styles.cardStats}>
               <View style={styles.cardStat}>
                 <Text style={styles.cardStatValue}>{formatDistance(item.distance)}</Text>
-                <Text style={styles.cardStatLabel}>{t('stats.distance')}</Text>
+                <Text style={styles.cardStatLabel}>{t('statsBar.label.distance')}</Text>
               </View>
               <View style={styles.cardStat}>
                 <Text style={styles.cardStatValue}>{formatTime(item.duration * 1000)}</Text>
-                <Text style={styles.cardStatLabel}>{t('stats.time')}</Text>
+                <Text style={styles.cardStatLabel}>{t('statsBar.label.time')}</Text>
               </View>
               <View style={styles.cardStat}>
                 <Text style={styles.cardStatValue}>{formatPace(pace)} /km</Text>
-                <Text style={styles.cardStatLabel}>{t('stats.pace')}</Text>
+                <Text style={styles.cardStatLabel}>{t('statsBar.label.pace')}</Text>
               </View>
             </View>
             <Text style={styles.cardArrow}>›</Text>

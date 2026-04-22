@@ -25,7 +25,7 @@ async function getDb(): Promise<SQLite.SQLiteDatabase> {
 
 export async function saveRun(run: Run): Promise<Run> {
   if (run.path.length === 0 || run.duration <= 0) {
-    throw new Error(i18next.t('storage.emptyRunError'))
+    throw new Error(i18next.t('storage.error.emptyRun'))
   }
 
   const db = await getDb()

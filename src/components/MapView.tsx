@@ -60,7 +60,7 @@ export function RunMapView({path, followUser = false, staticMode = false}: RunMa
       return (
         <View style={[styles.container, styles.placeholder]}>
           <ActivityIndicator size="small" color="#007AFF" />
-          <Text style={styles.placeholderText}>{t('map.loading')}</Text>
+          <Text style={styles.placeholderText}>{t('map.label.loading')}</Text>
         </View>
       )
     }
@@ -117,7 +117,7 @@ export function RunMapView({path, followUser = false, staticMode = false}: RunMa
               latitude: firstCoord.latitude,
               longitude: firstCoord.longitude
             }}
-            title={t('map.markerStart')}
+            title={t('map.label.markerStart')}
             pinColor="#34C759"
           />
         )}
@@ -128,7 +128,7 @@ export function RunMapView({path, followUser = false, staticMode = false}: RunMa
               latitude: lastCoord.latitude,
               longitude: lastCoord.longitude
             }}
-            title={t('map.markerCurrent')}
+            title={t('map.label.markerCurrent')}
             pinColor="#007AFF"
           />
         )}

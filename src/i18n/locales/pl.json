@@ -1,61 +1,84 @@
 {
   "tabs": {
-    "run": "Bieg",
-    "history": "Historia"
+    "label": {
+      "run": "Bieg",
+      "history": "Historia"
+    }
   },
-  "run": {
-    "title": "Runly",
-    "statusIdle": "Gotowy do biegu?",
-    "statusRunning": "Bieg w toku...",
-    "statusPaused": "Pauza",
-    "statusStopped": "Bieg zakończony!",
-    "btnStart": "▶ START",
-    "btnPause": "⏸ PAUZA",
-    "btnStop": "⏹ STOP",
-    "btnResume": "▶ WZNÓW",
-    "btnSave": "💾 ZAPISZ",
-    "btnNewRun": "🔄 NOWY BIEG",
-    "saveSuccess": "Bieg {{distance}} został zapisany.",
-    "saveSuccessTitle": "✅ Zapisano!",
-    "saveErrorTitle": "Błąd zapisu",
-    "saveNoData": "Brak danych do zapisania.",
-    "errorTitle": "Błąd",
-    "unknownError": "Nieznany błąd"
+  "runScreen": {
+    "label": {
+      "title": "Runly",
+      "statusIdle": "Gotowy do biegu?",
+      "statusRunning": "Bieg w toku...",
+      "statusPaused": "Pauza",
+      "statusStopped": "Bieg zakończony!"
+    },
+    "action": {
+      "start": "START",
+      "pause": "PAUZA",
+      "stop": "STOP",
+      "resume": "WZNÓW",
+      "save": "ZAPISZ",
+      "newRun": "NOWY BIEG"
+    },
+    "alert": {
+      "saveSuccessTitle": "Zapisano!",
+      "saveSuccess": "Bieg {{distance}} został zapisany.",
+      "saveErrorTitle": "Błąd zapisu",
+      "saveNoData": "Brak danych do zapisania.",
+      "errorTitle": "Błąd",
+      "unknownError": "Nieznany błąd"
+    }
   },
-  "permissions": {
-    "noPermissionTitle": "Brak uprawnień",
-    "noPermissionMessage": "Aplikacja potrzebuje dostępu do lokalizacji, aby śledzić bieg. Włącz uprawnienia w ustawieniach."
+  "historyScreen": {
+    "label": {
+      "loading": "Ładowanie...",
+      "emptyTitle": "Brak zapisanych biegów",
+      "emptyHint": "Ukończ swój pierwszy bieg, aby zobaczyć go tutaj!"
+    }
   },
-  "history": {
-    "loading": "Ładowanie...",
-    "emptyTitle": "Brak zapisanych biegów",
-    "emptyHint": "Ukończ swój pierwszy bieg, aby zobaczyć go tutaj!"
+  "detailsScreen": {
+    "label": {
+      "screenTitle": "Szczegóły biegu",
+      "notFound": "Nie znaleziono biegu",
+      "gpsPoints": "Punkty GPS",
+      "avgPace": "Śr. tempo",
+      "distance": "Dystans",
+      "duration": "Czas trwania"
+    },
+    "action": {
+      "delete": "Usuń bieg"
+    },
+    "alert": {
+      "deleteTitle": "Usuń bieg",
+      "deleteMessage": "Czy na pewno chcesz usunąć ten bieg ({{distance}})?",
+      "deleteCancel": "Anuluj",
+      "deleteConfirm": "Usuń"
+    }
   },
-  "details": {
-    "screenTitle": "Szczegóły biegu",
-    "notFound": "Nie znaleziono biegu",
-    "gpsPoints": "Punkty GPS",
-    "avgPace": "Śr. tempo",
-    "distance": "Dystans",
-    "duration": "Czas trwania",
-    "deleteBtn": "Usuń bieg",
-    "deleteTitle": "Usuń bieg",
-    "deleteMessage": "Czy na pewno chcesz usunąć ten bieg ({{distance}})?",
-    "deleteCancel": "Anuluj",
-    "deleteConfirm": "Usuń"
-  },
-  "stats": {
-    "distance": "Dystans",
-    "time": "Czas",
-    "pace": "Tempo"
+  "statsBar": {
+    "label": {
+      "distance": "Dystans",
+      "time": "Czas",
+      "pace": "Tempo"
+    }
   },
   "map": {
-    "loading": "Ładowanie mapy...",
-    "markerStart": "Start",
-    "markerCurrent": "Aktualna pozycja"
+    "label": {
+      "loading": "Ładowanie mapy...",
+      "markerStart": "Start",
+      "markerCurrent": "Aktualna pozycja"
+    }
+  },
+  "permissions": {
+    "alert": {
+      "title": "Brak uprawnień",
+      "message": "Aplikacja potrzebuje dostępu do lokalizacji, aby śledzić bieg. Włącz uprawnienia w ustawieniach."
+    }
   },
   "storage": {
-    "emptyRunError": "Nie można zapisać pustego biegu"
+    "error": {
+      "emptyRun": "Nie można zapisać pustego biegu"
+    }
   }
 }
-

@@ -26,14 +26,14 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: t('tabs.run'),
+          title: t('tabs.label.run'),
           tabBarIcon: ({color, size}) => <Ionicons name="fitness" size={size} color={color} />
         }}
       />
       <Tabs.Screen
         name="history"
         options={{
-          title: t('tabs.history'),
+          title: t('tabs.label.history'),
           tabBarIcon: ({color, size}) => <Ionicons name="list" size={size} color={color} />
         }}
       />

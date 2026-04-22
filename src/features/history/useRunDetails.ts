@@ -31,12 +31,12 @@ export function useRunDetails(id: string | undefined): UseRunDetailsReturn {
   const handleDelete = useCallback(() => {
     if (!run) return
     Alert.alert(
-      t('details.deleteTitle'),
-      t('details.deleteMessage', {distance: formatDistance(run.distance)}),
+      t('detailsScreen.alert.deleteTitle'),
+      t('detailsScreen.alert.deleteMessage', {distance: formatDistance(run.distance)}),
       [
-        {text: t('details.deleteCancel'), style: 'cancel'},
+        {text: t('detailsScreen.alert.deleteCancel'), style: 'cancel'},
         {
-          text: t('details.deleteConfirm'),
+          text: t('detailsScreen.alert.deleteConfirm'),
           style: 'destructive',
           onPress: () => {
             void deleteRun(run.id).then(() => router.back())
