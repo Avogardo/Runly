@@ -1,8 +1,8 @@
 import { useRef, useEffect, useState } from "react";
 import { StyleSheet, View, Text, ActivityIndicator } from "react-native";
 import RNMapView, { Polyline, Marker } from "react-native-maps";
-import { Coordinate } from "../types";
-import { getCurrentPosition } from "../services/locationService";
+import { Coordinate } from "@/types";
+import { getCurrentPosition } from "@/services/locationService";
 
 type RunMapViewProps = {
   path: Coordinate[];

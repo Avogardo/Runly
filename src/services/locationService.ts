@@ -1,5 +1,9 @@
 import * as Location from "expo-location";
-import { Coordinate } from "../types";
+import { Coordinate } from "@/types";
+import {
+  GPS_TIME_INTERVAL_MS,
+  GPS_DISTANCE_INTERVAL_M,
+} from "@/constants/config";
 
 /**
  * Prosi o uprawnienia foreground location.
@@ -30,8 +34,8 @@ export async function getCurrentPosition(): Promise<Coordinate> {
  */
 export async function watchPosition(
   onLocation: (coord: Coordinate) => void,
-  intervalMs: number = 1000,
-  distanceMeters: number = 5
+  intervalMs: number = GPS_TIME_INTERVAL_MS,
+  distanceMeters: number = GPS_DISTANCE_INTERVAL_M
 ): Promise<Location.LocationSubscription> {
   const subscription = await Location.watchPositionAsync(
     {

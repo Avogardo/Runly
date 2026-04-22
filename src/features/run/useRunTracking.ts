@@ -5,10 +5,9 @@ import { runReducer, initialRunState, RunState } from "./runStore";
 import {
   requestLocationPermission,
   watchPosition,
-} from "../../services/locationService";
-import { Coordinate } from "../../types";
-
-const TIMER_INTERVAL_MS = 1000;
+} from "@/services/locationService";
+import { Coordinate } from "@/types";
+import { TIMER_INTERVAL_MS } from "@/constants/config";
 
 export type UseRunTrackingReturn = {
   state: RunState;

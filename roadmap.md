@@ -1,6 +1,5 @@
 # 🗺️ Runly — Roadmap
 
-> Roadmapa dla doświadczonego React developera uczącego się React Native.
 > Każda faza kończy się działającym, testowalnym rezultatem.
 
 ---

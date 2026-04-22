@@ -1,8 +1,6 @@
 import * as SQLite from "expo-sqlite";
-import * as Crypto from "expo-crypto";
-import { Run, Coordinate } from "../types";
-
-const DB_NAME = "runly.db";
+import { Run, Coordinate } from "@/types";
+import { DB_NAME } from "@/constants/config";
 
 let _db: SQLite.SQLiteDatabase | null = null;
 
@@ -21,11 +19,6 @@ async function getDb(): Promise<SQLite.SQLiteDatabase> {
     `);
   }
   return _db;
-}
-
-/** Generuje UUID v4 */
-export function generateId(): string {
-  return Crypto.randomUUID();
 }
 
 /** Zapisuje bieg do bazy. Zwraca zapisany Run. */
