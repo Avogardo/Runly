@@ -1,14 +1,14 @@
 import {useLocalSearchParams} from 'expo-router'
 import {View, Text, StyleSheet, ScrollView, ActivityIndicator, Pressable} from 'react-native'
 
-import RunMapView from '@/components/MapView'
-import StatsBar from '@/components/StatsBar'
+import {RunMapView} from '@/components/MapView'
+import {StatsBar} from '@/components/StatsBar'
 import {calculatePace} from '@/features/run/metrics'
 import {formatDistance, formatTime, formatPace} from '@/utils/formatters'
 
 import {useRunDetails} from './useRunDetails'
 
-export default function RunDetailsScreen() {
+export function RunDetailsScreen() {
   const {id} = useLocalSearchParams<{id: string}>()
   const {run, loading, handleDelete} = useRunDetails(id)
 

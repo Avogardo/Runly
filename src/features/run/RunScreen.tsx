@@ -2,8 +2,8 @@ import {StatusBar} from 'expo-status-bar'
 import {useMemo, useCallback, useState} from 'react'
 import {View, Text, StyleSheet, Pressable, ScrollView, Alert} from 'react-native'
 
-import RunMapView from '@/components/MapView'
-import StatsBar from '@/components/StatsBar'
+import {RunMapView} from '@/components/MapView'
+import {StatsBar} from '@/components/StatsBar'
 import {saveRun} from '@/services/storageService'
 import {Run} from '@/types'
 import {formatDistance, formatPace, formatTime} from '@/utils/formatters'
@@ -12,7 +12,7 @@ import {generateId} from '@/utils/id'
 import {calculateTotalDistance, calculatePace} from './metrics'
 import {useRunTracking} from './useRunTracking'
 
-export default function RunScreen() {
+export function RunScreen() {
   const {state, start, pause, resume, stop, reset} = useRunTracking()
   const {status, path, elapsedMs} = state
 

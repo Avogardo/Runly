@@ -9,7 +9,7 @@ type StatsBarProps = {
   stats: Stat[]
 }
 
-export default function StatsBar({stats}: StatsBarProps) {
+export function StatsBar({stats}: StatsBarProps) {
   return (
     <View style={styles.container}>
       {stats.map((stat) => (

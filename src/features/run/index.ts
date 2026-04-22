@@ -1,5 +1,5 @@
 // Run feature — public API
-export {default as RunScreen} from './RunScreen'
+export {RunScreen} from './RunScreen'
 export {useRunTracking} from './useRunTracking'
 export type {UseRunTrackingReturn} from './useRunTracking'
 export {runReducer, initialRunState} from './runStore'

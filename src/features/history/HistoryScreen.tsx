@@ -6,7 +6,7 @@ import {formatDistance, formatTime, formatPace} from '@/utils/formatters'
 
 import {useRunHistory} from './useRunHistory'
 
-export default function HistoryScreen() {
+export function HistoryScreen() {
   const router = useRouter()
   const {runs, loading} = useRunHistory()
 

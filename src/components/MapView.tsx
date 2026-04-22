@@ -13,11 +13,7 @@ type RunMapViewProps = {
   staticMode?: boolean
 }
 
-export default function RunMapView({
-  path,
-  followUser = false,
-  staticMode = false
-}: RunMapViewProps) {
+export function RunMapView({path, followUser = false, staticMode = false}: RunMapViewProps) {
   const mapRef = useRef<RNMapView>(null)
   const [initialLocation, setInitialLocation] = useState<Coordinate | null>(null)
 
