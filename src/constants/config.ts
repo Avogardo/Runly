@@ -1,3 +1,7 @@
+import Constants from "expo-constants";
+
+const extra = Constants.expoConfig?.extra ?? {};
+
 // --- GPS filtering ---
 /** Minimalna odległość między punktami GPS (w metrach). Punkty bliższe to "szum GPS". */
 export const MIN_DISTANCE_M = 3;
@@ -13,7 +17,6 @@ export const GPS_TIME_INTERVAL_MS = 1000;
 /** Minimalny dystans między odczytami GPS (m) */
 export const GPS_DISTANCE_INTERVAL_M = 5;
 
-// --- Database ---
+// --- Database (from .env) ---
 /** Nazwa pliku bazy SQLite */
-export const DB_NAME = "runly.db";
-
+export const DB_NAME: string = extra.DB_NAME ?? "";

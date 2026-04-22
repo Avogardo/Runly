@@ -6,6 +6,7 @@ let _db: SQLite.SQLiteDatabase | null = null;
 
 async function getDb(): Promise<SQLite.SQLiteDatabase> {
   if (!_db) {
+    console.log(DB_NAME)
     _db = await SQLite.openDatabaseAsync(DB_NAME);
     await _db.execAsync(`
       CREATE TABLE IF NOT EXISTS runs (
