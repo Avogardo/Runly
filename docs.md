@@ -174,3 +174,111 @@ Platforms
 
 Android only
 document iOS vs Android differences
+
+5.5 Interwały (nowy feature)
+
+Aplikacja umożliwia prowadzenie treningów interwałowych (np. bieg + odpoczynek), z pełnym wsparciem podczas biegu oraz w historii.
+
+🧩 Funkcjonalności
+🎛️ Konfiguracja interwałów (przed biegiem)
+
+Użytkownik może ustawić:
+
+liczba interwałów
+długość interwału:
+🟢 lekkiego (np. trucht / odpoczynek)
+🔴 ciężkiego (np. sprint)
+
+Opcjonalnie:
+
+jednostka: czas (minuty) 
+start od ciężkiego
+🏃‍♂️ Tracking interwałów (w trakcie biegu)
+
+Podczas biegu:
+
+aktualny typ interwału (lekki / ciężki)
+czas pozostały do końca interwału
+liczba pozostałych interwałów
+
+Widoczne na ekranie:
+
+🔴 / 🟢 aktualny tryb
+⏱ countdown
+🔁 np. „3 / 8 interwałów”
+🔊 Komunikaty głosowe
+
+Przy zmianie interwału:
+
+informacja o zmianie:
+„Start interwału szybkiego”
+„Start interwału lekkiego”
+liczba pozostałych:
+„Pozostało 3 interwały”
+
+Opcjonalnie:
+
+włącz / wyłącz voice feedback
+język (PL / EN)
+
+W szczegółach biegu:
+
+liczba interwałów
+konfiguracja (np. 8 × 1min / 2min)
+
+🧱 Zmiany w modelu danych (możesz dostosować do swojej implementacji)
+Run (rozszerzenie)
+type Run = {
+id: string
+startedAt: string
+endedAt: string
+distance: number
+duration: number
+path: Coordinate[]
+
+intervals?: IntervalSummary
+}
+IntervalSummary
+type IntervalSummary = {
+total: number
+lightDuration: number
+heavyDuration: number
+intervals: Interval[]
+}
+Interval
+type Interval = {
+type: 'light' | 'heavy'
+startedAt: number
+endedAt: number
+duration: number
+}
+
+🧠 Logika interwałów
+Przebieg:
+Start biegu
+Start pierwszego interwału
+Timer odlicza czas
+Po zakończeniu:
+zmiana typu interwału
+voice feedback
+aktualizacja licznika
+Powtarzaj aż do końca
+⚠️ Edge cases (ważne)
+pauza biegu → pauza interwału
+GPS lag → nie wpływa na timer interwałów
+wyjście z aplikacji → interwały działają w background
+użytkownik kończy bieg wcześniej:
+zapis częściowych interwałów
+🚀 UX / UI sugestie (warto dodać)
+🔥 1. Haptic feedback
+wibracja przy zmianie interwału
+🔥 2. Lock screen mode
+duże liczby (czas + typ interwału)
+minimal UI podczas biegu
+🧭 TL;DR
+
+Feature interwałów dodaje:
+
+realną wartość treningową (to już nie tylko tracker)
+więcej logiki (state machine + timer)
+lepszy UX (voice + wizualne wskazówki)

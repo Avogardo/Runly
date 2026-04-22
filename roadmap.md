@@ -113,6 +113,14 @@
 
 ---
 
+## Phase 5.5 — Intervals 
+
+**Goal:** Intervals (new feature)
+
+- [] `Interwały` — implementation
+
+---
+
 ## Phase 6 — Polish & UX ✨
 
 **Goal:** Refine the app to a "I want to use this" level.
@@ -164,17 +172,18 @@
 
 ## 📐 Phase Summary
 
-| Phase | Scope | Priority |
-|-------|-------|----------|
-| 0 | Setup + navigation | 🔴 Must |
-| 1 | GPS tracking | 🔴 Must |
-| 2 | Distance + pace | 🔴 Must |
-| 3 | Map | 🔴 Must |
-| 4 | Local storage | 🔴 Must |
-| 5 | History | 🔴 Must |
-| 6 | Polish & UX | 🟡 Should |
-| 7 | Background tracking | 🟡 Should |
-| 8 | Statistics & extras | 🟢 Nice to have |
+| Phase | Scope               | Priority |
+|-------|---------------------|----------|
+| 0     | Setup + navigation  | 🔴 Must |
+| 1     | GPS tracking        | 🔴 Must |
+| 2     | Distance + pace     | 🔴 Must |
+| 3     | Map                 | 🔴 Must |
+| 4     | Local storage       | 🔴 Must |
+| 5     | History             | 🔴 Must |
+| 5.5   | Intervals           | 🟡 Should |
+| 6     | Polish & UX         | 🟡 Should |
+| 7     | Background tracking | 🟡 Should |
+| 8     | Statistics & extras | 🟢 Nice to have |
 
 > **Phases 0–5 = MVP**
 > Estimated time with regular work: **2–4 weeks**
