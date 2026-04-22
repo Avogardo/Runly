@@ -10,7 +10,11 @@ type GlassCardProps = {
   intensity?: number
 }
 
-export const GlassCard: FC<GlassCardProps> = ({children, style, intensity = theme.blurIntensity}) => {
+export const GlassCard: FC<GlassCardProps> = ({
+  children,
+  style,
+  intensity = theme.blurIntensity
+}) => {
   return (
     <View style={[styles.wrapper, style]}>
       <BlurView intensity={intensity} tint={theme.blurTint} style={styles.blur}>

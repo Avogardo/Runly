@@ -1,4 +1,5 @@
 import {IntervalType} from '@/types'
+import {MS_PER_SEC} from '@/consts'
 
 import {RunAction, RunState} from '../types'
 
@@ -21,7 +22,7 @@ export function getCurrentIntervalDurationMs(state: RunState): number {
   const isHeavy = intervalConfig.startWithHeavy
     ? currentIntervalIndex % 2 === 0
     : currentIntervalIndex % 2 === 1
-  return (isHeavy ? intervalConfig.heavyDurationSec : intervalConfig.lightDurationSec) * 1000
+  return (isHeavy ? intervalConfig.heavyDurationSec : intervalConfig.lightDurationSec) * MS_PER_SEC
 }
 
 /** Get type of current interval */

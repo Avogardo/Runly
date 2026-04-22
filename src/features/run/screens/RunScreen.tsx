@@ -8,6 +8,7 @@ import {useRouter, useLocalSearchParams} from 'expo-router'
 
 import {StatsBar, IntervalBanner, RunMapView} from '@/components'
 import {theme} from '@/ui'
+import {MS_PER_SEC} from '@/consts'
 import {saveRun} from '@/services/storageService'
 import {Run, IntervalConfig} from '@/types'
 import {calculatePace, formatDistance, formatPace, formatTime} from '@/utils'
@@ -81,7 +82,7 @@ export const RunScreen: FC = () => {
       startedAt: state.startedAt,
       endedAt: new Date().toISOString(),
       distance,
-      duration: Math.floor(elapsedMs / 1000),
+      duration: Math.floor(elapsedMs / MS_PER_SEC),
       path,
       ...(state.intervalConfig && {
         intervals: {

@@ -5,13 +5,17 @@ import {useTranslation} from 'react-i18next'
 import {View, Text, StyleSheet, ScrollView, ActivityIndicator, Pressable} from 'react-native'
 
 import {GlassCard, theme} from '@/ui'
+import {MS_PER_SEC} from '@/consts'
 import {RunMapView, StatsBar} from '@/components'
 import {calculatePace, formatDistance, formatTime, formatPace} from '@/utils'
 
 import {useRunDetails} from '../hooks'
 
 export const RunDetailsScreen: FC = () => {
-  const {t, i18n: {language}} = useTranslation()
+  const {
+    t,
+    i18n: {language}
+  } = useTranslation()
   const {id} = useLocalSearchParams<{id: string}>()
   const {run, isLoading, handleDelete} = useRunDetails(id)
 
@@ -31,7 +35,7 @@ export const RunDetailsScreen: FC = () => {
     )
   }
 
-  const pace = calculatePace(run.distance, run.duration * 1000)
+  const pace = calculatePace(run.distance, run.duration * MS_PER_SEC)
   const date = new Date(run.startedAt)
   const dateStr = date.toLocaleDateString(language, {
     weekday: 'long',
@@ -50,7 +54,7 @@ export const RunDetailsScreen: FC = () => {
 
   const stats = [
     {label: t('statsBar.label.distance'), value: formatDistance(run.distance)},
-    {label: t('statsBar.label.time'), value: formatTime(run.duration * 1000)},
+    {label: t('statsBar.label.time'), value: formatTime(run.duration * MS_PER_SEC)},
     {label: t('statsBar.label.pace'), value: `${formatPace(pace)} /km`}
   ]
 
@@ -75,7 +79,7 @@ export const RunDetailsScreen: FC = () => {
           />
           <DetailRow
             label={t('detailsScreen.label.duration')}
-            value={formatTime(run.duration * 1000)}
+            value={formatTime(run.duration * MS_PER_SEC)}
             last
           />
         </GlassCard>

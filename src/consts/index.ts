@@ -1,1 +1,8 @@
-export {GPS_DISTANCE_INTERVAL_M, GPS_TIME_INTERVAL_MS, DB_NAME} from './config'
+export {GPS_DISTANCE_INTERVAL_M, GPS_TIME_INTERVAL_MS, DB_NAME} from './config.consts'
+export {MS_PER_SEC, SEC_PER_MIN, SEC_PER_HOUR, M_PER_KM} from './units.consts'
+export {
+  MAP_FOLLOW_DELTA,
+  MAP_INITIAL_DELTA,
+  MAP_ANIMATE_DURATION_MS,
+  MAP_FIT_EDGE_PADDING
+} from './map.consts'

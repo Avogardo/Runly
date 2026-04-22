@@ -4,6 +4,12 @@ import {StyleSheet, View, Text, ActivityIndicator} from 'react-native'
 import RNMapView, {Polyline, Marker} from 'react-native-maps'
 
 import {getCurrentPosition} from '@/services'
+import {
+  MAP_FOLLOW_DELTA,
+  MAP_INITIAL_DELTA,
+  MAP_ANIMATE_DURATION_MS,
+  MAP_FIT_EDGE_PADDING
+} from '@/consts'
 import {Coordinate} from '@/types'
 import {theme} from '@/ui'
 
@@ -37,10 +43,10 @@ export const RunMapView: FC<RunMapViewProps> = ({path, followUser = false, stati
         {
           latitude: lastCoordinate.latitude,
           longitude: lastCoordinate.longitude,
-          latitudeDelta: 0.005,
-          longitudeDelta: 0.005
+          latitudeDelta: MAP_FOLLOW_DELTA,
+          longitudeDelta: MAP_FOLLOW_DELTA
         },
-        500
+        MAP_ANIMATE_DURATION_MS
       )
     }
   }, [followUser, lastCoordinate?.latitude, lastCoordinate?.longitude])
@@ -50,7 +56,12 @@ export const RunMapView: FC<RunMapViewProps> = ({path, followUser = false, stati
       mapRef.current.fitToCoordinates(
         path.map(({latitude, longitude}) => ({latitude, longitude})),
         {
-          edgePadding: {top: 50, right: 50, bottom: 50, left: 50},
+          edgePadding: {
+            top: MAP_FIT_EDGE_PADDING,
+            right: MAP_FIT_EDGE_PADDING,
+            bottom: MAP_FIT_EDGE_PADDING,
+            left: MAP_FIT_EDGE_PADDING
+          },
           animated: true
         }
       )
@@ -74,8 +85,8 @@ export const RunMapView: FC<RunMapViewProps> = ({path, followUser = false, stati
           initialRegion={{
             latitude: initialLocation.latitude,
             longitude: initialLocation.longitude,
-            latitudeDelta: 0.01,
-            longitudeDelta: 0.01
+            latitudeDelta: MAP_INITIAL_DELTA,
+            longitudeDelta: MAP_INITIAL_DELTA
           }}
           showsUserLocation={true}
           showsMyLocationButton={false}
@@ -94,8 +105,8 @@ export const RunMapView: FC<RunMapViewProps> = ({path, followUser = false, stati
             ? {
                 latitude: firstCoordinate.latitude,
                 longitude: firstCoordinate.longitude,
-                latitudeDelta: 0.005,
-                longitudeDelta: 0.005
+                latitudeDelta: MAP_FOLLOW_DELTA,
+                longitudeDelta: MAP_FOLLOW_DELTA
               }
             : undefined
         }
