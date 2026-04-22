@@ -1,3 +1,4 @@
+Test files should be located in the same directory as the file they are testing, and should have the same name as the file being tested, with '.test' added before the file extension. For example, if you are testing 'date.utils.ts', the test file should be named 'date.utils.test.ts'.
 For testing use gherkin Given / When / And / Then notation
 
 - Given - should contain given tested file context: for example for 'date.utils.ts' "Given date util"
