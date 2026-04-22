@@ -1,2 +1,2 @@
 export {formatDistance, formatPace, formatTime} from './formatters'
-export {generateId} from './id'
+export {calculatePace} from './metrics.utils'

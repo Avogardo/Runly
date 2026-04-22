@@ -1,3 +1,3 @@
-import {RunScreen} from '@/features/run/RunScreen'
+import {RunScreen} from '@/features/run'
 
 export default RunScreen

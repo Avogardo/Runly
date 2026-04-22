@@ -7,10 +7,9 @@ import {View, Text, StyleSheet, ScrollView, ActivityIndicator, Pressable} from '
 import {GlassCard, theme} from '@/ui'
 import {RunMapView} from '@/components/MapView'
 import {StatsBar} from '@/components/StatsBar'
-import {calculatePace} from '@/features/run/metrics'
-import {formatDistance, formatTime, formatPace} from '@/utils/formatters'
+import {calculatePace, formatDistance, formatTime, formatPace} from '@/utils'
 
-import {useRunDetails} from './useRunDetails'
+import {useRunDetails} from '../hooks'
 
 export function RunDetailsScreen() {
   const {t} = useTranslation()

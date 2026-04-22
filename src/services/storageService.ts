@@ -1,7 +1,7 @@
 import * as SQLite from 'expo-sqlite'
 import i18next from 'i18next'
 
-import {DB_NAME} from '@/constants/config'
+import {DB_NAME} from '@/consts'
 import {Run, Coordinate} from '@/types'
 
 let _db: SQLite.SQLiteDatabase | null = null

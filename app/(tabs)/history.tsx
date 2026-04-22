@@ -1,3 +1,3 @@
-import {HistoryScreen} from '@/features/history/HistoryScreen'
+import {HistoryScreen} from '@/features/history'
 
 export default HistoryScreen

@@ -6,10 +6,9 @@ import {View, Text, StyleSheet, FlatList, Pressable} from 'react-native'
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
 
 import {GlassCard, theme} from '@/ui'
-import {calculatePace} from '@/features/run/metrics'
-import {formatDistance, formatTime, formatPace} from '@/utils/formatters'
+import {calculatePace, formatDistance, formatTime, formatPace} from '@/utils'
 
-import {useRunHistory} from './useRunHistory'
+import {useRunHistory} from '../hooks'
 
 export function HistoryScreen() {
   const {t} = useTranslation()

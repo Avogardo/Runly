@@ -3,11 +3,12 @@ import {useReducer, useRef, useCallback, useEffect} from 'react'
 import {useTranslation} from 'react-i18next'
 import {Alert} from 'react-native'
 
-import {TIMER_INTERVAL_MS} from '@/constants/config'
 import {requestLocationPermission, watchPosition} from '@/services/locationService'
 import {Coordinate} from '@/types'
 
-import {runReducer, initialRunState, RunState} from './runStore'
+import {TIMER_INTERVAL_MS} from '../consts'
+import {runReducer, initialRunState} from '../stores'
+import {RunState} from '../types'
 
 export type UseRunTrackingReturn = {
   state: RunState

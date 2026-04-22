@@ -1,6 +1,1 @@
-export {HistoryScreen} from './HistoryScreen'
-export {RunDetailsScreen} from './RunDetailsScreen'
-export {useRunHistory} from './useRunHistory'
-export type {UseRunHistoryReturn} from './useRunHistory'
-export {useRunDetails} from './useRunDetails'
-export type {UseRunDetailsReturn} from './useRunDetails'
+export {HistoryScreen, RunDetailsScreen} from './screens'

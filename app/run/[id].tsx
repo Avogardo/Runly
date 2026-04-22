@@ -1,3 +1,3 @@
-import {RunDetailsScreen} from '@/features/history/RunDetailsScreen'
+import {RunDetailsScreen} from '@/features/history'
 
 export default RunDetailsScreen

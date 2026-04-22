@@ -1,8 +1,4 @@
-export type Coordinate = {
-  latitude: number
-  longitude: number
-  timestamp: number
-}
+import {Coordinate} from './gps.types'
 
 export type Run = {
   id: string

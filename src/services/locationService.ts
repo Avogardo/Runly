@@ -1,6 +1,6 @@
 import * as Location from 'expo-location'
 
-import {GPS_TIME_INTERVAL_MS, GPS_DISTANCE_INTERVAL_M} from '@/constants/config'
+import {GPS_TIME_INTERVAL_MS, GPS_DISTANCE_INTERVAL_M} from '@/consts'
 import {Coordinate} from '@/types'
 
 export async function requestLocationPermission(): Promise<boolean> {

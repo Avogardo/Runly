@@ -2,8 +2,6 @@ import Constants from 'expo-constants'
 
 const extra: Record<string, unknown> = Constants.expoConfig?.extra ?? {}
 
-export const MIN_DISTANCE_M = 3
-export const TIMER_INTERVAL_MS = 1000
 export const GPS_TIME_INTERVAL_MS = 1000
 export const GPS_DISTANCE_INTERVAL_M = 5
 

@@ -10,11 +10,10 @@ import {RunMapView} from '@/components/MapView'
 import {theme} from '@/ui'
 import {saveRun} from '@/services/storageService'
 import {Run} from '@/types'
-import {formatDistance, formatPace, formatTime} from '@/utils/formatters'
-import {generateId} from '@/utils/id'
+import {calculatePace, formatDistance, formatPace, formatTime} from '@/utils'
 
-import {calculateTotalDistance, calculatePace} from './metrics'
-import {useRunTracking} from './useRunTracking'
+import {useRunTracking} from '../hooks'
+import {calculateTotalDistance, generateId} from '../utils'
 
 export function RunScreen() {
   const {t} = useTranslation()

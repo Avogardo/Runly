@@ -1,0 +1,1 @@
+export {GPS_DISTANCE_INTERVAL_M, GPS_TIME_INTERVAL_MS, DB_NAME} from './config'
