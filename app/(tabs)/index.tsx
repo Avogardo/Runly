@@ -1,1 +1,1 @@
-export { default } from "@/features/run/RunScreen";
+export {default} from '@/features/run/RunScreen'

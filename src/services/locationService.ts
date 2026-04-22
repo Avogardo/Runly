@@ -1,17 +1,15 @@
-import * as Location from "expo-location";
-import { Coordinate } from "@/types";
-import {
-  GPS_TIME_INTERVAL_MS,
-  GPS_DISTANCE_INTERVAL_M,
-} from "@/constants/config";
+import * as Location from 'expo-location'
+
+import {GPS_TIME_INTERVAL_MS, GPS_DISTANCE_INTERVAL_M} from '@/constants/config'
+import {Coordinate} from '@/types'
 
 /**
  * Prosi o uprawnienia foreground location.
  * Zwraca true jeśli przyznane, false jeśli odmówione.
  */
 export async function requestLocationPermission(): Promise<boolean> {
-  const { status } = await Location.requestForegroundPermissionsAsync();
-  return status === "granted";
+  const {status} = await Location.requestForegroundPermissionsAsync()
+  return status === Location.PermissionStatus.GRANTED
 }
 
 /**
@@ -19,13 +17,13 @@ export async function requestLocationPermission(): Promise<boolean> {
  */
 export async function getCurrentPosition(): Promise<Coordinate> {
   const location = await Location.getCurrentPositionAsync({
-    accuracy: Location.Accuracy.High,
-  });
+    accuracy: Location.Accuracy.High
+  })
   return {
     latitude: location.coords.latitude,
     longitude: location.coords.longitude,
-    timestamp: location.timestamp,
-  };
+    timestamp: location.timestamp
+  }
 }
 
 /**
@@ -41,15 +39,15 @@ export async function watchPosition(
     {
       accuracy: Location.Accuracy.High,
       timeInterval: intervalMs,
-      distanceInterval: distanceMeters,
+      distanceInterval: distanceMeters
     },
     (location) => {
       onLocation({
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
-        timestamp: location.timestamp,
-      });
+        timestamp: location.timestamp
+      })
     }
-  );
-  return subscription;
+  )
+  return subscription
 }

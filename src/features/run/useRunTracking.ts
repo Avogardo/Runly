@@ -1,104 +1,110 @@
-import { useReducer, useRef, useCallback, useEffect } from "react";
-import { Alert } from "react-native";
-import { LocationSubscription } from "expo-location";
-import { runReducer, initialRunState, RunState } from "./runStore";
-import {
-  requestLocationPermission,
-  watchPosition,
-} from "@/services/locationService";
-import { Coordinate } from "@/types";
-import { TIMER_INTERVAL_MS } from "@/constants/config";
+import {LocationSubscription} from 'expo-location'
+import {useReducer, useRef, useCallback, useEffect} from 'react'
+import {Alert} from 'react-native'
+
+import {TIMER_INTERVAL_MS} from '@/constants/config'
+import {requestLocationPermission, watchPosition} from '@/services/locationService'
+import {Coordinate} from '@/types'
+
+import {runReducer, initialRunState, RunState} from './runStore'
 
 export type UseRunTrackingReturn = {
-  state: RunState;
-  start: () => Promise<void>;
-  pause: () => void;
-  resume: () => void;
-  stop: () => void;
-  reset: () => void;
-};
+  state: RunState
+  start: () => void
+  pause: () => void
+  resume: () => void
+  stop: () => void
+  reset: () => void
+}
 
 export function useRunTracking(): UseRunTrackingReturn {
-  const [state, dispatch] = useReducer(runReducer, initialRunState);
+  const [state, dispatch] = useReducer(runReducer, initialRunState)
 
-  const locationSubRef = useRef<LocationSubscription | null>(null);
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const locationSubRef = useRef<LocationSubscription | null>(null)
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   // --- Timer ---
   const startTimer = useCallback(() => {
-    if (timerRef.current) return;
+    if (timerRef.current) return
     timerRef.current = setInterval(() => {
-      dispatch({ type: "TICK", ms: TIMER_INTERVAL_MS });
-    }, TIMER_INTERVAL_MS);
-  }, []);
+      dispatch({type: 'TICK', ms: TIMER_INTERVAL_MS})
+    }, TIMER_INTERVAL_MS)
+  }, [])
 
   const stopTimer = useCallback(() => {
     if (timerRef.current) {
-      clearInterval(timerRef.current);
-      timerRef.current = null;
+      clearInterval(timerRef.current)
+      timerRef.current = null
     }
-  }, []);
+  }, [])
 
   // --- GPS subscription ---
   const startLocationWatch = useCallback(async () => {
     const sub = await watchPosition((coord: Coordinate) => {
-      dispatch({ type: "ADD_POINT", coord });
-    });
-    locationSubRef.current = sub;
-  }, []);
+      dispatch({type: 'ADD_POINT', coord})
+    })
+    locationSubRef.current = sub
+  }, [])
 
   const stopLocationWatch = useCallback(() => {
-    locationSubRef.current?.remove();
-    locationSubRef.current = null;
-  }, []);
+    locationSubRef.current?.remove()
+    locationSubRef.current = null
+  }, [])
 
   // --- Actions ---
   const start = useCallback(async () => {
-    const granted = await requestLocationPermission();
+    const granted = await requestLocationPermission()
     if (!granted) {
       Alert.alert(
-        "Brak uprawnień",
-        "Aplikacja potrzebuje dostępu do lokalizacji, aby śledzić bieg. Włącz uprawnienia w ustawieniach."
-      );
-      return;
+        'Brak uprawnień',
+        'Aplikacja potrzebuje dostępu do lokalizacji, aby śledzić bieg. Włącz uprawnienia w ustawieniach.'
+      )
+      return
     }
 
-    dispatch({ type: "START", startedAt: new Date().toISOString() });
-    await startLocationWatch();
-    startTimer();
-  }, [startLocationWatch, startTimer]);
+    dispatch({type: 'START', startedAt: new Date().toISOString()})
+    await startLocationWatch()
+    startTimer()
+  }, [startLocationWatch, startTimer])
 
   const pause = useCallback(() => {
-    dispatch({ type: "PAUSE" });
-    stopLocationWatch();
-    stopTimer();
-  }, [stopLocationWatch, stopTimer]);
+    dispatch({type: 'PAUSE'})
+    stopLocationWatch()
+    stopTimer()
+  }, [stopLocationWatch, stopTimer])
 
   const resume = useCallback(async () => {
-    dispatch({ type: "RESUME" });
-    await startLocationWatch();
-    startTimer();
-  }, [startLocationWatch, startTimer]);
+    dispatch({type: 'RESUME'})
+    await startLocationWatch()
+    startTimer()
+  }, [startLocationWatch, startTimer])
 
   const stop = useCallback(() => {
-    dispatch({ type: "STOP" });
-    stopLocationWatch();
-    stopTimer();
-  }, [stopLocationWatch, stopTimer]);
+    dispatch({type: 'STOP'})
+    stopLocationWatch()
+    stopTimer()
+  }, [stopLocationWatch, stopTimer])
 
   const reset = useCallback(() => {
-    stopLocationWatch();
-    stopTimer();
-    dispatch({ type: "RESET" });
-  }, [stopLocationWatch, stopTimer]);
+    stopLocationWatch()
+    stopTimer()
+    dispatch({type: 'RESET'})
+  }, [stopLocationWatch, stopTimer])
 
   // Cleanup on unmount
   useEffect(() => {
     return () => {
-      locationSubRef.current?.remove();
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, []);
+      locationSubRef.current?.remove()
+      if (timerRef.current) clearInterval(timerRef.current)
+    }
+  }, [])
 
-  return { state, start, pause, resume, stop, reset };
+  return {
+    state,
+    start: () => void start(),
+    pause,
+    resume: () => void resume(),
+    stop,
+    reset
+  }
 }

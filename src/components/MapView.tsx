@@ -1,36 +1,37 @@
-import { useRef, useEffect, useState } from "react";
-import { StyleSheet, View, Text, ActivityIndicator } from "react-native";
-import RNMapView, { Polyline, Marker } from "react-native-maps";
-import { Coordinate } from "@/types";
-import { getCurrentPosition } from "@/services/locationService";
+import {useRef, useEffect, useState} from 'react'
+import {StyleSheet, View, Text, ActivityIndicator} from 'react-native'
+import RNMapView, {Polyline, Marker} from 'react-native-maps'
+
+import {getCurrentPosition} from '@/services/locationService'
+import {Coordinate} from '@/types'
 
 type RunMapViewProps = {
-  path: Coordinate[];
+  path: Coordinate[]
   /** Czy mapa ma śledzić (animować kamerę) do aktualnej pozycji */
-  followUser?: boolean;
+  followUser?: boolean
   /** Tryb statyczny — dopasuj mapę do całej trasy (np. historia) */
-  staticMode?: boolean;
-};
+  staticMode?: boolean
+}
 
 export default function RunMapView({
   path,
   followUser = false,
-  staticMode = false,
+  staticMode = false
 }: RunMapViewProps) {
-  const mapRef = useRef<RNMapView>(null);
-  const [initialLocation, setInitialLocation] = useState<Coordinate | null>(null);
+  const mapRef = useRef<RNMapView>(null)
+  const [initialLocation, setInitialLocation] = useState<Coordinate | null>(null)
 
-  const lastCoord = path.length > 0 ? path[path.length - 1] : null;
-  const firstCoord = path.length > 0 ? path[0] : null;
+  const lastCoord = path.length > 0 ? path[path.length - 1] : null
+  const firstCoord = path.length > 0 ? path[0] : null
 
   // Pobierz aktualną lokalizację na start (przed biegiem)
   useEffect(() => {
     if (path.length === 0) {
       getCurrentPosition()
         .then(setInitialLocation)
-        .catch(() => {});
+        .catch(() => {})
     }
-  }, [path.length === 0]);
+  }, [path.length === 0])
 
   // Animuj kamerę do ostatniej pozycji w trybie follow
   useEffect(() => {
@@ -40,25 +41,25 @@ export default function RunMapView({
           latitude: lastCoord.latitude,
           longitude: lastCoord.longitude,
           latitudeDelta: 0.005,
-          longitudeDelta: 0.005,
+          longitudeDelta: 0.005
         },
         500 // animacja 500ms
-      );
+      )
     }
-  }, [followUser, lastCoord?.latitude, lastCoord?.longitude]);
+  }, [followUser, lastCoord?.latitude, lastCoord?.longitude])
 
   // W trybie statycznym — dopasuj widok do całej trasy
   useEffect(() => {
     if (staticMode && path.length >= 2 && mapRef.current) {
       mapRef.current.fitToCoordinates(
-        path.map((p) => ({ latitude: p.latitude, longitude: p.longitude })),
+        path.map((p) => ({latitude: p.latitude, longitude: p.longitude})),
         {
-          edgePadding: { top: 50, right: 50, bottom: 50, left: 50 },
-          animated: true,
+          edgePadding: {top: 50, right: 50, bottom: 50, left: 50},
+          animated: true
         }
-      );
+      )
     }
-  }, [staticMode, path.length]);
+  }, [staticMode, path.length])
 
   // Przed biegiem — pokaż mapę z aktualną lokalizacją
   if (path.length === 0) {
@@ -68,7 +69,7 @@ export default function RunMapView({
           <ActivityIndicator size="small" color="#007AFF" />
           <Text style={styles.placeholderText}>Ładowanie mapy...</Text>
         </View>
-      );
+      )
     }
 
     return (
@@ -79,13 +80,13 @@ export default function RunMapView({
             latitude: initialLocation.latitude,
             longitude: initialLocation.longitude,
             latitudeDelta: 0.01,
-            longitudeDelta: 0.01,
+            longitudeDelta: 0.01
           }}
           showsUserLocation={true}
           showsMyLocationButton={false}
         />
       </View>
-    );
+    )
   }
 
   return (
@@ -99,7 +100,7 @@ export default function RunMapView({
                 latitude: firstCoord.latitude,
                 longitude: firstCoord.longitude,
                 latitudeDelta: 0.005,
-                longitudeDelta: 0.005,
+                longitudeDelta: 0.005
               }
             : undefined
         }
@@ -111,7 +112,7 @@ export default function RunMapView({
           <Polyline
             coordinates={path.map((p) => ({
               latitude: p.latitude,
-              longitude: p.longitude,
+              longitude: p.longitude
             }))}
             strokeColor="#007AFF"
             strokeWidth={4}
@@ -123,7 +124,7 @@ export default function RunMapView({
           <Marker
             coordinate={{
               latitude: firstCoord.latitude,
-              longitude: firstCoord.longitude,
+              longitude: firstCoord.longitude
             }}
             title="Start"
             pinColor="#34C759"
@@ -135,7 +136,7 @@ export default function RunMapView({
           <Marker
             coordinate={{
               latitude: lastCoord.latitude,
-              longitude: lastCoord.longitude,
+              longitude: lastCoord.longitude
             }}
             title="Aktualna pozycja"
             pinColor="#007AFF"
@@ -143,28 +144,28 @@ export default function RunMapView({
         )}
       </RNMapView>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
+    width: '100%',
     height: 250,
     borderRadius: 16,
-    overflow: "hidden",
-    marginBottom: 20,
+    overflow: 'hidden',
+    marginBottom: 20
   },
   map: {
-    flex: 1,
+    flex: 1
   },
   placeholder: {
-    backgroundColor: "#E5E5EA",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 8,
+    backgroundColor: '#E5E5EA',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8
   },
   placeholderText: {
-    color: "#8E8E93",
-    fontSize: 14,
-  },
-});
+    color: '#8E8E93',
+    fontSize: 14
+  }
+})
