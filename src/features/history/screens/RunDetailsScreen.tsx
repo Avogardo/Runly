@@ -71,7 +71,10 @@ export function RunDetailsScreen() {
         <GlassCard>
           <DetailRow label={t('detailsScreen.label.gpsPoints')} value={String(run.path.length)} />
           <DetailRow label={t('detailsScreen.label.avgPace')} value={`${formatPace(pace)} /km`} />
-          <DetailRow label={t('detailsScreen.label.distance')} value={formatDistance(run.distance)} />
+          <DetailRow
+            label={t('detailsScreen.label.distance')}
+            value={formatDistance(run.distance)}
+          />
           <DetailRow
             label={t('detailsScreen.label.duration')}
             value={formatTime(run.duration * 1000)}
@@ -158,13 +161,13 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0
   },
   intervalCard: {
-    marginTop: 16,
+    marginTop: 16
   },
   intervalTitle: {
     fontSize: 16,
     fontWeight: '700',
     color: theme.textPrimary,
-    marginBottom: 12,
+    marginBottom: 12
   },
   detailLabel: {
     fontSize: 15,

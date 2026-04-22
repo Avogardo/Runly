@@ -44,7 +44,7 @@ function rowToRun(row: RunRow): Run {
   return {
     ...rest,
     path: JSON.parse(path) as Coordinate[],
-    ...(intervals ? {intervals: JSON.parse(intervals) as IntervalSummary} : {}),
+    ...(intervals ? {intervals: JSON.parse(intervals) as IntervalSummary} : {})
   }
 }
 
@@ -64,7 +64,7 @@ export async function saveRun(run: Run): Promise<Run> {
       run.distance,
       run.duration,
       JSON.stringify(run.path),
-      run.intervals ? JSON.stringify(run.intervals) : null,
+      run.intervals ? JSON.stringify(run.intervals) : null
     ]
   )
   return run

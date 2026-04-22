@@ -26,8 +26,8 @@ export function IntervalConfigScreen() {
         intervalLightSec: String(lightMin * 60),
         intervalHeavySec: String(heavyMin * 60),
         intervalStartHeavy: startWithHeavy ? '1' : '0',
-        intervalVoice: voiceEnabled ? '1' : '0',
-      },
+        intervalVoice: voiceEnabled ? '1' : '0'
+      }
     })
   }
 
@@ -135,7 +135,8 @@ function Stepper({label, value, onChange, min = 1, max = 99, step = 1, suffix}: 
           <Text style={styles.stepperBtnText}>−</Text>
         </Pressable>
         <Text style={styles.stepperValue}>
-          {displayValue}{suffix ? ` ${suffix}` : ''}
+          {displayValue}
+          {suffix ? ` ${suffix}` : ''}
         </Text>
         <Pressable style={styles.stepperBtn} onPress={increase}>
           <Text style={styles.stepperBtnText}>+</Text>
@@ -147,49 +148,49 @@ function Stepper({label, value, onChange, min = 1, max = 99, step = 1, suffix}: 
 
 const styles = StyleSheet.create({
   gradient: {
-    flex: 1,
+    flex: 1
   },
   container: {
     alignItems: 'center',
     padding: 20,
-    paddingBottom: 40,
+    paddingBottom: 40
   },
   title: {
     fontSize: 48,
-    marginBottom: 8,
+    marginBottom: 8
   },
   heading: {
     fontSize: 26,
     fontWeight: '800',
     color: theme.textPrimary,
     marginBottom: 24,
-    letterSpacing: 0.5,
+    letterSpacing: 0.5
   },
   card: {
-    marginBottom: 12,
+    marginBottom: 12
   },
   switchRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   switchLabel: {
     fontSize: 15,
     color: theme.textPrimary,
-    fontWeight: '600',
+    fontWeight: '600'
   },
   stepperLabel: {
     fontSize: 13,
     color: theme.textSecondary,
     marginBottom: 10,
     textTransform: 'uppercase',
-    letterSpacing: 0.5,
+    letterSpacing: 0.5
   },
   stepperRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 20,
+    gap: 20
   },
   stepperBtn: {
     width: 44,
@@ -199,25 +200,25 @@ const styles = StyleSheet.create({
     borderColor: theme.surfaceBorder,
     backgroundColor: theme.surface,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   stepperBtnText: {
     fontSize: 22,
     color: theme.textPrimary,
-    fontWeight: '600',
+    fontWeight: '600'
   },
   stepperValue: {
     fontSize: 24,
     fontWeight: '700',
     color: theme.textPrimary,
     minWidth: 80,
-    textAlign: 'center',
+    textAlign: 'center'
   },
   summary: {
     fontSize: 15,
     color: theme.textSecondary,
     marginTop: 16,
-    marginBottom: 24,
+    marginBottom: 24
   },
   startBtn: {
     paddingHorizontal: 40,
@@ -226,17 +227,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     backgroundColor: 'rgba(168, 85, 247, 0.15)',
     borderColor: theme.accent,
-    ...theme.glow(theme.accent, 0.5),
+    ...theme.glow(theme.accent, 0.5)
   },
   startBtnPressed: {
     opacity: 0.7,
-    transform: [{scale: 0.96}],
+    transform: [{scale: 0.96}]
   },
   startBtnText: {
     color: theme.textPrimary,
     fontSize: 18,
     fontWeight: '800',
-    letterSpacing: 1,
-  },
+    letterSpacing: 1
+  }
 })
-

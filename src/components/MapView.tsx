@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderWidth: 1,
     borderColor: theme.surfaceBorder,
-    ...theme.glow(theme.accent, 0.15),
+    ...theme.glow(theme.accent, 0.15)
   },
   map: {
     flex: 1

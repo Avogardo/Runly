@@ -15,16 +15,16 @@ export default function TabsLayout() {
         tabBarStyle: {
           backgroundColor: theme.bg,
           borderTopColor: theme.surfaceBorder,
-          borderTopWidth: 1,
+          borderTopWidth: 1
         },
         headerStyle: {
-          backgroundColor: theme.bg,
+          backgroundColor: theme.bg
         },
         headerTintColor: theme.textPrimary,
         headerTitleStyle: {
-          fontWeight: 'bold',
+          fontWeight: 'bold'
         },
-        headerShadowVisible: false,
+        headerShadowVisible: false
       }}
     >
       <Tabs.Screen
@@ -32,7 +32,7 @@ export default function TabsLayout() {
         options={{
           title: t('tabs.label.run'),
           headerShown: false,
-          tabBarIcon: ({color, size}) => <Ionicons name="fitness" size={size} color={color} />,
+          tabBarIcon: ({color, size}) => <Ionicons name="fitness" size={size} color={color} />
         }}
       />
       <Tabs.Screen
@@ -40,7 +40,7 @@ export default function TabsLayout() {
         options={{
           title: t('tabs.label.history'),
           headerShown: false,
-          tabBarIcon: ({color, size}) => <Ionicons name="list" size={size} color={color} />,
+          tabBarIcon: ({color, size}) => <Ionicons name="list" size={size} color={color} />
         }}
       />
     </Tabs>

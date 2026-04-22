@@ -32,7 +32,7 @@ export const theme = {
     md: 16,
     lg: 24,
     xl: 32,
-    full: 999,
+    full: 999
   },
 
   // Shadows
@@ -41,7 +41,6 @@ export const theme = {
     shadowOffset: {width: 0, height: 0},
     shadowOpacity: opacity,
     shadowRadius: 16,
-    elevation: 8,
-  }),
+    elevation: 8
+  })
 } as const
-

@@ -30,8 +30,17 @@ export function RunScreen() {
   }>()
 
   const {
-    state, start, pause, resume, stop, reset, setIntervalConfig, clearIntervalConfig,
-    currentIntervalType, intervalTimeRemainingMs, intervalProgress,
+    state,
+    start,
+    pause,
+    resume,
+    stop,
+    reset,
+    setIntervalConfig,
+    clearIntervalConfig,
+    currentIntervalType,
+    intervalTimeRemainingMs,
+    intervalProgress
   } = useRunTracking()
   const {status, path, elapsedMs} = state
 
@@ -43,7 +52,7 @@ export function RunScreen() {
         lightDurationSec: Number(params.intervalLightSec || 120),
         heavyDurationSec: Number(params.intervalHeavySec || 60),
         startWithHeavy: params.intervalStartHeavy === '1',
-        voiceEnabled: params.intervalVoice === '1',
+        voiceEnabled: params.intervalVoice === '1'
       }
       setIntervalConfig(config)
     }
@@ -79,9 +88,9 @@ export function RunScreen() {
       ...(state.intervalConfig && {
         intervals: {
           config: state.intervalConfig,
-          intervals: state.completedIntervals,
+          intervals: state.completedIntervals
         }
-      }),
+      })
     }
 
     try {
@@ -95,7 +104,15 @@ export function RunScreen() {
       const message = e instanceof Error ? e.message : t('runScreen.alert.unknownError')
       Alert.alert(t('runScreen.alert.saveErrorTitle'), message)
     }
-  }, [state.startedAt, path, distance, elapsedMs, state.intervalConfig, state.completedIntervals, t])
+  }, [
+    state.startedAt,
+    path,
+    distance,
+    elapsedMs,
+    state.intervalConfig,
+    state.completedIntervals,
+    t
+  ])
 
   const handleReset = useCallback(() => {
     reset()
@@ -106,7 +123,10 @@ export function RunScreen() {
 
   return (
     <LinearGradient colors={[...theme.bgGradient]} style={styles.gradient}>
-      <ScrollView style={styles.scrollView} contentContainerStyle={[styles.container, {paddingTop: insets.top + 12}]}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={[styles.container, {paddingTop: insets.top + 12}]}
+      >
         <Text style={styles.title}>Runly</Text>
         <Text style={styles.subtitle}>
           {status === 'idle' && !hasIntervals && t('runScreen.label.statusIdle')}
@@ -126,7 +146,11 @@ export function RunScreen() {
           />
         )}
 
-        <RunMapView path={path} followUser={status === 'running'} staticMode={status === 'stopped'} />
+        <RunMapView
+          path={path}
+          followUser={status === 'running'}
+          staticMode={status === 'stopped'}
+        />
 
         <StatsBar stats={stats} />
 
@@ -148,7 +172,11 @@ export function RunScreen() {
                 </Pressable>
               ) : (
                 <Pressable
-                  style={({pressed}) => [styles.btn, styles.btnInterval, pressed && styles.btnPressed]}
+                  style={({pressed}) => [
+                    styles.btn,
+                    styles.btnInterval,
+                    pressed && styles.btnPressed
+                  ]}
                   onPress={() => router.push('/interval-config')}
                 >
                   <Text style={styles.btnText}>⏱️ {t('runScreen.action.intervalRun')}</Text>
@@ -247,7 +275,7 @@ const styles = StyleSheet.create({
     gap: 14,
     marginTop: 12,
     flexWrap: 'wrap',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   btn: {
     paddingHorizontal: 28,

@@ -7,7 +7,12 @@ import {requestLocationPermission, watchPosition} from '@/services/locationServi
 import {Coordinate, IntervalConfig} from '@/types'
 
 import {TIMER_INTERVAL_MS} from '../consts'
-import {runReducer, initialRunState, getCurrentIntervalDurationMs, getCurrentIntervalType} from '../stores'
+import {
+  runReducer,
+  initialRunState,
+  getCurrentIntervalDurationMs,
+  getCurrentIntervalType
+} from '../stores'
 import {RunState} from '../types'
 
 import {useIntervalTimer} from './useIntervalTimer'
@@ -133,6 +138,6 @@ export function useRunTracking(): UseRunTrackingReturn {
     clearIntervalConfig,
     currentIntervalType,
     intervalTimeRemainingMs,
-    intervalProgress,
+    intervalProgress
   }
 }

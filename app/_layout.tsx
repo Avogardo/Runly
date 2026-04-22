@@ -18,7 +18,7 @@ export default function RootLayout() {
           headerStyle: {backgroundColor: theme.bg},
           headerTintColor: theme.textPrimary,
           headerTitleStyle: {fontWeight: 'bold'},
-          headerShadowVisible: false,
+          headerShadowVisible: false
         }}
       />
       <Stack.Screen
@@ -28,7 +28,7 @@ export default function RootLayout() {
           headerStyle: {backgroundColor: theme.bg},
           headerTintColor: theme.textPrimary,
           headerTitleStyle: {fontWeight: 'bold'},
-          headerShadowVisible: false,
+          headerShadowVisible: false
         }}
       />
     </Stack>

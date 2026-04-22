@@ -25,14 +25,13 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     borderWidth: 1,
     borderColor: theme.surfaceBorder,
-    width: '100%',
+    width: '100%'
   },
   blur: {
-    width: '100%',
+    width: '100%'
   },
   inner: {
     padding: 20,
-    backgroundColor: theme.surface,
-  },
+    backgroundColor: theme.surface
+  }
 })
-

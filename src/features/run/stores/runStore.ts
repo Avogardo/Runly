@@ -9,7 +9,7 @@ export const initialRunState: RunState = {
   currentIntervalIndex: 0,
   intervalElapsedMs: 0,
   completedIntervals: [],
-  intervalsFinished: false,
+  intervalsFinished: false
 }
 
 /** Get duration of current interval in ms */
@@ -43,7 +43,7 @@ export function runReducer(state: RunState, action: RunAction): RunState {
         currentIntervalIndex: 0,
         intervalElapsedMs: 0,
         completedIntervals: [],
-        intervalsFinished: false,
+        intervalsFinished: false
       }
     case 'PAUSE':
       return {...state, status: 'paused'}
@@ -57,9 +57,10 @@ export function runReducer(state: RunState, action: RunAction): RunState {
       return {
         ...state,
         elapsedMs: state.elapsedMs + action.ms,
-        intervalElapsedMs: state.intervalConfig && !state.intervalsFinished
-          ? state.intervalElapsedMs + action.ms
-          : state.intervalElapsedMs,
+        intervalElapsedMs:
+          state.intervalConfig && !state.intervalsFinished
+            ? state.intervalElapsedMs + action.ms
+            : state.intervalElapsedMs
       }
     case 'RESET':
       return initialRunState
@@ -71,13 +72,13 @@ export function runReducer(state: RunState, action: RunAction): RunState {
         type: currentType,
         startedAt: state.elapsedMs - state.intervalElapsedMs,
         endedAt: state.elapsedMs,
-        duration: state.intervalElapsedMs,
+        duration: state.intervalElapsedMs
       } as const
       return {
         ...state,
         completedIntervals: [...state.completedIntervals, completed],
         currentIntervalIndex: state.currentIntervalIndex + 1,
-        intervalElapsedMs: 0,
+        intervalElapsedMs: 0
       }
     }
     case 'COMPLETE_INTERVALS':

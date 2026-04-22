@@ -11,7 +11,12 @@ type IntervalBannerProps = {
   finished: boolean
 }
 
-export function IntervalBanner({intervalType, timeRemainingMs, progress, finished}: IntervalBannerProps) {
+export function IntervalBanner({
+  intervalType,
+  timeRemainingMs,
+  progress,
+  finished
+}: IntervalBannerProps) {
   const {t} = useTranslation()
 
   if (finished) {
@@ -49,58 +54,57 @@ export function IntervalBanner({intervalType, timeRemainingMs, progress, finishe
 
 const styles = StyleSheet.create({
   wrapper: {
-    marginBottom: 16,
+    marginBottom: 16
   },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   typeCol: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-    flex: 1,
+    flex: 1
   },
   icon: {
-    fontSize: 20,
+    fontSize: 20
   },
   typeText: {
     fontSize: 16,
     fontWeight: '700',
     textTransform: 'uppercase',
-    letterSpacing: 1,
+    letterSpacing: 1
   },
   timerCol: {
     alignItems: 'center',
-    flex: 1,
+    flex: 1
   },
   countdown: {
     fontSize: 28,
     fontWeight: '800',
-    fontVariant: ['tabular-nums'],
+    fontVariant: ['tabular-nums']
   },
   progressCol: {
     alignItems: 'flex-end',
-    flex: 1,
+    flex: 1
   },
   progressText: {
     fontSize: 20,
     fontWeight: '700',
-    color: theme.textPrimary,
+    color: theme.textPrimary
   },
   label: {
     fontSize: 10,
     color: theme.textSecondary,
     marginTop: 2,
     textTransform: 'uppercase',
-    letterSpacing: 0.5,
+    letterSpacing: 0.5
   },
   finishedText: {
     fontSize: 16,
     fontWeight: '700',
     color: theme.success,
-    textAlign: 'center',
-  },
+    textAlign: 'center'
+  }
 })
-

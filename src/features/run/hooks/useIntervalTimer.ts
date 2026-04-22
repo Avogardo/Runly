@@ -9,10 +9,7 @@ import {getCurrentIntervalDurationMs, getCurrentIntervalType} from '../stores'
  * Hook that watches interval elapsed time and triggers transitions + voice feedback.
  * Must be called inside the component that owns the dispatch.
  */
-export function useIntervalTimer(
-  state: RunState,
-  dispatch: React.Dispatch<RunAction>
-) {
+export function useIntervalTimer(state: RunState, dispatch: React.Dispatch<RunAction>) {
   const prevIndexRef = useRef(state.currentIntervalIndex)
 
   useEffect(() => {
@@ -34,7 +31,7 @@ export function useIntervalTimer(
 
         if (state.intervalConfig.voiceEnabled) {
           Speech.speak(i18next.t('speech.intervalsComplete'), {
-            language: i18next.language,
+            language: i18next.language
           })
         }
       } else {
@@ -60,4 +57,3 @@ export function useIntervalTimer(
     Speech.speak(message, {language: i18next.language})
   }, [state.currentIntervalIndex])
 }
-

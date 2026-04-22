@@ -18,7 +18,10 @@ export function HistoryScreen() {
 
   if (loading) {
     return (
-      <LinearGradient colors={[...theme.bgGradient]} style={[styles.centered, {paddingTop: insets.top}]}>
+      <LinearGradient
+        colors={[...theme.bgGradient]}
+        style={[styles.centered, {paddingTop: insets.top}]}
+      >
         <Text style={styles.loadingText}>{t('historyScreen.label.loading')}</Text>
       </LinearGradient>
     )
@@ -26,7 +29,10 @@ export function HistoryScreen() {
 
   if (runs.length === 0) {
     return (
-      <LinearGradient colors={[...theme.bgGradient]} style={[styles.centered, {paddingTop: insets.top}]}>
+      <LinearGradient
+        colors={[...theme.bgGradient]}
+        style={[styles.centered, {paddingTop: insets.top}]}
+      >
         <Text style={styles.emptyIcon}>🏁</Text>
         <Text style={styles.emptyText}>{t('historyScreen.label.emptyTitle')}</Text>
         <Text style={styles.emptyHint}>{t('historyScreen.label.emptyHint')}</Text>
