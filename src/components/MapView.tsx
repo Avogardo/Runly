@@ -61,7 +61,7 @@ export const RunMapView: FC<RunMapViewProps> = ({path, followUser = false, stati
     if (!initialLocation) {
       return (
         <View style={[styles.container, styles.placeholder]}>
-          <ActivityIndicator size="small" color="#007AFF" />
+          <ActivityIndicator size="small" color={theme.accent} />
           <Text style={styles.placeholderText}>{t('map.label.loading')}</Text>
         </View>
       )
@@ -120,7 +120,7 @@ export const RunMapView: FC<RunMapViewProps> = ({path, followUser = false, stati
               longitude: firstCoordinate.longitude
             }}
             title={t('map.label.markerStart')}
-            pinColor="#34C759"
+            pinColor={theme.success}
           />
         )}
 
@@ -131,7 +131,7 @@ export const RunMapView: FC<RunMapViewProps> = ({path, followUser = false, stati
               longitude: lastCoordinate.longitude
             }}
             title={t('map.label.markerCurrent')}
-            pinColor="#007AFF"
+            pinColor={theme.accent}
           />
         )}
       </RNMapView>

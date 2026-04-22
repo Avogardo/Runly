@@ -77,8 +77,8 @@ export const IntervalConfigScreen: FC = () => {
             <Switch
               value={startWithHeavy}
               onValueChange={setStartWithHeavy}
-              trackColor={{false: 'rgba(255,255,255,0.1)', true: theme.accent}}
-              thumbColor="#fff"
+              trackColor={{false: theme.switchTrackOff, true: theme.accent}}
+              thumbColor={theme.textPrimary}
             />
           </View>
         </GlassCard>
@@ -89,8 +89,8 @@ export const IntervalConfigScreen: FC = () => {
             <Switch
               value={voiceEnabled}
               onValueChange={setVoiceEnabled}
-              trackColor={{false: 'rgba(255,255,255,0.1)', true: theme.accent}}
-              thumbColor="#fff"
+              trackColor={{false: theme.switchTrackOff, true: theme.accent}}
+              thumbColor={theme.textPrimary}
             />
           </View>
         </GlassCard>
@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
     paddingVertical: 18,
     borderRadius: theme.radius.full,
     borderWidth: 1,
-    backgroundColor: 'rgba(168, 85, 247, 0.15)',
+    backgroundColor: theme.btnAccentBg,
     borderColor: theme.accent,
     ...theme.glow(theme.accent, 0.5)
   },

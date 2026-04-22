@@ -286,32 +286,32 @@ const styles = StyleSheet.create({
     transform: [{scale: 0.96}]
   },
   btnStart: {
-    backgroundColor: 'rgba(52, 211, 153, 0.15)',
+    backgroundColor: theme.btnSuccessBg,
     borderColor: theme.success,
     ...theme.glow(theme.success, 0.4)
   },
   btnPause: {
-    backgroundColor: 'rgba(251, 191, 36, 0.15)',
+    backgroundColor: theme.btnWarningBg,
     borderColor: theme.warning,
     ...theme.glow(theme.warning, 0.4)
   },
   btnStop: {
-    backgroundColor: 'rgba(248, 113, 113, 0.15)',
+    backgroundColor: theme.btnDangerBg,
     borderColor: theme.danger,
     ...theme.glow(theme.danger, 0.4)
   },
   btnReset: {
-    backgroundColor: 'rgba(168, 85, 247, 0.15)',
+    backgroundColor: theme.btnAccentBg,
     borderColor: theme.accent,
     ...theme.glow(theme.accent, 0.4)
   },
   btnSave: {
-    backgroundColor: 'rgba(52, 211, 153, 0.15)',
+    backgroundColor: theme.btnSuccessBg,
     borderColor: theme.success,
     ...theme.glow(theme.success, 0.4)
   },
   btnInterval: {
-    backgroundColor: 'rgba(129, 140, 248, 0.15)',
+    backgroundColor: theme.btnInfoBg,
     borderColor: theme.info,
     ...theme.glow(theme.info, 0.4)
   },

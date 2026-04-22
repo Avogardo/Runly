@@ -177,15 +177,15 @@ const styles = StyleSheet.create({
   },
   deleteBtn: {
     marginTop: 32,
-    backgroundColor: 'rgba(255, 82, 82, 0.10)',
+    backgroundColor: theme.dangerSurface,
     borderRadius: theme.radius.sm,
     borderWidth: 1,
-    borderColor: 'rgba(255, 82, 82, 0.25)',
+    borderColor: theme.dangerSurfaceBorder,
     paddingVertical: 14,
     alignItems: 'center'
   },
   deleteBtnPressed: {
-    backgroundColor: 'rgba(255, 82, 82, 0.22)',
+    backgroundColor: theme.dangerSurfacePressed,
     transform: [{scale: 0.98}]
   },
   deleteBtnText: {
