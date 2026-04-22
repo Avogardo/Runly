@@ -1,7 +1,3 @@
-/**
- * Formatuje dystans w metrach do czytelnego stringa.
- * np. 1234.5 → "1.23 km", 850 → "850 m"
- */
 export function formatDistance(meters: number): string {
   if (meters < 1000) {
     return `${Math.round(meters)} m`
@@ -9,10 +5,6 @@ export function formatDistance(meters: number): string {
   return `${(meters / 1000).toFixed(2)} km`
 }
 
-/**
- * Formatuje tempo (min/km) do stringa.
- * np. 5.5 → "5'30\"", null → "--:--"
- */
 export function formatPace(paceMinPerKm: number | null): string {
   if (paceMinPerKm === null || !isFinite(paceMinPerKm)) return '--:--'
   const min = Math.floor(paceMinPerKm)
@@ -20,9 +12,6 @@ export function formatPace(paceMinPerKm: number | null): string {
   return `${min}'${String(sec).padStart(2, '0')}"`
 }
 
-/**
- * Formatuje czas w ms do stringa MM:SS lub HH:MM:SS.
- */
 export function formatTime(ms: number): string {
   const totalSec = Math.floor(ms / 1000)
   const hrs = Math.floor(totalSec / 3600)

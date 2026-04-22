@@ -6,7 +6,7 @@ export type RunState = {
   status: RunStatus
   path: Coordinate[]
   startedAt: string | null
-  elapsedMs: number // czas w milisekundach
+  elapsedMs: number
 }
 
 export type RunAction =

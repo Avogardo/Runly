@@ -3,10 +3,6 @@ import {Coordinate} from '@/types'
 
 import {haversineDistance} from './haversine'
 
-/**
- * Filtruje "skaczące" punkty GPS.
- * Odrzuca punkty, które są bliżej niż MIN_DISTANCE_M od poprzedniego.
- */
 export function filterGpsNoise(path: Coordinate[]): Coordinate[] {
   if (path.length === 0) return []
 

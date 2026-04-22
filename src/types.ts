@@ -8,7 +8,7 @@ export type Run = {
   id: string
   startedAt: string
   endedAt: string
-  distance: number // w metrach
-  duration: number // w sekundach
+  distance: number // in meters
+  duration: number // in seconds
   path: Coordinate[]
 }

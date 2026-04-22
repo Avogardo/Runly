@@ -23,7 +23,6 @@ export function useRunTracking(): UseRunTrackingReturn {
   const locationSubRef = useRef<LocationSubscription | null>(null)
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
-  // --- Timer ---
   const startTimer = useCallback(() => {
     if (timerRef.current) return
     timerRef.current = setInterval(() => {
@@ -38,7 +37,6 @@ export function useRunTracking(): UseRunTrackingReturn {
     }
   }, [])
 
-  // --- GPS subscription ---
   const startLocationWatch = useCallback(async () => {
     const sub = await watchPosition((coord: Coordinate) => {
       dispatch({type: 'ADD_POINT', coord})
@@ -51,7 +49,6 @@ export function useRunTracking(): UseRunTrackingReturn {
     locationSubRef.current = null
   }, [])
 
-  // --- Actions ---
   const start = useCallback(async () => {
     const granted = await requestLocationPermission()
     if (!granted) {
@@ -91,7 +88,6 @@ export function useRunTracking(): UseRunTrackingReturn {
     dispatch({type: 'RESET'})
   }, [stopLocationWatch, stopTimer])
 
-  // Cleanup on unmount
   useEffect(() => {
     return () => {
       locationSubRef.current?.remove()

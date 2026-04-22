@@ -3,10 +3,6 @@ import {Coordinate} from '@/types'
 import {filterGpsNoise} from './gpsFilter'
 import {haversineDistance} from './haversine'
 
-/**
- * Oblicza łączny dystans z tablicy punktów GPS (w metrach).
- * Automatycznie filtruje szum GPS.
- */
 export function calculateTotalDistance(path: Coordinate[]): number {
   const filtered = filterGpsNoise(path)
   let total = 0
@@ -16,13 +12,9 @@ export function calculateTotalDistance(path: Coordinate[]): number {
   return total
 }
 
-/**
- * Oblicza tempo (min/km) na podstawie dystansu (m) i czasu (ms).
- * Zwraca null jeśli dystans = 0.
- */
 export function calculatePace(distanceM: number, elapsedMs: number): number | null {
   if (distanceM <= 0) return null
   const distanceKm = distanceM / 1000
   const elapsedMin = elapsedMs / 1000 / 60
-  return elapsedMin / distanceKm // min/km
+  return elapsedMin / distanceKm
 }

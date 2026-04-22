@@ -1,4 +1,3 @@
-// Run feature — public API
 export {RunScreen} from './RunScreen'
 export {useRunTracking} from './useRunTracking'
 export type {UseRunTrackingReturn} from './useRunTracking'

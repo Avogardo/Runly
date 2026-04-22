@@ -1,11 +1,7 @@
 import {Coordinate} from '@/types'
 
-const EARTH_RADIUS_M = 6_371_000 // promień Ziemi w metrach
+const EARTH_RADIUS_M = 6_371_000
 
-/**
- * Oblicza odległość między dwoma punktami GPS (wzór Haversine).
- * Zwraca dystans w metrach.
- */
 export function haversineDistance(a: Coordinate, b: Coordinate): number {
   const toRad = (deg: number) => (deg * Math.PI) / 180
 

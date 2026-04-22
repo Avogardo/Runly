@@ -53,19 +53,15 @@ export function RunDetailsScreen() {
 
   return (
     <ScrollView style={styles.scrollView} contentContainerStyle={styles.container}>
-      {/* Data i godzina */}
       <Text style={styles.date}>{dateStr}</Text>
       <Text style={styles.timeRange}>
         {startTime} — {endTime}
       </Text>
 
-      {/* Mapa z trasą */}
       <RunMapView path={run.path} staticMode={true} />
 
-      {/* Statystyki */}
       <StatsBar stats={stats} />
 
-      {/* Dodatkowe informacje */}
       <View style={styles.detailsCard}>
         <DetailRow label="Punkty GPS" value={String(run.path.length)} />
         <DetailRow label="Śr. tempo" value={`${formatPace(pace)} /km`} />
@@ -73,7 +69,6 @@ export function RunDetailsScreen() {
         <DetailRow label="Czas trwania" value={formatTime(run.duration * 1000)} />
       </View>
 
-      {/* Przycisk usuwania */}
       <Pressable
         style={({pressed}) => [styles.deleteBtn, pressed && styles.deleteBtnPressed]}
         onPress={handleDelete}

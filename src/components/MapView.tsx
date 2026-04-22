@@ -7,9 +7,8 @@ import {Coordinate} from '@/types'
 
 type RunMapViewProps = {
   path: Coordinate[]
-  /** Czy mapa ma śledzić (animować kamerę) do aktualnej pozycji */
   followUser?: boolean
-  /** Tryb statyczny — dopasuj mapę do całej trasy (np. historia) */
+  // fit map to entire route
   staticMode?: boolean
 }
 
@@ -20,7 +19,6 @@ export function RunMapView({path, followUser = false, staticMode = false}: RunMa
   const lastCoord = path.length > 0 ? path[path.length - 1] : null
   const firstCoord = path.length > 0 ? path[0] : null
 
-  // Pobierz aktualną lokalizację na start (przed biegiem)
   useEffect(() => {
     if (path.length === 0) {
       getCurrentPosition()
@@ -29,7 +27,6 @@ export function RunMapView({path, followUser = false, staticMode = false}: RunMa
     }
   }, [path.length === 0])
 
-  // Animuj kamerę do ostatniej pozycji w trybie follow
   useEffect(() => {
     if (followUser && lastCoord && mapRef.current) {
       mapRef.current.animateToRegion(
@@ -39,12 +36,11 @@ export function RunMapView({path, followUser = false, staticMode = false}: RunMa
           latitudeDelta: 0.005,
           longitudeDelta: 0.005
         },
-        500 // animacja 500ms
+        500
       )
     }
   }, [followUser, lastCoord?.latitude, lastCoord?.longitude])
 
-  // W trybie statycznym — dopasuj widok do całej trasy
   useEffect(() => {
     if (staticMode && path.length >= 2 && mapRef.current) {
       mapRef.current.fitToCoordinates(
@@ -57,7 +53,6 @@ export function RunMapView({path, followUser = false, staticMode = false}: RunMa
     }
   }, [staticMode, path.length])
 
-  // Przed biegiem — pokaż mapę z aktualną lokalizacją
   if (path.length === 0) {
     if (!initialLocation) {
       return (
@@ -103,7 +98,6 @@ export function RunMapView({path, followUser = false, staticMode = false}: RunMa
         showsUserLocation={false}
         showsMyLocationButton={false}
       >
-        {/* Trasa */}
         {path.length >= 2 && (
           <Polyline
             coordinates={path.map((p) => ({
@@ -115,7 +109,6 @@ export function RunMapView({path, followUser = false, staticMode = false}: RunMa
           />
         )}
 
-        {/* Marker startu */}
         {firstCoord && (
           <Marker
             coordinate={{
@@ -127,7 +120,6 @@ export function RunMapView({path, followUser = false, staticMode = false}: RunMa
           />
         )}
 
-        {/* Marker aktualnej pozycji */}
         {lastCoord && path.length > 1 && (
           <Marker
             coordinate={{

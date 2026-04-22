@@ -1,4 +1,3 @@
-// History feature — public API
 export {HistoryScreen} from './HistoryScreen'
 export {RunDetailsScreen} from './RunDetailsScreen'
 export {useRunHistory} from './useRunHistory'

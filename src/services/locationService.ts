@@ -3,18 +3,11 @@ import * as Location from 'expo-location'
 import {GPS_TIME_INTERVAL_MS, GPS_DISTANCE_INTERVAL_M} from '@/constants/config'
 import {Coordinate} from '@/types'
 
-/**
- * Prosi o uprawnienia foreground location.
- * Zwraca true jeśli przyznane, false jeśli odmówione.
- */
 export async function requestLocationPermission(): Promise<boolean> {
   const {status} = await Location.requestForegroundPermissionsAsync()
   return status === Location.PermissionStatus.GRANTED
 }
 
-/**
- * Pobiera aktualną pozycję (jednorazowo).
- */
 export async function getCurrentPosition(): Promise<Coordinate> {
   const location = await Location.getCurrentPositionAsync({
     accuracy: Location.Accuracy.High
@@ -26,16 +19,12 @@ export async function getCurrentPosition(): Promise<Coordinate> {
   }
 }
 
-/**
- * Subskrybuje aktualizacje lokalizacji.
- * Zwraca obiekt subskrypcji — wywołaj .remove() aby się odsubskrybować.
- */
 export async function watchPosition(
   onLocation: (coord: Coordinate) => void,
   intervalMs: number = GPS_TIME_INTERVAL_MS,
   distanceMeters: number = GPS_DISTANCE_INTERVAL_M
 ): Promise<Location.LocationSubscription> {
-  const subscription = await Location.watchPositionAsync(
+  return await Location.watchPositionAsync(
     {
       accuracy: Location.Accuracy.High,
       timeInterval: intervalMs,
@@ -49,5 +38,4 @@ export async function watchPosition(
       })
     }
   )
-  return subscription
 }

@@ -23,9 +23,7 @@ async function getDb(): Promise<SQLite.SQLiteDatabase> {
   return _db
 }
 
-/** Zapisuje bieg do bazy. Zwraca zapisany Run. */
 export async function saveRun(run: Run): Promise<Run> {
-  // Walidacja: nie zapisuj pustych biegów
   if (run.path.length === 0 || run.duration <= 0) {
     throw new Error('Nie można zapisać pustego biegu')
   }
@@ -39,7 +37,6 @@ export async function saveRun(run: Run): Promise<Run> {
   return run
 }
 
-/** Pobiera wszystkie biegi (najnowsze pierwsze). */
 export async function getAllRuns(): Promise<Run[]> {
   const db = await getDb()
   const rows = await db.getAllAsync<{
@@ -57,7 +54,6 @@ export async function getAllRuns(): Promise<Run[]> {
   }))
 }
 
-/** Pobiera pojedynczy bieg po ID. */
 export async function getRunById(id: string): Promise<Run | null> {
   const db = await getDb()
   const row = await db.getFirstAsync<{
@@ -73,7 +69,6 @@ export async function getRunById(id: string): Promise<Run | null> {
   return {...row, path: JSON.parse(row.path) as Coordinate[]}
 }
 
-/** Usuwa bieg po ID. */
 export async function deleteRun(id: string): Promise<void> {
   const db = await getDb()
   await db.runAsync('DELETE FROM runs WHERE id = ?', [id])

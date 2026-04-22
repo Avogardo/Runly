@@ -71,13 +71,10 @@ export function RunScreen() {
         {status === 'stopped' && 'Bieg zakończony!'}
       </Text>
 
-      {/* Mapa */}
       <RunMapView path={path} followUser={status === 'running'} staticMode={status === 'stopped'} />
 
-      {/* Stats */}
       <StatsBar stats={stats} />
 
-      {/* Buttons */}
       <View style={styles.buttonsRow}>
         {status === 'idle' && (
           <Pressable style={[styles.btn, styles.btnStart]} onPress={() => void start()}>
