@@ -1,3 +1,5 @@
+import {IntervalType} from '@/types'
+
 import {RunAction, RunState} from '../types'
 
 export const initialRunState: RunState = {
@@ -23,13 +25,13 @@ export function getCurrentIntervalDurationMs(state: RunState): number {
 }
 
 /** Get type of current interval */
-export function getCurrentIntervalType(state: RunState): 'light' | 'heavy' {
-  if (!state.intervalConfig) return 'light'
+export function getCurrentIntervalType(state: RunState): IntervalType {
+  if (!state.intervalConfig) return IntervalType.Light
   const {intervalConfig, currentIntervalIndex} = state
   const isHeavy = intervalConfig.startWithHeavy
     ? currentIntervalIndex % 2 === 0
     : currentIntervalIndex % 2 === 1
-  return isHeavy ? 'heavy' : 'light'
+  return isHeavy ? IntervalType.Heavy : IntervalType.Light
 }
 
 export function runReducer(state: RunState, action: RunAction): RunState {

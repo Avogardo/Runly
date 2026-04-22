@@ -4,7 +4,7 @@ import {useTranslation} from 'react-i18next'
 import {Alert} from 'react-native'
 
 import {requestLocationPermission, watchPosition} from '@/services/locationService'
-import {Coordinate, IntervalConfig} from '@/types'
+import {Coordinate, IntervalConfig, IntervalType} from '@/types'
 
 import {TIMER_INTERVAL_MS} from '../consts'
 import {
@@ -27,7 +27,7 @@ export type UseRunTrackingReturn = {
   setIntervalConfig: (config: IntervalConfig) => void
   clearIntervalConfig: () => void
   // Interval derived values
-  currentIntervalType: 'light' | 'heavy'
+  currentIntervalType: IntervalType
   intervalTimeRemainingMs: number
   intervalProgress: string
 }

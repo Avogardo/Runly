@@ -1,5 +1,11 @@
 import {Coordinate} from './gps.types'
 
+export const IntervalType = {
+  Light: 'light',
+  Heavy: 'heavy'
+} as const
+export type IntervalType = (typeof IntervalType)[keyof typeof IntervalType]
+
 export type IntervalConfig = {
   total: number
   lightDurationSec: number
@@ -9,7 +15,7 @@ export type IntervalConfig = {
 }
 
 export type Interval = {
-  type: 'light' | 'heavy'
+  type: IntervalType
   startedAt: number
   endedAt: number
   duration: number

@@ -4,6 +4,7 @@ import i18next from 'i18next'
 
 import {RunState, RunAction} from '../types'
 import {getCurrentIntervalDurationMs, getCurrentIntervalType} from '../stores'
+import {IntervalType} from '@/types'
 
 /**
  * Hook that watches interval elapsed time and triggers transitions + voice feedback.
@@ -51,7 +52,7 @@ export function useIntervalTimer(state: RunState, dispatch: React.Dispatch<RunAc
     const type = getCurrentIntervalType(state)
     const remaining = state.intervalConfig.total - state.currentIntervalIndex
 
-    const typeKey = type === 'heavy' ? 'speech.startHeavy' : 'speech.startLight'
+    const typeKey = type === IntervalType.Heavy ? 'speech.startHeavy' : 'speech.startLight'
     const message = `${i18next.t(typeKey)}. ${i18next.t('speech.remaining', {count: remaining})}`
 
     Speech.speak(message, {language: i18next.language})

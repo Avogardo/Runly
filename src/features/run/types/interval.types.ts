@@ -1,3 +1,5 @@
+import {IntervalType} from '@/types'
+
 export type IntervalConfig = {
   total: number
   lightDurationSec: number
@@ -7,7 +9,7 @@ export type IntervalConfig = {
 }
 
 export type Interval = {
-  type: 'light' | 'heavy'
+  type: IntervalType
   startedAt: number
   endedAt: number
   duration: number

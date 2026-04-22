@@ -6,9 +6,7 @@ import {View, Text, StyleSheet, Pressable, ScrollView, Alert} from 'react-native
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
 import {useRouter, useLocalSearchParams} from 'expo-router'
 
-import {StatsBar} from '@/components/StatsBar'
-import {RunMapView} from '@/components/MapView'
-import {IntervalBanner} from '@/components/IntervalBanner'
+import {StatsBar, IntervalBanner, RunMapView} from '@/components'
 import {theme} from '@/ui'
 import {saveRun} from '@/services/storageService'
 import {Run, IntervalConfig} from '@/types'

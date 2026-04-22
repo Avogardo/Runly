@@ -3,7 +3,7 @@ import {useTranslation} from 'react-i18next'
 import {StyleSheet, View, Text, ActivityIndicator} from 'react-native'
 import RNMapView, {Polyline, Marker} from 'react-native-maps'
 
-import {getCurrentPosition} from '@/services/locationService'
+import {getCurrentPosition} from '@/services'
 import {Coordinate} from '@/types'
 import {theme} from '@/ui'
 
@@ -19,35 +19,36 @@ export function RunMapView({path, followUser = false, staticMode = false}: RunMa
   const mapRef = useRef<RNMapView>(null)
   const [initialLocation, setInitialLocation] = useState<Coordinate | null>(null)
 
-  const lastCoord = path.length > 0 ? path[path.length - 1] : null
-  const firstCoord = path.length > 0 ? path[0] : null
+  const firstCoordinate = path.length > 0 ? path[0] : null
+  const lastCoordinate = path.length > 0 ? path.at(-1) : null
+  const isPathEmpty = path.length === 0
 
   useEffect(() => {
-    if (path.length === 0) {
+    if (isPathEmpty) {
       getCurrentPosition()
         .then(setInitialLocation)
         .catch(() => {})
     }
-  }, [path.length === 0])
+  }, [isPathEmpty])
 
   useEffect(() => {
-    if (followUser && lastCoord && mapRef.current) {
+    if (followUser && lastCoordinate && mapRef.current) {
       mapRef.current.animateToRegion(
         {
-          latitude: lastCoord.latitude,
-          longitude: lastCoord.longitude,
+          latitude: lastCoordinate.latitude,
+          longitude: lastCoordinate.longitude,
           latitudeDelta: 0.005,
           longitudeDelta: 0.005
         },
         500
       )
     }
-  }, [followUser, lastCoord?.latitude, lastCoord?.longitude])
+  }, [followUser, lastCoordinate?.latitude, lastCoordinate?.longitude])
 
   useEffect(() => {
     if (staticMode && path.length >= 2 && mapRef.current) {
       mapRef.current.fitToCoordinates(
-        path.map((p) => ({latitude: p.latitude, longitude: p.longitude})),
+        path.map(({latitude, longitude}) => ({latitude, longitude})),
         {
           edgePadding: {top: 50, right: 50, bottom: 50, left: 50},
           animated: true
@@ -56,7 +57,7 @@ export function RunMapView({path, followUser = false, staticMode = false}: RunMa
     }
   }, [staticMode, path.length])
 
-  if (path.length === 0) {
+  if (isPathEmpty) {
     if (!initialLocation) {
       return (
         <View style={[styles.container, styles.placeholder]}>
@@ -89,10 +90,10 @@ export function RunMapView({path, followUser = false, staticMode = false}: RunMa
         ref={mapRef}
         style={styles.map}
         initialRegion={
-          firstCoord
+          firstCoordinate
             ? {
-                latitude: firstCoord.latitude,
-                longitude: firstCoord.longitude,
+                latitude: firstCoordinate.latitude,
+                longitude: firstCoordinate.longitude,
                 latitudeDelta: 0.005,
                 longitudeDelta: 0.005
               }
@@ -112,22 +113,22 @@ export function RunMapView({path, followUser = false, staticMode = false}: RunMa
           />
         )}
 
-        {firstCoord && (
+        {firstCoordinate && (
           <Marker
             coordinate={{
-              latitude: firstCoord.latitude,
-              longitude: firstCoord.longitude
+              latitude: firstCoordinate.latitude,
+              longitude: firstCoordinate.longitude
             }}
             title={t('map.label.markerStart')}
             pinColor="#34C759"
           />
         )}
 
-        {lastCoord && path.length > 1 && (
+        {lastCoordinate && path.length > 1 && (
           <Marker
             coordinate={{
-              latitude: lastCoord.latitude,
-              longitude: lastCoord.longitude
+              latitude: lastCoordinate.latitude,
+              longitude: lastCoordinate.longitude
             }}
             title={t('map.label.markerCurrent')}
             pinColor="#007AFF"

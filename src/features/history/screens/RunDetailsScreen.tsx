@@ -5,8 +5,7 @@ import {useTranslation} from 'react-i18next'
 import {View, Text, StyleSheet, ScrollView, ActivityIndicator, Pressable} from 'react-native'
 
 import {GlassCard, theme} from '@/ui'
-import {RunMapView} from '@/components/MapView'
-import {StatsBar} from '@/components/StatsBar'
+import {RunMapView, StatsBar} from '@/components'
 import {calculatePace, formatDistance, formatTime, formatPace} from '@/utils'
 
 import {useRunDetails} from '../hooks'

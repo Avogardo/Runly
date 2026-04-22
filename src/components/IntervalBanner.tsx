@@ -3,9 +3,10 @@ import {useTranslation} from 'react-i18next'
 
 import {GlassCard, theme} from '@/ui'
 import {formatTime} from '@/utils'
+import {IntervalType} from '@/types'
 
 type IntervalBannerProps = {
-  intervalType: 'light' | 'heavy'
+  intervalType: IntervalType
   timeRemainingMs: number
   progress: string
   finished: boolean
@@ -27,7 +28,7 @@ export function IntervalBanner({
     )
   }
 
-  const isHeavy = intervalType === 'heavy'
+  const isHeavy = intervalType === IntervalType.Heavy
   const color = isHeavy ? theme.danger : theme.success
   const icon = isHeavy ? '🔴' : '🟢'
   const typeLabel = isHeavy ? t('interval.label.heavy') : t('interval.label.light')
