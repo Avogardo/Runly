@@ -138,5 +138,40 @@
       "openSettings": "Open Settings",
       "retry": "Try Again"
     }
+  },
+  "auth": {
+    "label": {
+      "loginTitle": "Welcome back",
+      "loginSubtitle": "Log in to sync your runs to the cloud",
+      "registerTitle": "Create account",
+      "registerSubtitle": "Sign up to sync your runs across devices",
+      "email": "Email",
+      "password": "Password",
+      "name": "Name",
+      "namePlaceholder": "John",
+      "passwordPlaceholder": "Min. 6 characters",
+      "noAccount": "Don't have an account?",
+      "hasAccount": "Already have an account?"
+    },
+    "action": {
+      "login": "LOG IN",
+      "register": "SIGN UP",
+      "logout": "Log out",
+      "skip": "Continue without account"
+    },
+    "error": {
+      "fillAll": "Please fill in all required fields",
+      "passwordShort": "Password must be at least 6 characters",
+      "invalidCredentials": "Invalid email or password",
+      "emailTaken": "Email already registered",
+      "networkError": "Network error. Please check your connection."
+    }
+  },
+  "sync": {
+    "label": {
+      "synced": "Synced",
+      "pending": "Pending sync",
+      "error": "Sync failed"
+    }
   }
 }

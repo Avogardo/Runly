@@ -6,3 +6,8 @@ export const GPS_TIME_INTERVAL_MS = 1000
 export const GPS_DISTANCE_INTERVAL_M = 5
 
 export const DB_NAME: string = typeof extra.DB_NAME === 'string' ? extra.DB_NAME : 'runly.db'
+
+export const API_BASE_URL: string =
+  typeof extra.API_BASE_URL === 'string'
+    ? extra.API_BASE_URL
+    : 'http://localhost:3000'

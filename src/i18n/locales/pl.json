@@ -138,5 +138,40 @@
       "openSettings": "Otwórz Ustawienia",
       "retry": "Spróbuj ponownie"
     }
+  },
+  "auth": {
+    "label": {
+      "loginTitle": "Witaj ponownie",
+      "loginSubtitle": "Zaloguj się, aby synchronizować biegi z chmurą",
+      "registerTitle": "Utwórz konto",
+      "registerSubtitle": "Zarejestruj się, aby synchronizować biegi między urządzeniami",
+      "email": "Email",
+      "password": "Hasło",
+      "name": "Imię",
+      "namePlaceholder": "Jan",
+      "passwordPlaceholder": "Min. 6 znaków",
+      "noAccount": "Nie masz konta?",
+      "hasAccount": "Masz już konto?"
+    },
+    "action": {
+      "login": "ZALOGUJ SIĘ",
+      "register": "ZAREJESTRUJ SIĘ",
+      "logout": "Wyloguj",
+      "skip": "Kontynuuj bez konta"
+    },
+    "error": {
+      "fillAll": "Wypełnij wszystkie wymagane pola",
+      "passwordShort": "Hasło musi mieć co najmniej 6 znaków",
+      "invalidCredentials": "Nieprawidłowy email lub hasło",
+      "emailTaken": "Email jest już zarejestrowany",
+      "networkError": "Błąd sieci. Sprawdź połączenie."
+    }
+  },
+  "sync": {
+    "label": {
+      "synced": "Zsynchronizowane",
+      "pending": "Oczekuje na synchronizację",
+      "error": "Synchronizacja nie powiodła się"
+    }
   }
 }

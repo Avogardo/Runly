@@ -140,6 +140,33 @@
 
 ---
 
+## Phase 6.5 — Cloud Sync ☁️
+
+**Goal:** Sync runs to Runly Web backend so they can be viewed in the browser.
+
+- [x] Auth service (`authService.ts`) — login, register, session persistence via `expo-secure-store`
+- [x] Sync service (`syncService.ts`) — upload runs to API, retry pending, delete from cloud
+- [x] Login & Register screens (glassmorphism UI, email + password)
+- [x] Auth context (`AuthProvider`, `useAuth`) — global auth state
+- [x] Navigation: `(auth)` route group with login/register screens
+- [x] SQLite migration: `syncStatus` + `cloudId` columns
+- [x] Auto-sync on save (fire-and-forget after `saveRun`)
+- [x] Auto-sync on app open (`useSyncOnOpen` hook)
+- [x] `SyncStatusBadge` component (cloud icon per run in history)
+- [x] Account bar in History screen (login prompt or user info + logout)
+- [x] Cloud delete (when deleting a synced run, also DELETE from API)
+- [x] "Skip" option — app works fully offline without account
+- [x] i18n translations (EN + PL) for all auth & sync strings
+
+**What you'll learn:**
+- Cookie-based auth from React Native (CSRF + session tokens)
+- Offline-first sync strategy (local-first, sync when online)
+- Secure storage (`expo-secure-store`)
+- Context API for global auth state
+- Integration with REST API from mobile
+
+---
+
 ## Phase 7 — Background Tracking 🔋
 
 **Goal:** GPS works even when the app is in the background.
@@ -182,6 +209,7 @@
 | 5     | History             | 🔴 Must |
 | 5.5   | Intervals           | 🟡 Should |
 | 6     | Polish & UX         | 🟡 Should |
+| 6.5   | Cloud Sync          | 🟡 Should |
 | 7     | Background tracking | 🟡 Should |
 | 8     | Statistics & extras | 🟢 Nice to have |
 

@@ -1,4 +1,4 @@
-export {GPS_DISTANCE_INTERVAL_M, GPS_TIME_INTERVAL_MS, DB_NAME} from './config.consts'
+export {GPS_DISTANCE_INTERVAL_M, GPS_TIME_INTERVAL_MS, DB_NAME, API_BASE_URL} from './config.consts'
 export {MS_PER_SEC, SEC_PER_MIN, SEC_PER_HOUR, M_PER_KM} from './units.consts'
 export {
   MAP_FOLLOW_DELTA,

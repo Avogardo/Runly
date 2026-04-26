@@ -7,6 +7,7 @@ import {GlassCard, theme} from '@/ui'
 import {MS_PER_SEC} from '@/consts'
 import {Run} from '@/types'
 import {calculatePace, formatDistance, formatTime, formatPace} from '@/utils'
+import {SyncStatusBadge} from '@/components'
 
 type RunCardProps = {
   run: Run
@@ -39,7 +40,10 @@ export const RunCard: FC<RunCardProps> = ({run}) => {
       <GlassCard style={styles.cardWrapper}>
         <View style={styles.cardHeader}>
           <Text style={styles.cardDate}>{dateStr}</Text>
-          <Text style={styles.cardTime}>{timeStr}</Text>
+          <View style={styles.cardHeaderRight}>
+            <SyncStatusBadge status={run.syncStatus} />
+            <Text style={styles.cardTime}>{timeStr}</Text>
+          </View>
         </View>
         <View style={styles.cardStats}>
           <View style={styles.cardStat}>
@@ -72,7 +76,13 @@ const styles = StyleSheet.create({
   cardHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     marginBottom: 14
+  },
+  cardHeaderRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8
   },
   cardDate: {
     fontSize: 16,

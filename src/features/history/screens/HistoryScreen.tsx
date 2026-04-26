@@ -1,12 +1,12 @@
 import {type FC} from 'react'
 import {LinearGradient} from 'expo-linear-gradient'
 import {useTranslation} from 'react-i18next'
-import {Text, StyleSheet, FlatList} from 'react-native'
+import {View, Text, StyleSheet, FlatList} from 'react-native'
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
 
 import {theme} from '@/ui'
 
-import {RunCard} from '../components'
+import {AccountBar, RunCard} from '../components'
 import {useRunHistory} from '../hooks'
 
 export const HistoryScreen: FC = () => {
@@ -29,11 +29,14 @@ export const HistoryScreen: FC = () => {
     return (
       <LinearGradient
         colors={[...theme.bgGradient]}
-        style={[styles.centered, {paddingTop: insets.top}]}
+        style={styles.gradient}
       >
-        <Text style={styles.emptyIcon}>🏁</Text>
-        <Text style={styles.emptyText}>{t('historyScreen.label.emptyTitle')}</Text>
-        <Text style={styles.emptyHint}>{t('historyScreen.label.emptyHint')}</Text>
+        <AccountBar />
+        <View style={styles.centered}>
+          <Text style={styles.emptyIcon}>🏁</Text>
+          <Text style={styles.emptyText}>{t('historyScreen.label.emptyTitle')}</Text>
+          <Text style={styles.emptyHint}>{t('historyScreen.label.emptyHint')}</Text>
+        </View>
       </LinearGradient>
     )
   }
@@ -44,7 +47,8 @@ export const HistoryScreen: FC = () => {
         data={runs}
         keyExtractor={(item) => item.id}
         style={styles.list}
-        contentContainerStyle={[styles.listContent, {paddingTop: insets.top + 16}]}
+        contentContainerStyle={styles.listContent}
+        ListHeaderComponent={<AccountBar />}
         renderItem={({item}) => <RunCard run={item} />}
       />
     </LinearGradient>

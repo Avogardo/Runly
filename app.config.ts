@@ -34,8 +34,9 @@ export default ({config}: ConfigContext): ExpoConfig => ({
   web: {
     favicon: './assets/favicon.png'
   },
-  plugins: ['expo-router', 'expo-sqlite'],
+  plugins: ['expo-router', 'expo-sqlite', 'expo-secure-store'],
   extra: {
-    DB_NAME: String(process.env.DB_NAME || 'runly.db')
+    DB_NAME: String(process.env.DB_NAME || 'runly.db'),
+    API_BASE_URL: String(process.env.API_BASE_URL || 'http://localhost:3000')
   }
 })

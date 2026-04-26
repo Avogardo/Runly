@@ -10,6 +10,7 @@ import {StatsBar, IntervalBanner, RunMapView} from '@/components'
 import {theme} from '@/ui'
 import {MS_PER_SEC} from '@/consts'
 import {saveRun} from '@/services/storageService'
+import {syncService} from '@/services/syncService'
 import {Run, IntervalConfig} from '@/types'
 import {calculatePace, formatDistance, formatPace, formatTime} from '@/utils'
 
@@ -102,6 +103,10 @@ export const RunScreen: FC = () => {
         `✅ ${t('runScreen.alert.saveSuccessTitle')}`,
         t('runScreen.alert.saveSuccess', {distance: formatDistance(distance)})
       )
+      // Fire-and-forget cloud sync
+      syncService.syncRun(run).catch(() => {
+        // Silently fail — will retry on next app open
+      })
     } catch (e: unknown) {
       const message = e instanceof Error ? e.message : t('runScreen.alert.unknownError')
       Alert.alert(t('runScreen.alert.saveErrorTitle'), message)

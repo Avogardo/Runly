@@ -1,11 +1,16 @@
 import {Ionicons} from '@expo/vector-icons'
 import {Tabs} from 'expo-router'
 import {useTranslation} from 'react-i18next'
+import {Pressable} from 'react-native'
 
 import {theme} from '@/ui'
+import {useSyncOnOpen, useAuth} from '@/hooks'
 
 export default function TabsLayout() {
   const {t} = useTranslation()
+  const {isAuthenticated, logout} = useAuth()
+
+  useSyncOnOpen()
 
   return (
     <Tabs
@@ -40,7 +45,14 @@ export default function TabsLayout() {
         options={{
           title: t('tabs.label.history'),
           headerShown: false,
-          tabBarIcon: ({color, size}) => <Ionicons name="list" size={size} color={color} />
+          tabBarIcon: ({color, size}) => <Ionicons name="list" size={size} color={color} />,
+          headerRight: isAuthenticated
+            ? () => (
+                <Pressable onPress={() => void logout()} style={{marginRight: 16}}>
+                  <Ionicons name="log-out-outline" size={22} color={theme.textSecondary} />
+                </Pressable>
+              )
+            : undefined
         }}
       />
     </Tabs>

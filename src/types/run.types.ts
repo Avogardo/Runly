@@ -26,6 +26,13 @@ export type IntervalSummary = {
   intervals: Interval[]
 }
 
+export const SyncStatus = {
+  Pending: 'pending',
+  Synced: 'synced',
+  Error: 'error'
+} as const
+export type SyncStatus = (typeof SyncStatus)[keyof typeof SyncStatus]
+
 export type Run = {
   id: string
   startedAt: string
@@ -34,4 +41,6 @@ export type Run = {
   duration: number // in seconds
   path: Coordinate[]
   intervals?: IntervalSummary
+  syncStatus?: SyncStatus
+  cloudId?: string
 }
