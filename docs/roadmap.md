@@ -131,7 +131,7 @@
 - [x] Loading states and error handling (e.g. no GPS)
 - [x] Permission denial handling (message + button to settings)
 - [x] Splash screen and app icon
-- [ ] Testing on physical Android device
+- [x] Testing on physical Android device
 
 **What you'll learn:**
 - UX patterns in mobile

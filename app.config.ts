@@ -19,11 +19,17 @@ export default ({config}: ConfigContext): ExpoConfig => ({
     supportsTablet: true
   },
   android: {
+    package: 'com.runly.app',
     adaptiveIcon: {
       foregroundImage: './assets/adaptive-icon.png',
       backgroundColor: '#0B0B1E'
     },
-    edgeToEdgeEnabled: true
+    edgeToEdgeEnabled: true,
+    config: {
+      googleMaps: {
+        apiKey: String(process.env.GOOGLE_MAPS_API_KEY || '')
+      }
+    }
   },
   web: {
     favicon: './assets/favicon.png'
