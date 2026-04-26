@@ -1,4 +1,5 @@
 import '@/i18n'
+import '@/services/backgroundLocationTask'
 
 import {Stack} from 'expo-router'
 import {useTranslation} from 'react-i18next'

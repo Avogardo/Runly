@@ -1,8 +1,15 @@
 import {LocationSubscription} from 'expo-location'
 import {useReducer, useRef, useCallback, useEffect, useState} from 'react'
-import {useTranslation} from 'react-i18next'
+import {AppState, type AppStateStatus} from 'react-native'
 
-import {requestLocationPermission, watchPosition} from '@/services/locationService'
+import {
+  requestBackgroundLocationPermission,
+  watchPosition,
+  startBackgroundLocationUpdates,
+  stopBackgroundLocationUpdates,
+  onBackgroundLocation,
+  runningFlag
+} from '@/services'
 import {Coordinate, IntervalConfig, IntervalType} from '@/types'
 
 import {TIMER_INTERVAL_MS} from '../consts'
@@ -27,25 +34,22 @@ export type UseRunTrackingReturn = {
   reset: () => void
   setIntervalConfig: (config: IntervalConfig) => void
   clearIntervalConfig: () => void
-  // Interval derived values
   currentIntervalType: IntervalType
   intervalTimeRemainingMs: number
   intervalProgress: string
-  // GPS error
   gpsError: GPSError
   clearGpsError: () => void
 }
 
 export function useRunTracking(): UseRunTrackingReturn {
-  const {t} = useTranslation()
   const [state, dispatch] = useReducer(runReducer, initialRunState)
   const [gpsError, setGpsError] = useState<GPSError>(null)
 
-  // Interval timer hook
   useIntervalTimer(state, dispatch)
 
   const locationSubRef = useRef<LocationSubscription | null>(null)
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const appStateRef = useRef<AppStateStatus>(AppState.currentState)
 
   const startTimer = useCallback(() => {
     if (timerRef.current) return
@@ -62,10 +66,9 @@ export function useRunTracking(): UseRunTrackingReturn {
   }, [])
 
   const startLocationWatch = useCallback(async () => {
-    const sub = await watchPosition((coord: Coordinate) => {
+    locationSubRef.current = await watchPosition((coord: Coordinate) => {
       dispatch({type: 'ADD_POINT', coord})
     })
-    locationSubRef.current = sub
   }, [])
 
   const stopLocationWatch = useCallback(() => {
@@ -75,7 +78,8 @@ export function useRunTracking(): UseRunTrackingReturn {
 
   const start = useCallback(async () => {
     setGpsError(null)
-    const granted = await requestLocationPermission()
+
+    const granted = await requestBackgroundLocationPermission()
     if (!granted) {
       setGpsError('no_permission')
       return
@@ -83,8 +87,11 @@ export function useRunTracking(): UseRunTrackingReturn {
 
     try {
       dispatch({type: 'START', startedAt: new Date().toISOString()})
+      runningFlag.isRunning = true
+
       await startLocationWatch()
       startTimer()
+      await startBackgroundLocationUpdates()
     } catch {
       setGpsError('gps_error')
     }
@@ -92,25 +99,33 @@ export function useRunTracking(): UseRunTrackingReturn {
 
   const pause = useCallback(() => {
     dispatch({type: 'PAUSE'})
+    runningFlag.isRunning = false
     stopLocationWatch()
     stopTimer()
+    void stopBackgroundLocationUpdates()
   }, [stopLocationWatch, stopTimer])
 
   const resume = useCallback(async () => {
     dispatch({type: 'RESUME'})
+    runningFlag.isRunning = true
     await startLocationWatch()
     startTimer()
+    await startBackgroundLocationUpdates()
   }, [startLocationWatch, startTimer])
 
   const stop = useCallback(() => {
     dispatch({type: 'STOP'})
+    runningFlag.isRunning = false
     stopLocationWatch()
     stopTimer()
+    void stopBackgroundLocationUpdates()
   }, [stopLocationWatch, stopTimer])
 
   const reset = useCallback(() => {
+    runningFlag.isRunning = false
     stopLocationWatch()
     stopTimer()
+    void stopBackgroundLocationUpdates()
     dispatch({type: 'RESET'})
   }, [stopLocationWatch, stopTimer])
 
@@ -123,13 +138,32 @@ export function useRunTracking(): UseRunTrackingReturn {
   }, [])
 
   useEffect(() => {
+    const subscription = onBackgroundLocation((coord: Coordinate) => {
+      if (appStateRef.current !== 'active') {
+        dispatch({type: 'ADD_POINT', coord})
+      }
+    })
+
+    return () => subscription.remove()
+  }, [])
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', (nextState: AppStateStatus) => {
+      appStateRef.current = nextState
+    })
+
+    return () => subscription.remove()
+  }, [])
+
+  useEffect(() => {
     return () => {
       locationSubRef.current?.remove()
       if (timerRef.current) clearInterval(timerRef.current)
+      runningFlag.isRunning = false
+      void stopBackgroundLocationUpdates()
     }
   }, [])
 
-  // Derived interval values
   const currentIntervalType = getCurrentIntervalType(state)
   const durationMs = getCurrentIntervalDurationMs(state)
   const intervalTimeRemainingMs = Math.max(0, durationMs - state.intervalElapsedMs)

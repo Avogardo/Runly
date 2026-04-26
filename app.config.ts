@@ -34,7 +34,20 @@ export default ({config}: ConfigContext): ExpoConfig => ({
   web: {
     favicon: './assets/favicon.png'
   },
-  plugins: ['expo-router', 'expo-sqlite', 'expo-secure-store'],
+  plugins: [
+    'expo-router',
+    'expo-sqlite',
+    'expo-secure-store',
+    [
+      'expo-location',
+      {
+        isAndroidBackgroundLocationEnabled: true,
+        isAndroidForegroundServiceEnabled: true,
+        locationAlwaysAndWhenInUsePermission:
+          'Allow Runly to access your location to track your runs even when the app is in the background.'
+      }
+    ]
+  ],
   extra: {
     DB_NAME: String(process.env.DB_NAME || 'runly.db'),
     API_BASE_URL: String(process.env.API_BASE_URL || 'http://localhost:3000')

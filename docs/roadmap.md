@@ -171,11 +171,12 @@
 
 **Goal:** GPS works even when the app is in the background.
 
-- [ ] Configure `expo-location` background task
-- [ ] Background location permissions (Android)
-- [ ] Foreground service notification (required by Android)
+- [x] Configure `expo-location` background task (`TaskManager.defineTask`)
+- [x] Background location permissions (Android — `ACCESS_BACKGROUND_LOCATION`)
+- [x] Foreground service notification (required by Android)
+- [x] Event bridge: background task → foreground state via `DeviceEventEmitter`
+- [x] Battery optimization (lower accuracy + wider intervals in background)
 - [ ] Testing: lock screen → run still recording
-- [ ] Battery optimization (read frequency)
 
 **What you'll learn:**
 - Background tasks in React Native
