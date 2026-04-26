@@ -117,7 +117,7 @@
 
 **Goal:** Intervals (new feature)
 
-- [] `Interwały` — implementation
+- [x] `Interwały` — implementation
 
 ---
 
@@ -125,12 +125,12 @@
 
 **Goal:** Refine the app to a "I want to use this" level.
 
-- [ ] Run summary screen (after clicking Stop)
-- [ ] Nice formatting: `12:34 min`, `5.2 km`, `6'04" /km`
-- [ ] Screen transition animations
-- [ ] Loading states and error handling (e.g. no GPS)
-- [ ] Permission denial handling (message + button to settings)
-- [ ] Splash screen and app icon
+- [x] Run summary screen (after clicking Stop)
+- [x] Nice formatting: `12:34 min`, `5.2 km`, `6'04" /km`
+- [x] Screen transition animations
+- [x] Loading states and error handling (e.g. no GPS)
+- [x] Permission denial handling (message + button to settings)
+- [x] Splash screen and app icon
 - [ ] Testing on physical Android device
 
 **What you'll learn:**

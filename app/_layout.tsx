@@ -9,7 +9,12 @@ export default function RootLayout() {
   const {t} = useTranslation()
 
   return (
-    <Stack>
+    <Stack
+      screenOptions={{
+        animation: 'slide_from_right',
+        contentStyle: {backgroundColor: theme.bg}
+      }}
+    >
       <Stack.Screen name="(tabs)" options={{headerShown: false}} />
       <Stack.Screen
         name="run/[id]"
@@ -18,7 +23,8 @@ export default function RootLayout() {
           headerStyle: {backgroundColor: theme.bg},
           headerTintColor: theme.textPrimary,
           headerTitleStyle: {fontWeight: 'bold'},
-          headerShadowVisible: false
+          headerShadowVisible: false,
+          animation: 'slide_from_right'
         }}
       />
       <Stack.Screen
@@ -28,7 +34,9 @@ export default function RootLayout() {
           headerStyle: {backgroundColor: theme.bg},
           headerTintColor: theme.textPrimary,
           headerTitleStyle: {fontWeight: 'bold'},
-          headerShadowVisible: false
+          headerShadowVisible: false,
+          animation: 'slide_from_bottom',
+          presentation: 'modal'
         }}
       />
     </Stack>

@@ -114,5 +114,29 @@
     "startLight": "Start light interval",
     "remaining": "{{count}} intervals remaining",
     "intervalsComplete": "All intervals completed. Great job!"
+  },
+  "runSummary": {
+    "label": {
+      "title": "Run Complete!",
+      "gpsPoints": "GPS points"
+    },
+    "motivation": {
+      "amazing": "Amazing run! Over 10 km!",
+      "great": "Great job! Over 5 km!",
+      "good": "Nice work! Keep it up!",
+      "start": "Every run counts!"
+    }
+  },
+  "gpsError": {
+    "label": {
+      "noPermission": "Location access denied",
+      "noPermissionHint": "Runly needs location access to track your run. Please enable it in your device settings.",
+      "gpsUnavailable": "GPS unavailable",
+      "gpsUnavailableHint": "Could not access GPS. Make sure location services are enabled and try again."
+    },
+    "action": {
+      "openSettings": "Open Settings",
+      "retry": "Try Again"
+    }
   }
 }

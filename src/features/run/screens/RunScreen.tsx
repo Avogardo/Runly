@@ -13,6 +13,7 @@ import {saveRun} from '@/services/storageService'
 import {Run, IntervalConfig} from '@/types'
 import {calculatePace, formatDistance, formatPace, formatTime} from '@/utils'
 
+import {RunSummaryCard, GPSErrorBanner} from '../components'
 import {useRunTracking} from '../hooks'
 import {calculateTotalDistance, generateId} from '../utils'
 
@@ -39,7 +40,9 @@ export const RunScreen: FC = () => {
     clearIntervalConfig,
     currentIntervalType,
     intervalTimeRemainingMs,
-    intervalProgress
+    intervalProgress,
+    gpsError,
+    clearGpsError
   } = useRunTracking()
   const {status, path, elapsedMs} = state
 
@@ -135,7 +138,16 @@ export const RunScreen: FC = () => {
           {status === 'stopped' && t('runScreen.label.statusStopped')}
         </Text>
 
-        {/* Interval banner during run */}
+        {gpsError && status === 'idle' && (
+          <GPSErrorBanner
+            type={gpsError}
+            onRetry={() => {
+              clearGpsError()
+              void start()
+            }}
+          />
+        )}
+
         {hasIntervals && (status === 'running' || status === 'paused') && (
           <IntervalBanner
             intervalType={currentIntervalType}
@@ -145,13 +157,25 @@ export const RunScreen: FC = () => {
           />
         )}
 
-        <RunMapView
-          path={path}
-          followUser={status === 'running'}
-          staticMode={status === 'stopped'}
-        />
+        {status === 'stopped' && (
+          <RunSummaryCard
+            distance={distance}
+            elapsedMs={elapsedMs}
+            path={path}
+            startedAt={state.startedAt}
+          />
+        )}
 
-        <StatsBar stats={stats} />
+        {status !== 'stopped' && (
+          <>
+            <RunMapView
+              path={path}
+              followUser={status === 'running'}
+              staticMode={false}
+            />
+            <StatsBar stats={stats} />
+          </>
+        )}
 
         <View style={styles.buttonsRow}>
           {status === 'idle' && (

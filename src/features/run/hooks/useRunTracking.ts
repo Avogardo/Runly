@@ -1,7 +1,6 @@
 import {LocationSubscription} from 'expo-location'
-import {useReducer, useRef, useCallback, useEffect} from 'react'
+import {useReducer, useRef, useCallback, useEffect, useState} from 'react'
 import {useTranslation} from 'react-i18next'
-import {Alert} from 'react-native'
 
 import {requestLocationPermission, watchPosition} from '@/services/locationService'
 import {Coordinate, IntervalConfig, IntervalType} from '@/types'
@@ -17,6 +16,8 @@ import {RunState} from '../types'
 
 import {useIntervalTimer} from './useIntervalTimer'
 
+export type GPSError = 'no_permission' | 'gps_error' | null
+
 export type UseRunTrackingReturn = {
   state: RunState
   start: () => void
@@ -30,11 +31,15 @@ export type UseRunTrackingReturn = {
   currentIntervalType: IntervalType
   intervalTimeRemainingMs: number
   intervalProgress: string
+  // GPS error
+  gpsError: GPSError
+  clearGpsError: () => void
 }
 
 export function useRunTracking(): UseRunTrackingReturn {
   const {t} = useTranslation()
   const [state, dispatch] = useReducer(runReducer, initialRunState)
+  const [gpsError, setGpsError] = useState<GPSError>(null)
 
   // Interval timer hook
   useIntervalTimer(state, dispatch)
@@ -69,16 +74,21 @@ export function useRunTracking(): UseRunTrackingReturn {
   }, [])
 
   const start = useCallback(async () => {
+    setGpsError(null)
     const granted = await requestLocationPermission()
     if (!granted) {
-      Alert.alert(t('permissions.alert.title'), t('permissions.alert.message'))
+      setGpsError('no_permission')
       return
     }
 
-    dispatch({type: 'START', startedAt: new Date().toISOString()})
-    await startLocationWatch()
-    startTimer()
-  }, [startLocationWatch, startTimer, t])
+    try {
+      dispatch({type: 'START', startedAt: new Date().toISOString()})
+      await startLocationWatch()
+      startTimer()
+    } catch {
+      setGpsError('gps_error')
+    }
+  }, [startLocationWatch, startTimer])
 
   const pause = useCallback(() => {
     dispatch({type: 'PAUSE'})
@@ -127,6 +137,8 @@ export function useRunTracking(): UseRunTrackingReturn {
     ? `${state.currentIntervalIndex + 1}/${state.intervalConfig.total}`
     : ''
 
+  const clearGpsError = useCallback(() => setGpsError(null), [])
+
   return {
     state,
     start: () => void start(),
@@ -138,6 +150,8 @@ export function useRunTracking(): UseRunTrackingReturn {
     clearIntervalConfig,
     currentIntervalType,
     intervalTimeRemainingMs,
-    intervalProgress
+    intervalProgress,
+    gpsError,
+    clearGpsError
   }
 }

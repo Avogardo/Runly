@@ -114,5 +114,29 @@
     "startLight": "Start lekkiego interwału",
     "remaining": "Pozostało {{count}} interwałów",
     "intervalsComplete": "Wszystkie interwały ukończone. Świetna robota!"
+  },
+  "runSummary": {
+    "label": {
+      "title": "Bieg zakończony!",
+      "gpsPoints": "Punkty GPS"
+    },
+    "motivation": {
+      "amazing": "Niesamowity bieg! Ponad 10 km!",
+      "great": "Świetna robota! Ponad 5 km!",
+      "good": "Dobra robota! Tak trzymaj!",
+      "start": "Każdy bieg się liczy!"
+    }
+  },
+  "gpsError": {
+    "label": {
+      "noPermission": "Brak dostępu do lokalizacji",
+      "noPermissionHint": "Runly potrzebuje dostępu do lokalizacji, aby śledzić bieg. Włącz uprawnienia w ustawieniach urządzenia.",
+      "gpsUnavailable": "GPS niedostępny",
+      "gpsUnavailableHint": "Nie udało się uzyskać dostępu do GPS. Upewnij się, że usługi lokalizacji są włączone i spróbuj ponownie."
+    },
+    "action": {
+      "openSettings": "Otwórz Ustawienia",
+      "retry": "Spróbuj ponownie"
+    }
   }
 }
