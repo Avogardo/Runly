@@ -33,7 +33,7 @@ export const IntervalConfigScreen: FC = () => {
 
   return (
     <LinearGradient colors={[...theme.bgGradient]} style={styles.gradient}>
-      <ScrollView contentContainerStyle={[styles.container, {paddingTop: insets.top + 16}]}>
+      <ScrollView contentContainerStyle={[styles.container, {paddingTop: insets.top + 16, paddingBottom: insets.bottom + 24}]}>
         <Text style={styles.title}>⏱️</Text>
         <Text style={styles.heading}>{t('intervalConfig.label.title')}</Text>
 

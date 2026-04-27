@@ -3,6 +3,7 @@ import {useLocalSearchParams} from 'expo-router'
 import {LinearGradient} from 'expo-linear-gradient'
 import {useTranslation} from 'react-i18next'
 import {View, Text, StyleSheet, ScrollView, ActivityIndicator, Pressable} from 'react-native'
+import {useSafeAreaInsets} from 'react-native-safe-area-context'
 
 import {GlassCard, theme} from '@/ui'
 import {MS_PER_SEC} from '@/consts'
@@ -18,6 +19,7 @@ export const RunDetailsScreen: FC = () => {
   } = useTranslation()
   const {id} = useLocalSearchParams<{id: string}>()
   const {run, isLoading, handleDelete} = useRunDetails(id)
+  const insets = useSafeAreaInsets()
 
   if (isLoading) {
     return (
@@ -60,7 +62,7 @@ export const RunDetailsScreen: FC = () => {
 
   return (
     <LinearGradient colors={[...theme.bgGradient]} style={styles.gradient}>
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.container}>
+      <ScrollView style={styles.scrollView} contentContainerStyle={[styles.container, {paddingBottom: insets.bottom + 24}]}>
         <Text style={styles.date}>{dateStr}</Text>
         <Text style={styles.timeRange}>
           {startTime} — {endTime}
@@ -136,8 +138,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   container: {
-    padding: 20,
-    paddingBottom: 40
+    padding: 20
   },
   date: {
     fontSize: 20,

@@ -2,6 +2,12 @@
 
 > A mobile run tracking app built with React Native & Expo. Track your runs in real-time, analyse your performance and train smarter with built-in interval support.
 
+<p style="text-align: center;">
+  <img src="docs/run.jpg" height="600" alt="Run screen" />
+  &nbsp;&nbsp;
+  <img src="docs/details.jpg" height="600" alt="Run details" />
+</p>
+
 ---
 
 ## Features

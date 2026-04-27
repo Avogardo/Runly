@@ -176,7 +176,7 @@
 - [x] Foreground service notification (required by Android)
 - [x] Event bridge: background task → foreground state via `DeviceEventEmitter`
 - [x] Battery optimization (lower accuracy + wider intervals in background)
-- [ ] Testing: lock screen → run still recording
+- [x] Testing: lock screen → run still recording
 
 **What you'll learn:**
 - Background tasks in React Native
