@@ -1,14 +1,14 @@
 # Runly 🏃
 
-> A mobile run tracking app built with React Native & Expo. Track your runs in real-time, analyse your performance and train smarter with built-in interval support.
+A mobile run tracking app built with React Native & Expo. Track your runs in real-time, analyse your performance and train smarter with built-in interval support.
+
+## Screenshots
 
 <p style="text-align: center;">
   <img src="docs/run.jpg" height="600" alt="Run screen" />
   &nbsp;&nbsp;
   <img src="docs/details.jpg" height="600" alt="Run details" />
 </p>
-
----
 
 ## Features
 
@@ -20,8 +20,6 @@
 - **Run history** — browse past workouts with a `FlatList`, tap to see full details and route replay
 - **Dark glassmorphism UI** — deep purple gradient background, frosted-glass cards (`expo-blur`), neon glow buttons and safe-area aware layout
 - **i18n** — full English / Polish support via `i18next`
-
----
 
 ## Tech stack
 
@@ -38,8 +36,6 @@
 | Language | TypeScript 5.9 (strict) |
 | Linting | ESLint + Prettier |
 | Testing | Jest + jest-expo + Testing Library |
-
----
 
 ## Project structure
 
@@ -72,8 +68,6 @@ app/                      # Expo Router routes
 └── interval-config.tsx   # → IntervalConfigScreen
 ```
 
----
-
 ## Getting started
 
 ```bash
@@ -88,8 +82,6 @@ npm run android
 ```
 
 > Requires [Node.js](https://nodejs.org) ≥ 18 and the [Expo Go](https://expo.dev/go) app or an Android emulator.
-
----
 
 ## Running tests
 
